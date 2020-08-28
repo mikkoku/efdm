@@ -66,7 +66,7 @@ estimatetransprobs1 <- function(pairdata, statespace, prior, state0, state1, fac
   s <- apply_prior(statespace, prior, state0, state1)
 
   if(!is.null(pairdata)) {
-    pairdata <- pairdata[,usednames]
+    pairdata <- pairdata[,usednames, drop=FALSE]
 
     for(name in names(pairdata)) {
       if(!is.factor(pairdata[[name]])) {

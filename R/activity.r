@@ -38,8 +38,8 @@ build_statespace_by <- function(data, statespace0, statespace1, state0, state1, 
 
   bydata <- split(data, data[by])
   return(lapply(bydata, function(bydata) {
-    bystatespace0 <- merge(bydata[1,by], statespace0, by=by, all=FALSE)
-    bystatespace1 <- merge(bydata[1,by], statespace1, by=by, all=FALSE)
+    bystatespace0 <- merge(bydata[1, by, drop=FALSE], statespace0, by=by, all=FALSE)
+    bystatespace1 <- merge(bydata[1, by, drop=FALSE], statespace1, by=by, all=FALSE)
     if(nrow(bystatespace0)==0 || nrow(bystatespace1)==0) {
       cat("No rows in statespace for ")
       print(bydata[by][1,])
@@ -48,7 +48,7 @@ build_statespace_by <- function(data, statespace0, statespace1, state0, state1, 
 
     res <- build_statespace1(bydata, bystatespace0, bystatespace1,
                              state0, state1, factors)
-    res <- cbind(res, bydata[1,by], row.names=NULL)
+    res <- cbind(res, bydata[1, by, drop=FALSE], row.names=NULL)
     res
   }))
 
