@@ -38,6 +38,8 @@ apply_prior <- function(statespace, prior, state0, state1) {
     A <- array(0, dim = sapply(c(v1, v0), length))
     dimnames(A) <- c(v1, v0)
     prior <- prior(A, v1, v0)
+    if(!identical(dim(A), dim(prior))) stop("Prior function didn't return array of right size.")
+    if(!identical(dimnames(A), dimnames(prior))) stop("Prior function didn't return array with right dimnames.")
   } else if(prior == "nochange") {
     if(!identical(unname(v0), unname(v1))) stop("nochange prior is only available if statespaces are identical")
     prior <- diag(prod(sapply(v0, length)))
@@ -49,6 +51,9 @@ apply_prior <- function(statespace, prior, state0, state1) {
   } else {
     stop("Only nochange and uninformative prior is implemented")
   }
+  check <- prior
+  dim(check) <- c(prod(sapply(v1, length)), prod(sapply(v0, length)))
+  if(any(colSums(check)==0)) stop("Prior gave zero transition probabilities when starting from some states. Please check your prior.")
   prior
 }
 
