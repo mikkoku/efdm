@@ -48,6 +48,7 @@ do_activity <- function(state, act) {
     }
     res <- rbind(res, m3)
   }
+  resbefore$seq_used_for_sorting <- NULL
   list(before=resbefore, after=res)
 }
 
