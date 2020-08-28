@@ -22,4 +22,47 @@ The estimation uses an iterative Bayesian algorithm that is explained in
 }
 \details{
 If pairdata is NULL prior is used by itself.
+
+Observations should have 'factor' and 'by' variables and statepairs with 0 and 1
+suffixes to indicate before and after observations.
+
+The estimation algorithm uses information across 'factor' variables, but not
+across 'by' variables.
+
+\code{prior} can either \code{character} or \code{function}.
+\itemize{
+\item "nochange" implies that there is one observation where state doesn't change
+\item "uninformative" when no observations are given all states are as likely
+\item \code{function(A, state1, state0)} where A is an array of zeros with
+  dimnames(A) <- c(state1, state0). The function should fill A with observed
+  transitions and return it.
+}
+}
+\examples{
+statespace <- expand.grid(ds=c("sp", "pi"), vol=1:3)
+pairdata <- data.frame(ds=c("sp", "pi"), vol0=c(1,1), vol1=c(2,3))
+actprob <- state0 <- statespace
+actprob$test <- 1
+state0$area <- c(1,1,0,0,0,0)
+
+act <- define_activity("test", c("vol"))
+act <- build_statespace(act, pairdata, statespace, statespace, factors=c("ds"), by=character())
+act1 <- estimatetransprobs(act, pairdata, "nochange")
+runEFDM(state0, actprob, list(act1), 1)
+act <- define_activity("test", c("vol"))
+act <- build_statespace(act, pairdata, statespace, statespace, factors=character(), by=c("ds"))
+act2 <- estimatetransprobs(act, pairdata, "nochange")
+runEFDM(state0, actprob, list(act2), 1)
+act <- define_activity("test", c("vol"))
+act <- build_statespace(act, pairdata, statespace, statespace, factors=character(), by=c("ds"))
+growth_model <- function(A, state1, state0) {
+  A[1,1] <- 0.2; A[2,1] <- 0.7; A[3,1] <- 0.1
+  A[2,2] <- 0.1; A[3,2] <- 0.9
+  A[3,3] <- 1
+  A
+}
+act3 <- estimatetransprobs(act, NULL, growth_model)
+runEFDM(state0, actprob, list(act3), 2)
+
+
 }
