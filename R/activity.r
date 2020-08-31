@@ -55,7 +55,6 @@ build_statespace_by <- function(data, statespace0, statespace1, state0, state1, 
 }
 
 build_statespace1 <- function(data, statespace0, statespace1, state0, state1, factors) {
-  # Assuming that state is a cartesian product of individual variables.
   # Convert everything used by table to factors and save the levels because table only return levels as character.
   varlevels <- NULL
   for(name in names(data)) {
@@ -81,7 +80,7 @@ build_statespace1 <- function(data, statespace0, statespace1, state0, state1, fa
   if(length(factors)==0) {
     out <- data.frame(varlevels=1)
   } else {
-    out <- expand.grid(varlevels[factors], KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)
+    out <- unique(data[factors])
   }
   out$varlevels <- list(varlevels)
   out
