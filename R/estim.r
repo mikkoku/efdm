@@ -61,13 +61,20 @@ estimatetransprobs <- function(act, pairdata, prior) {
   by <- act$by
   statespace <- act$statespace
 
+  processed_rows <- 0
+
   act$transmat <- do.call(rbind, lapply(statespace, function(statespacepart) {
     bydata <- NULL
-    if(!is.null(pairdata))
-      bydata <- merge(pairdata, statespacepart[by], all=FALSE, by=by)
+    if(!is.null(pairdata)) {
+      bydata <- merge(pairdata, statespacepart[c(factors,by)], all=FALSE, by=c(factors,by))
+      processed_rows <<- processed_rows + nrow(bydata)
+    }
     estimatetransprobs1(bydata, statespacepart, prior, state0, state1, factors)
   }))
-
+  if(!is.null(pairdata)) {
+    if(processed_rows > nrow(pairdata)) stop("Internal error. Processed pairdata multiple times.")
+    if(processed_rows < nrow(pairdata)) warning("Not all pairdata was processed. Was this intentional?")
+  }
   act
 }
 
