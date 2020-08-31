@@ -66,6 +66,7 @@ do_activity <- function(state, act) {
 #' @importFrom utils head
 #' @export
 runEFDM <- function(state0, actprob, activities, n) {
+  totalarea <- sum(state0$area)
   state <- state0
   factornames <- setdiff(names(state), "area")
   actnames <- setdiff(names(actprob), names(state))
@@ -114,6 +115,9 @@ runEFDM <- function(state0, actprob, activities, n) {
     allres <- do.call(rbind, res)
     state <- aggregate(allres["area"], allres[factornames], sum)
     #states[[i]] <- c(list(sum=state), res)
+    newtotalarea <- sum(state$area)
+    if(!isTRUE(all.equal(totalarea, newtotalarea)))
+      warning(paste("Starting with", totalarea, "area ended up with", newtotalarea, " area."))
   }
   #states
   list(before=do.call(rbind, beforeactivity), after=do.call(rbind, afteractivity))
