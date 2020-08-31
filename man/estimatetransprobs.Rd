@@ -46,15 +46,15 @@ actprob$test <- 1
 state0$area <- c(1,1,0,0,0,0)
 
 act <- define_activity("test", c("vol"))
-act <- build_statespace(act, pairdata, statespace, statespace, factors=c("ds"), by=character())
+act <- build_statespace(act, statespace, factors=c("ds"))
 act1 <- estimatetransprobs(act, pairdata, "nochange")
 runEFDM(state0, actprob, list(act1), 1)
 act <- define_activity("test", c("vol"))
-act <- build_statespace(act, pairdata, statespace, statespace, factors=character(), by=c("ds"))
+act <- build_statespace(act, statespace, by=c("ds"))
 act2 <- estimatetransprobs(act, pairdata, "nochange")
 runEFDM(state0, actprob, list(act2), 1)
 act <- define_activity("test", c("vol"))
-act <- build_statespace(act, pairdata, statespace, statespace, factors=character(), by=c("ds"))
+act <- build_statespace(act, statespace, by=c("ds"))
 growth_model <- function(A, state1, state0) {
   A[1,1] <- 0.2; A[2,1] <- 0.7; A[3,1] <- 0.1
   A[2,2] <- 0.1; A[3,2] <- 0.9

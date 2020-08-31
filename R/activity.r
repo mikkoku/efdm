@@ -12,7 +12,49 @@ define_activity <- function(name, statespace, probname=name) {
 
 #' Add a statespace to an activity
 #'
+#' Statespace is the collection of levels for each state variable.
 #'
+#'
+#' If statespace is changing as a result of the activity see \code{\link{build_complex_statespace}}.
+#' @param act Activity definition
+#' @param statespace \code{data.frame}
+#' @param factors \code{character} Variables used in the iterative estimation
+#' @param by \code{character} Variables not used in the iterative estimation
+#' @return Activity definition with statespace
+#' @examples
+#'
+#' statespacepine <- expand.grid(species="pine", vol=1:5, age=1:3, stringsAsFactors=FALSE)
+#' statespacespruce <- expand.grid(species="spruce", vol=1:4, age=1:3, stringsAsFactors=FALSE)
+#' statespace <- rbind(statespacepine, statespacespruce)
+#' act <- define_activity("nomanagement", c("vol", "age"))
+#' act <- build_statespace(act, statespace)
+#'
+#' \dontshow{
+#' statespace <- expand.grid(ds=c("sp", "pi"), region=c("n", "s"), vol=1:3, stringsAsFactors=FALSE)
+#' act <- define_activity("test", c("vol"))
+#' act <- build_statespace(act, subset(statespace, !(ds=="sp"&region=="n")), factors=c("ds", "region"))
+#' stopifnot(nrow(act$statespace[[1]])==3)
+#'
+#' statespace <- expand.grid(a=1:2, b=c("f", "g"), c=c(4,9), vol=1:3, stringsAsFactors=FALSE)
+#' ii <- sample(nrow(statespace), sample(nrow(statespace), 1))
+#' act <- define_activity("test", c("vol"))
+#' act <- build_statespace(act, statespace[ii,], factors=c("a", "b"), by="c")
+#' if(sum(sapply(act$statespace, nrow))!=nrow(unique(statespace[ii,c("a", "b", "c")]))) {
+#'   stop(paste("build_statespace failed", list(ii)))
+#' }
+#' }
+#' @export
+build_statespace <- function(act, statespace, factors=character(), by=character()) {
+  statespace0 <- statespace1 <- data <- statespace
+  for(name in c(act$statespace0, act$statespace1)) {
+    data[[name]] <- data[[substr(name, 1, nchar(name)-1)]]
+  }
+  build_complex_statespace(act, data, statespace0, statespace1, factors, by)
+}
+#' Add a statespace to an activity
+#'
+#'
+#' In a complex statespace it is possible to change statespaces with an activity.
 #' Possible states are found using statespace0 and statespace1.
 #' Possible factor combinations are found from data. Thus the data should contain at least one observation for each
 #' interesting combination of factor levels. If pair data is used for estimation it usually is valid also here.
@@ -24,7 +66,7 @@ define_activity <- function(name, statespace, probname=name) {
 #' @param by \code{character} Variables not used in the iterative estimation
 #' @return Activity definition with statespace
 #' @export
-build_statespace <- function(act, data, statespace0, statespace1, factors, by) {
+build_complex_statespace <- function(act, data, statespace0, statespace1, factors=character(), by=character()) {
   act$factors <- factors
   act$by <- by
   act$statespace <- build_statespace_by(data, statespace0, statespace1, act$statespace0, act$statespace1, factors, by)

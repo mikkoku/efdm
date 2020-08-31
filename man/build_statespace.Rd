@@ -4,16 +4,12 @@
 \alias{build_statespace}
 \title{Add a statespace to an activity}
 \usage{
-build_statespace(act, data, statespace0, statespace1, factors, by)
+build_statespace(act, statespace, factors = character(), by = character())
 }
 \arguments{
 \item{act}{Activity definition}
 
-\item{data}{\code{data.frame} Observed transitions}
-
-\item{statespace0}{\code{data.frame} Possible states for each combination of by variables before transition}
-
-\item{statespace1}{\code{data.frame} Possible states for each combination of by variables after transition}
+\item{statespace}{\code{data.frame}}
 
 \item{factors}{\code{character} Variables used in the iterative estimation}
 
@@ -23,7 +19,31 @@ build_statespace(act, data, statespace0, statespace1, factors, by)
 Activity definition with statespace
 }
 \description{
-Possible states are found using statespace0 and statespace1.
-Possible factor combinations are found from data. Thus the data should contain at least one observation for each
-interesting combination of factor levels. If pair data is used for estimation it usually is valid also here.
+Statespace is the collection of levels for each state variable.
+}
+\details{
+If statespace is changing as a result of the activity see \code{\link{build_complex_statespace}}.
+}
+\examples{
+
+statespacepine <- expand.grid(species="pine", vol=1:5, age=1:3, stringsAsFactors=FALSE)
+statespacespruce <- expand.grid(species="spruce", vol=1:4, age=1:3, stringsAsFactors=FALSE)
+statespace <- rbind(statespacepine, statespacespruce)
+act <- define_activity("nomanagement", c("vol", "age"))
+act <- build_statespace(act, statespace)
+
+\dontshow{
+statespace <- expand.grid(ds=c("sp", "pi"), region=c("n", "s"), vol=1:3, stringsAsFactors=FALSE)
+act <- define_activity("test", c("vol"))
+act <- build_statespace(act, subset(statespace, !(ds=="sp"&region=="n")), factors=c("ds", "region"))
+stopifnot(nrow(act$statespace[[1]])==3)
+
+statespace <- expand.grid(a=1:2, b=c("f", "g"), c=c(4,9), vol=1:3, stringsAsFactors=FALSE)
+ii <- sample(nrow(statespace), sample(nrow(statespace), 1))
+act <- define_activity("test", c("vol"))
+act <- build_statespace(act, statespace[ii,], factors=c("a", "b"), by="c")
+if(sum(sapply(act$statespace, nrow))!=nrow(unique(statespace[ii,c("a", "b", "c")]))) {
+stop(paste("build_statespace failed", list(ii)))
+}
+}
 }
