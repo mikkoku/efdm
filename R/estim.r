@@ -131,10 +131,7 @@ apply_prior <- function(statespace, prior, state0, state1) {
 estimatetransprobs1 <- function(pairdata, statespace, prior, state0, state1, factors) {
   usednames <- c(state1, state0, factors)
   # Check that other variables are constant
-  for(name in setdiff(names(pairdata), usednames)) {
-    if(!all(pairdata[[name]] == pairdata[[name]][1]))
-      stop(paste("Don't know what to do with '", name, "' variable."))
-  }
+  check_unused_variables(pairdata, usednames)
 
   varlevels <- statespace[["varlevels"]][[1]]
 

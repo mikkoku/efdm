@@ -52,6 +52,12 @@ do_activity <- function(state, act) {
   list(before=resbefore, after=res)
 }
 
+check_activities <- function(acts) {
+  actnames <- sapply(acts, function(x) x$actprobname)
+  splitacts <- split(acts, actnames)
+  if(any(lapply(splitacts, check_activity_split))) stop("Duplicated activies found.")
+}
+
 #' Run Markov Forest Dynamics Model
 #'
 #'
@@ -70,6 +76,8 @@ runEFDM <- function(state0, actprob, activities, n) {
   state <- state0
   factornames <- setdiff(names(state), "area")
   actnames <- setdiff(names(actprob), names(state))
+
+  check_activities(activities)
   #states <- list() #list(list(sum=state0))
   beforeactivity <- NULL
   afteractivity <- NULL
