@@ -43,7 +43,7 @@ ii <- sample(nrow(statespace), sample(nrow(statespace), 1))
 act <- define_activity("test", c("vol"))
 act <- build_statespace(act, statespace[ii,], factors=c("a", "b"), by="c")
 if(sum(sapply(act$statespace, nrow))!=nrow(unique(statespace[ii,c("a", "b", "c")]))) {
-stop(paste("build_statespace failed", list(ii)))
+  stop(paste("build_statespace failed", list(ii)))
 }
 }
 }

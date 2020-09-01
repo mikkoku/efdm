@@ -73,7 +73,9 @@ build_complex_statespace <- function(act, data, statespace0, statespace1, factor
   act
 }
 build_statespace_by <- function(data, statespace0, statespace1, state0, state1, factors, by) {
-  if(!all(by %in% names(statespace1))) stop("All by variables should be in statespace")
+  if(!all(by %in% names(statespace1))) stop("All by variables should be in statespace1")
+  if(!all(by %in% names(statespace0))) stop("All by variables should be in statespace0")
+  if(!all(by %in% names(data))) stop("All by variables should be in pairdata")
   if(!all(state0 %in% names(data))) stop("All state variables should be in data")
 
   if(length(by)==0) return(list(build_statespace1(data, statespace0, statespace1, state0, state1, factors)))

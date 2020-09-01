@@ -55,7 +55,7 @@ do_activity <- function(state, act) {
 check_activities <- function(acts) {
   actnames <- sapply(acts, function(x) x$actprobname)
   splitacts <- split(acts, actnames)
-  if(any(lapply(splitacts, check_activity_split))) stop("Duplicated activies found.")
+  if(any(sapply(splitacts, check_activity_split))) stop("Duplicated activies found.")
 }
 
 #' Run Markov Forest Dynamics Model
