@@ -78,7 +78,7 @@ build_statespace_by <- function(data, statespace0, statespace1, state0, state1, 
 
   if(length(by)==0) return(list(build_statespace1(data, statespace0, statespace1, state0, state1, factors)))
 
-  bydata <- split(data, data[by])
+  bydata <- split(data, data[by], drop=TRUE)
   return(lapply(bydata, function(bydata) {
     bystatespace0 <- merge(bydata[1, by, drop=FALSE], statespace0, by=by, all=FALSE)
     bystatespace1 <- merge(bydata[1, by, drop=FALSE], statespace1, by=by, all=FALSE)
