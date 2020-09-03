@@ -78,10 +78,8 @@ runEFDM <- function(state0, actprob, activities, n) {
   actnames <- setdiff(names(actprob), names(state))
 
   check_activities(activities)
-  #states <- list() #list(list(sum=state0))
   beforeactivity <- NULL
-  afteractivity <- NULL
-  for(i in 1:n) {
+  for(i in 0:n) {
     m <- merge(state, actprob, by=factornames, all.x=TRUE)
     if(any(is.na(m[actnames]))) {
       print("No activation probability for:")
@@ -98,7 +96,6 @@ runEFDM <- function(state0, actprob, activities, n) {
       # m2 can include some area that is not meant for this activity due to
       # activities having different statespace but shared activation probability
       if(nrow(m2) != 0) {
-        #beforeactivity <- c(beforeactivity, list(m2))
         res2 <- do_activity(m2, act)
         res1 <- res2$after
         if(nrow(res1) != 0)  {
@@ -108,7 +105,6 @@ runEFDM <- function(state0, actprob, activities, n) {
           res1$activity <- act$actname
           res1$time <- i
           res <- c(res, list(res1))
-          afteractivity <- c(afteractivity, list(res1))
         }
         res1 <- res2$before
         res1 <- res1[!is.na(res1$area),,drop=FALSE]
@@ -122,11 +118,9 @@ runEFDM <- function(state0, actprob, activities, n) {
 
     allres <- do.call(rbind, res)
     state <- aggregate(allres["area"], allres[factornames], sum)
-    #states[[i]] <- c(list(sum=state), res)
     newtotalarea <- sum(state$area)
     if(!isTRUE(all.equal(totalarea, newtotalarea)))
       warning(paste("Starting with", totalarea, "area ended up with", newtotalarea, " area."))
   }
-  #states
-  list(before=do.call(rbind, beforeactivity), after=do.call(rbind, afteractivity))
+  do.call(rbind, beforeactivity)
 }
