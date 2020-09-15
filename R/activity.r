@@ -27,7 +27,7 @@ define_activity <- function(name, statespace, probname=name) {
 #' statespacespruce <- expand.grid(species="spruce", vol=1:4, age=1:3, stringsAsFactors=FALSE)
 #' statespace <- rbind(statespacepine, statespacespruce)
 #' act <- define_activity("nomanagement", c("vol", "age"))
-#' act <- build_statespace(act, statespace)
+#' act <- build_statespace(act, statespace, by="species")
 #'
 #' \dontshow{
 #' statespace <- expand.grid(ds=c("sp", "pi"), region=c("n", "s"), vol=1:3, stringsAsFactors=FALSE)
