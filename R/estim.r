@@ -153,7 +153,7 @@ estimatetransprobs1 <- function(pairdata, statespace, prior, state0, state1, fac
 
   varlevels <- statespace[["varlevels"]][[1]]
 
-  s <- apply_prior(statespace, prior, state0, state1)
+  nobs <- apply_prior(statespace, prior, state0, state1)
 
   if(!is.null(pairdata)) {
     pairdata <- pairdata[,usednames, drop=FALSE]
@@ -165,15 +165,20 @@ estimatetransprobs1 <- function(pairdata, statespace, prior, state0, state1, fac
     }
 
 
-    s <- iterativebayesestimation(pairdata, s, length(state0), length(state1))
+    nobs <- iterativebayesestimation(pairdata, nobs, length(state0), length(state1))
   }
 
-  # Convert s to array and add names to dim
-  class(s) <- "array"
-  dims <- dimnames(s)
-  names(dim(s)) <- names(dimnames(s))
-  dimnames(s) <- dims
-  transmat <- s
+  # Normalize number of observations to probabilities
+  ls1 <- length(state1)
+  N <- apply(nobs, (ls1+1):length(dim(nobs)), sum)
+  p <- sweep(nobs, (ls1+1):length(dim(nobs)), N, '/')
+
+  # Convert p to array and add names to dim
+  class(p) <- "array"
+  dims <- dimnames(p)
+  names(dim(p)) <- names(dimnames(p))
+  dimnames(p) <- dims
+  transmat <- p
 
   out <- statespace
 
@@ -184,7 +189,7 @@ estimatetransprobs1 <- function(pairdata, statespace, prior, state0, state1, fac
     grid <- expand.grid(factordims, KEEP.OUT.ATTRS = FALSE)
     out$transmat <- list(NULL)
     for(j in 1:nrow(out)) {
-      d <- c(dims[state1], dims[state0], grid[j,])[seq_along(dim(s))]
+      d <- c(dims[state1], dims[state0], grid[j,])[seq_along(dim(p))]
       # Drop singleton dimensions only for "grid" variables
       A <- do.call("[", c(list(transmat), d, list(drop=FALSE)))
       dn <- dimnames(A)
@@ -201,19 +206,17 @@ estimatetransprobs1 <- function(pairdata, statespace, prior, state0, state1, fac
 }
 
 iterativebayesestimation <- function(pairdata, prior, ls0, ls1) {
-  s <- prior
+  n <- prior
+  # Count number of observations with different factors
+  # The observations with more specific factor combinations are counted more
+  # times than those with less specific combinations.
   for (i in (ls0+ls1):length(pairdata))
   {
     tmp <- table(pairdata[1:i])
     # Since the new dimension is the last dimension it is possible to use
     # recycling to add the previous array to each level of the new dimension
-    tmp[] <- c(tmp) + c(s)
-    s <- tmp
+    tmp[] <- c(tmp) + c(n)
+    n <- tmp
   }
-
-  # s contains all the numerator values
-  # to obtain the denominator values the dimensions corresponding to state1
-  # are summed over.
-  N <- apply(s, (ls1+1):length(dim(s)), sum)
-  sweep(s, (ls1+1):length(dim(s)), N, '/')
+  n
 }
