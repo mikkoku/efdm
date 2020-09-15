@@ -46,9 +46,6 @@ define_activity <- function(name, statespace, probname=name) {
 #' @export
 build_statespace <- function(act, statespace, factors=character(), by=character()) {
   statespace0 <- statespace1 <- data <- statespace
-  for(name in c(act$statespace0, act$statespace1)) {
-    data[[name]] <- data[[substr(name, 1, nchar(name)-1)]]
-  }
   build_complex_statespace(act, data, statespace0, statespace1, factors, by)
 }
 #' Add a statespace to an activity
@@ -76,7 +73,6 @@ build_statespace_by <- function(data, statespace0, statespace1, state0, state1, 
   if(!all(by %in% names(statespace1))) stop("All by variables should be in statespace1")
   if(!all(by %in% names(statespace0))) stop("All by variables should be in statespace0")
   if(!all(by %in% names(data))) stop("All by variables should be in pairdata")
-  if(!all(state0 %in% names(data))) stop("All state variables should be in data")
 
   if(length(by)==0) return(list(build_statespace1(data, statespace0, statespace1, state0, state1, factors)))
 
@@ -101,7 +97,7 @@ build_statespace_by <- function(data, statespace0, statespace1, state0, state1, 
 build_statespace1 <- function(data, statespace0, statespace1, state0, state1, factors) {
   # Convert everything used by table to factors and save the levels because table only return levels as character.
   varlevels <- NULL
-  for(name in names(data)) {
+  for(name in c(state0, state1, names(data))) {
     if(name %in% state1) {
       name1 <- gsub("1$", "", name)
       x <- statespace1[[name1]]
