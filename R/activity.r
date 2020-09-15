@@ -125,3 +125,31 @@ build_statespace1 <- function(data, statespace0, statespace1, state0, state1, fa
   out$varlevels <- list(varlevels)
   out
 }
+
+#' Extract transitions from an activity
+#'
+#' @param act Activity
+#' @return \code{data.frame} where prob is the transition probability from current
+#' state (with suffix 0) to next state (with suffix 1).
+#' @export
+extract_transitions <- function(act) {
+  res <- NULL
+
+  grid <- act$transmat
+  if(is.null(grid)) return(NULL)
+  for(i in 1:nrow(grid)) {
+    currentfactors <- grid[i,,drop=FALSE]
+    row.names(currentfactors) <- NULL
+    transmat <- currentfactors$transmat[[1]]
+    varlevels <- currentfactors$varlevels[[1]]
+    currentfactors$transmat <- NULL
+    currentfactors$varlevels <- NULL
+
+    statespace <- expand.grid(varlevels[c(act$statespace1, act$statespace0)], KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)
+    statespace$prob <- c(transmat)
+    statespace <- statespace[statespace$prob != 0,]
+
+    res <- rbind(res, cbind(currentfactors, statespace))
+  }
+  res
+}
