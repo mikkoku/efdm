@@ -94,6 +94,12 @@ estimatetransprobs <- function(act, pairdata, prior) {
   by <- act$by
   statespace <- act$statespace
 
+  if(!is.null(pairdata)) {
+    requirednames <- c(factors, by)
+    missingnames <- setdiff(requirednames, names(pairdata))
+    if(length(missingnames) > 0) stop("Variable '", list(missingnames), "' not present in pairdata.")
+  }
+
   processed_rows <- 0
 
   act$transmat <- do.call(rbind, lapply(statespace, function(statespacepart) {
@@ -186,6 +192,10 @@ estimatetransprobs1 <- function(pairdata, statespace, prior, state0, state1, fac
       dimnames(A) <- dn[1:length(dim(A))]
       out$transmat[[j]] <- A
     }
+  }
+  sump <- prod(sapply(dims[state0], length))
+  for(A in out$transmat) {
+    if(!isTRUE(all.equal(sump, sum(A)))) stop(paste0("Sum of estimated transition probabilities is ", sum(A), " but should be ", sump))
   }
   out
 }

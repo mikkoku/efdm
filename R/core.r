@@ -3,6 +3,10 @@
 do_activity <- function(state, act) {
   res <- NULL
   resbefore <- NULL
+  requirednames <- gsub("0$", "", act$statespace0)
+  missingnames <- setdiff(requirednames, names(state))
+  if(length(missingnames) > 0) stop("Variable '", list(missingnames),
+                                    "' required by activity '", act$actname, "' not present in state.")
 
   grid <- act$transmat
   for(i in 1:nrow(grid)) {
@@ -49,6 +53,12 @@ do_activity <- function(state, act) {
     res <- rbind(res, m3)
   }
   resbefore$seq_used_for_sorting <- NULL
+  resbefore <- resbefore[!is.na(resbefore$area),,drop=FALSE]
+  for(name in setdiff(names(resbefore), names(res))) {
+    x <- resbefore[[name]]
+    if(length(x)==0 || all(x==x[1])) res[[name]] <- x[1]
+    else stop(paste0("Variable '", name, "' lost during activity '", act$actname, "'."))
+  }
   list(before=resbefore, after=res)
 }
 
@@ -77,6 +87,12 @@ runEFDM <- function(state0, actprob, activities, n) {
   factornames <- setdiff(names(state), "area")
   actnames <- setdiff(names(actprob), names(state))
 
+  if(anyDuplicated(actprob[factornames]))
+    stop("Duplicated rows in actprob.")
+
+  maxdiff <- max(abs(rowSums(actprob[actnames])-1))
+  if(maxdiff > 1e-15) stop(paste0("Not all activity probabilities sum to 1. Maximum absolute difference ", maxdiff))
+
   check_activities(activities)
   beforeactivity <- NULL
   for(i in 0:n) {
@@ -99,8 +115,9 @@ runEFDM <- function(state0, actprob, activities, n) {
         res2 <- do_activity(m2, act)
         res1 <- res2$after
         if(nrow(res1) != 0)  {
-          if(length(setdiff(names(state), c(names(res1), "area"))) != 0) {
-            stop("Missing factor")
+          extranames <- setdiff(names(state), c(names(res1), "area"))
+          if(length(extranames) != 0) {
+            stop(paste0("Variable '", list(extranames), "' in state before activity '", act$actname, "' but not after."))
           }
           res1$activity <- act$actname
           res1$time <- i
