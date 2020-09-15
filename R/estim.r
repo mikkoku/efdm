@@ -3,6 +3,13 @@
 #'
 #' The estimation uses an iterative Bayesian algorithm that is explained in
 #' \url{https://github.com/ec-jrc/efdm/blob/master/documents/EFDMinstructions/Seija_Mathematics_behind_EFDM.pdf}.
+#' The transition probability estimate is the proportion of observed transitions
+#' divided by the number of all transitions from the same starting state.
+#' \code{prior} gives the number of prior transitions. For each \code{factor}
+#' variable the transitions are counted in classes of all factors before the
+#' current factor. The "most important" observations (having all classes right)
+#' is counted \code{length(factors)} times, the second most important observations
+#' are counted \code{length(factors)-1} times and so on.
 #'
 #' If pairdata is NULL prior is used by itself.
 #'
@@ -17,8 +24,8 @@
 #' \item "nochange" implies that there is one observation where state doesn't change
 #' \item "uninformative" when no observations are given all states are as likely
 #' \item \code{function(A, state1, state0)} where A is an array of zeros with
-#'   dimnames(A) <- c(state1, state0). The function should fill A with observed
-#'   transitions and return it.
+#'   dimnames(A) <- c(state1, state0). The function should fill A with the number of
+#'   prior transitions and return it.
 #' }
 #'
 #' @param act Activity definition with statespace
@@ -32,6 +39,8 @@
 #' actprob$test <- 1
 #' state0$area <- c(1,1,0,0,0,0)
 #'
+#' # Estimation of transition probabilities may use information across
+#' # levels in "factors", but on in "by"
 #' act <- define_activity("test", c("vol"))
 #' act <- build_statespace(act, statespace, factors=c("ds"))
 #' act1 <- estimatetransprobs(act, pairdata, "nochange")
@@ -40,6 +49,7 @@
 #' act <- build_statespace(act, statespace, by=c("ds"))
 #' act2 <- estimatetransprobs(act, pairdata, "nochange")
 #' runEFDM(state0, actprob, list(act2), 1)
+#'
 #' act <- define_activity("test", c("vol"))
 #' act <- build_statespace(act, statespace, by=c("ds"))
 #' growth_model <- function(A, state1, state0) {
@@ -51,40 +61,7 @@
 #' act3 <- estimatetransprobs(act, NULL, growth_model)
 #' runEFDM(state0, actprob, list(act3), 2)
 #'
-#' statespace <- expand.grid(ds=c("sp", "pi"), region=c("n", "s"), vol=1:3, stringsAsFactors=FALSE)
-#' pairdata <- data.frame(ds=c("sp", "pi"), vol0=c(1,1), vol1=c(2,3), region=c("n", "s"))
-#' actprob <- state0 <- statespace
-#' actprob$test <- 1
-#' state0$area <- c(1,1,1,1, 0,0,0,0, 0,0,0,0)
 #'
-#' act <- define_activity("test", c("vol"))
-#' act <- build_statespace(act, subset(statespace, ds=="sp"&region=="n"), factors=c("ds", "region"))
-#' act1 <- estimatetransprobs(act, NULL, "nochange")
-#' act <- define_activity("test", c("vol"))
-#' act <- build_statespace(act, subset(statespace, !(ds=="sp"&region=="n")), factors=c("ds", "region"))
-#' act2 <- estimatetransprobs(act, NULL, "nochange")
-#' runEFDM(state0, actprob, list(act1, act2), 1)
-#'
-#' act <- define_activity("test", c("vol"))
-#' act <- build_statespace(act, subset(statespace, ds=="sp"&region=="n"), factors=c("ds", "region"))
-#' act1 <- estimatetransprobs(act, pairdata, "nochange")
-#' act <- define_activity("test", c("vol"))
-#' act <- build_statespace(act, subset(statespace, !(ds=="sp"&region=="n")), factors=c("ds", "region"))
-#' act2 <- estimatetransprobs(act, pairdata, "nochange")
-#' runEFDM(state0, actprob, list(act1, act2), 10)
-#'
-#' statespace <- expand.grid(ds=c("sp", "pi"), region=c("n", "s"), vol=1:3, stringsAsFactors=FALSE)
-#' statespace$split <- statespace$ds == "sp" & statespace$region == "n"
-#' pairdata <- data.frame(ds=c("sp", "pi"), vol0=c(1,1), vol1=c(2,3), region=c("n", "s"))
-#' pairdata$split <- pairdata$ds == "sp" & pairdata$region == "n"
-#' actprob <- state0 <- statespace
-#' actprob$test <- 1
-#' state0$area <- c(1,1,1,1, 0,0,0,0, 0,0,0,0)
-#'
-#' act <- define_activity("test", c("vol"))
-#' act <- build_statespace(act, statespace, factors=c("region"), by=c("split", "ds"))
-#' act1 <- estimatetransprobs(act, pairdata, "nochange")
-#' runEFDM(state0, actprob, list(act1), 10)
 #' @export
 estimatetransprobs <- function(act, pairdata, prior) {
   stopifnot(!is.null(act$statespace))
