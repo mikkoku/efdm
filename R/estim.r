@@ -91,6 +91,7 @@ estimatetransprobs <- function(act, pairdata, prior) {
     if(processed_rows > nrow(pairdata)) stop("Internal error. Processed pairdata multiple times.")
     if(processed_rows < nrow(pairdata)) warning("Not all pairdata was processed. Was this intentional?")
   }
+  act$A <- extract_transitions(act)
   act
 }
 

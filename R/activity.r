@@ -133,6 +133,7 @@ build_statespace1 <- function(data, statespace0, statespace1, state0, state1, fa
 #' state (with suffix 0) to next state (with suffix 1).
 #' @export
 extract_transitions <- function(act) {
+  if(!is.null(act$A)) return(act$A)
   res <- NULL
 
   grid <- act$transmat

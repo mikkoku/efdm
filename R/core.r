@@ -1,63 +1,30 @@
 
 
 do_activity <- function(state, act) {
-  res <- NULL
-  resbefore <- NULL
   requirednames <- gsub("0$", "", act$statespace0)
   missingnames <- setdiff(requirednames, names(state))
   if(length(missingnames) > 0) stop("Variable '", list(missingnames),
                                     "' required by activity '", act$actname, "' not present in state.")
 
-  grid <- act$transmat
-  for(i in 1:nrow(grid)) {
-    currentfactors <- grid[i,,drop=FALSE]
-    row.names(currentfactors) <- NULL
-    transmat <- currentfactors$transmat[[1]]
-    varlevels <- currentfactors$varlevels[[1]]
-    currentfactors$transmat <- NULL
-    currentfactors$varlevels <- NULL
 
-    statespace0 <- expand.grid(varlevels[act$statespace0], KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)
-    statespace1 <- expand.grid(varlevels[act$statespace1], KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)
-
-    # Select State corresponding to current fixed factors
-    m2 <- merge(state, currentfactors, all=FALSE)
-
-    statespace0$seq_used_for_sorting <- 1:nrow(statespace0)
-
-    # Add rows for all combinations of statespace0
-    # Remove rows not in statespace0
-    m2 <- merge(m2, statespace0, all.x=FALSE, all.y=TRUE, by.x=gsub("0$", "", act$statespace0), by.y=act$statespace0)
-
-    # m2 contains the area that this activity is applied to.
-    resbefore <- rbind(resbefore, m2)#[(!is.na(m2$area)) && (m2$area != 0),, drop=FALSE])
-
-    # Restore the ordering in statespace0
-    m2 <- m2[order(m2$seq_used_for_sorting),, drop=FALSE]
-    m2$seq_used_for_sorting <- NULL
-
-    x <- m2$area
-    x[is.na(x)] <- 0
-    A <- transmat
-    dim(A) <- c(nrow(statespace1), nrow(statespace0))
-    y <- A %*% x
-
-    names(statespace1) <- gsub("1$", "", names(statespace1))
-    m3 <- cbind(currentfactors, statespace1)
-    m3$area <- c(y)
-    m3 <- m3[m3$area != 0,, drop=FALSE]
-
-    if(!isTRUE(all.equal(sum(y), sum(x)))) {
-      stop(paste0("Some area (", sum(y) - sum(x), ") was lost in the computation for act ", act$actname))
-    }
-    res <- rbind(res, m3)
+  A <- extract_transitions(act)
+  names1 <- setdiff(names(A), c(act$statespace1, "prob"))
+  res <- merge(state, A, by.x = gsub("0$", "", names1), by.y=names1, all.x=FALSE, all.y=FALSE)
+  res$area <- res$area * res$prob
+  res$prob <- NULL
+  resbefore <- res
+  for(n in act$statespace0)
+    res[[gsub("0$", "", n)]] <- NULL
+  for(n in act$statespace1) {
+    i <- match(n, names(res))
+    names(res)[i] <- gsub("1$", "", names(res)[i])
+    resbefore[[n]] <- NULL
   }
-  resbefore$seq_used_for_sorting <- NULL
-  resbefore <- resbefore[!is.na(resbefore$area),,drop=FALSE]
-  for(name in setdiff(names(resbefore), names(res))) {
-    x <- resbefore[[name]]
-    if(length(x)==0 || all(x==x[1])) res[[name]] <- x[1]
-    else stop(paste0("Variable '", name, "' lost during activity '", act$actname, "'."))
+  resbefore <- aggregate(resbefore["area"], resbefore[names(resbefore) != "area"], sum)
+  res <- aggregate(res["area"], res[names(res) != "area"], sum)
+
+  if(!isTRUE(all.equal(sum(resbefore$area), sum(res$area)))) {
+    stop(paste0("Some area (", sum(resbefore$area), "!=", sum(res$area), ") was lost in the computation for act ", act$actname))
   }
   list(before=resbefore, after=res)
 }
@@ -89,6 +56,8 @@ runEFDM <- function(state0, actprob, activities, n) {
 
   if(anyDuplicated(actprob[factornames]))
     stop("Duplicated rows in actprob.")
+
+  if(any(actprob[actnames] < 0)) stop("Probabilities should be positive.")
 
   maxdiff <- max(abs(rowSums(actprob[actnames])-1))
   if(maxdiff > 1e-15) stop(paste0("Not all activity probabilities sum to 1. Maximum absolute difference ", maxdiff))
