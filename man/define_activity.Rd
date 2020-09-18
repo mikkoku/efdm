@@ -4,14 +4,14 @@
 \alias{define_activity}
 \title{Define activity}
 \usage{
-define_activity(name, statespace, probname = name)
+define_activity(name, dynamicvariables, probname = name)
 }
 \arguments{
 \item{name}{Name of activity used in reporting}
 
-\item{statespace}{Names of variables where changes happen}
+\item{dynamicvariables}{Names of variables where changes happen}
 
-\item{probname}{Name of activity in activity probabilities data}
+\item{probname}{(optional) Name of activity in activity probabilities data}
 }
 \description{
 Define activity

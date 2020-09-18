@@ -2,7 +2,7 @@
 % Please edit documentation in R/activity.r
 \name{extract_transitions}
 \alias{extract_transitions}
-\title{Extract transitions from an activity}
+\title{Extract transition probabilities from an activity}
 \usage{
 extract_transitions(act)
 }
@@ -10,9 +10,9 @@ extract_transitions(act)
 \item{act}{Activity}
 }
 \value{
-\code{data.frame} where prob is the transition probability from current
+\code{data.frame} where prob=nobs/N is the transition probability from current
 state (with suffix 0) to next state (with suffix 1).
 }
 \description{
-Extract transitions from an activity
+Extract transition probabilities from an activity
 }

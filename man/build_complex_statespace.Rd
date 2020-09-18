@@ -6,7 +6,6 @@
 \usage{
 build_complex_statespace(
   act,
-  data,
   statespace0,
   statespace1,
   factors = character(),
@@ -16,22 +15,20 @@ build_complex_statespace(
 \arguments{
 \item{act}{Activity definition}
 
-\item{data}{\code{data.frame} Observed transitions}
+\item{statespace0}{\code{data.frame} Statespace before transition}
 
-\item{statespace0}{\code{data.frame} Possible states for each combination of by variables before transition}
+\item{statespace1}{\code{data.frame} Statespace after transition}
 
-\item{statespace1}{\code{data.frame} Possible states for each combination of by variables after transition}
+\item{factors}{\code{character} Variables used by the activity}
 
-\item{factors}{\code{character} Variables used in the iterative estimation}
-
-\item{by}{\code{character} Variables not used in the iterative estimation}
+\item{by}{\code{character} Variables that split the statespace}
 }
 \value{
 Activity definition with statespace
 }
 \description{
 In a complex statespace it is possible to change statespaces with an activity.
-Possible states are found using statespace0 and statespace1.
-Possible factor combinations are found from data. Thus the data should contain at least one observation for each
-interesting combination of factor levels. If pair data is used for estimation it usually is valid also here.
+}
+\seealso{
+build_state_space
 }

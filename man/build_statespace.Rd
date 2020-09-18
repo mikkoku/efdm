@@ -11,17 +11,22 @@ build_statespace(act, statespace, factors = character(), by = character())
 
 \item{statespace}{\code{data.frame}}
 
-\item{factors}{\code{character} Variables used in the iterative estimation}
+\item{factors}{\code{character} Variables used by the activity}
 
-\item{by}{\code{character} Variables not used in the iterative estimation}
+\item{by}{\code{character} Variables that split the statespace}
 }
 \value{
 Activity definition with statespace
 }
 \description{
-Statespace is the collection of levels for each state variable.
+Statespace is the collection of strata.
 }
 \details{
+\code{factors} and \code{by} variables are used by \code{\link{estimatetransprobs}}
+to estimate transition probabilities for missing strata. Observations with
+different levels of \code{factors} variables are used where as observations
+with different levels of \code{by} variables are never used.
+
 If statespace is changing as a result of the activity see \code{\link{build_complex_statespace}}.
 }
 \examples{
@@ -42,7 +47,7 @@ statespace <- expand.grid(a=1:2, b=c("f", "g"), c=c(4,9), vol=1:3, stringsAsFact
 ii <- sample(nrow(statespace), sample(nrow(statespace), 1))
 act <- define_activity("test", c("vol"))
 act <- build_statespace(act, statespace[ii,], factors=c("a", "b"), by="c")
-if(sum(sapply(act$statespace, nrow))!=nrow(unique(statespace[ii,c("a", "b", "c")]))) {
+if(sum(sapply(act$statespace, function(x) nrow(x$statespace0)))!=length(ii)) {
   stop(paste("build_statespace failed", list(ii)))
 }
 }

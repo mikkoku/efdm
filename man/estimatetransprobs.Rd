@@ -40,39 +40,49 @@ across 'by' variables.
 \itemize{
 \item "nochange" implies that there is one observation where state doesn't change
 \item "uninformative" when no observations are given all states are as likely
-\item \code{function(A, state1, state0)} where A is an array of zeros with
-  dimnames(A) <- c(state1, state0). The function should fill A with the number of
+\item \code{function(A, dynvar1, dynvar0)} where A is an array of zeros with
+  dimnames(A) <- c(dynvar1, dynvar0). The function should fill A with the number of
   prior transitions and return it.
 }
 }
 \examples{
-statespace <- expand.grid(ds=c("sp", "pi"), vol=1:3)
-pairdata <- data.frame(ds=c("sp", "pi"), vol0=c(1,1), vol1=c(2,3))
-actprob <- state0 <- statespace
-actprob$test <- 1
-state0$area <- c(1,1,0,0,0,0)
 
-# Estimation of transition probabilities may use information across
-# levels in "factors", but on in "by"
+# Estimation can use observed transitions with different levels of factors.
+statespace <- expand.grid(a=1:2, b=1:2, vol=1:5)
+pairdata <- data.frame(a=c(1,1,2,2), b=c(1,2,1,2), vol0=c(1,1,1,1), vol1=c(2,3,4,5))
+state0 <- statespace
+actprob <- data.frame(test = 1)
+state0$area <- 0
+state0$area[1] <- 1
+
+# With by=c("a", "b") there are two observations: one from prior and the other
+# from the exact combination of class levels.
 act <- define_activity("test", c("vol"))
-act <- build_statespace(act, statespace, factors=c("ds"))
+act <- build_statespace(act, statespace, by=c("a", "b"))
 act1 <- estimatetransprobs(act, pairdata, "nochange")
 runEFDM(state0, actprob, list(act1), 1)
+
 act <- define_activity("test", c("vol"))
-act <- build_statespace(act, statespace, by=c("ds"))
+act <- build_statespace(act, statespace, factors="a", by="b")
 act2 <- estimatetransprobs(act, pairdata, "nochange")
 runEFDM(state0, actprob, list(act2), 1)
 
 act <- define_activity("test", c("vol"))
-act <- build_statespace(act, statespace, by=c("ds"))
-growth_model <- function(A, state1, state0) {
-  A[1,1] <- 0.2; A[2,1] <- 0.7; A[3,1] <- 0.1
-  A[2,2] <- 0.1; A[3,2] <- 0.9
-  A[3,3] <- 1
-  A
-}
-act3 <- estimatetransprobs(act, NULL, growth_model)
-runEFDM(state0, actprob, list(act3), 2)
+act <- build_statespace(act, statespace, factors="b", by="a")
+act3 <- estimatetransprobs(act, pairdata, "nochange")
+runEFDM(state0, actprob, list(act3), 1)
+
+# The order of variables in factors argument specifies the order of importance.
+# Observation that differ in the first variable are counted more times.
+act <- define_activity("test", c("vol"))
+act <- build_statespace(act, statespace, factors=c("a", "b"))
+act4 <- estimatetransprobs(act, pairdata, "nochange")
+runEFDM(state0, actprob, list(act4), 1)
+
+act <- define_activity("test", c("vol"))
+act <- build_statespace(act, statespace, factors=c("b", "a"))
+act5 <- estimatetransprobs(act, pairdata, "nochange")
+runEFDM(state0, actprob, list(act5), 1)
 
 
 }

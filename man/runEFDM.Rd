@@ -9,7 +9,7 @@ runEFDM(state0, actprob, activities, n)
 \arguments{
 \item{state0}{\code{data.frame} Initial state}
 
-\item{actprob}{\code{data.frame} Activation probabilities}
+\item{actprob}{\code{data.frame} Activaty probabilities}
 
 \item{activities}{\code{list} A list of activities}
 

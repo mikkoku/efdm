@@ -1,21 +1,28 @@
-
+extract_A <- function(act) {
+  A <- act$A
+  A$nobs <- NULL
+  A$N <- NULL
+  A
+}
 
 do_activity <- function(state, act) {
-  requirednames <- gsub("0$", "", act$statespace0)
+  A <- extract_A(act)
+  requirednames <- c(setdiff(names(A), c("prob", act$dynamicvariables0, act$dynamicvariables1)),
+    gsub("0$", "", act$dynamicvariables0))
   missingnames <- setdiff(requirednames, names(state))
   if(length(missingnames) > 0) stop("Variable '", list(missingnames),
                                     "' required by activity '", act$actname, "' not present in state.")
 
 
-  A <- extract_transitions(act)
-  names1 <- setdiff(names(A), c(act$statespace1, "prob"))
-  res <- merge(state, A, by.x = gsub("0$", "", names1), by.y=names1, all.x=FALSE, all.y=FALSE)
+  names1 <- intersect(names(A), names(state))
+                        #3c(act$dynamicvariables1, "prob"))
+  res <- merge(state, A, by.x = c(names1, gsub("0$", "", act$dynamicvariables0)), by.y=c(names1, act$dynamicvariables0), all.x=FALSE, all.y=FALSE)
   res$area <- res$area * res$prob
   res$prob <- NULL
   resbefore <- res
-  for(n in act$statespace0)
+  for(n in act$dynamicvariables0)
     res[[gsub("0$", "", n)]] <- NULL
-  for(n in act$statespace1) {
+  for(n in act$dynamicvariables1) {
     i <- match(n, names(res))
     names(res)[i] <- gsub("1$", "", names(res)[i])
     resbefore[[n]] <- NULL
@@ -41,20 +48,21 @@ check_activities <- function(acts) {
 #'
 #'
 #' @param state0 \code{data.frame} Initial state
-#' @param actprob \code{data.frame} Activation probabilities
+#' @param actprob \code{data.frame} Activaty probabilities
 #' @param activities \code{list} A list of activities
 #' @param n \code{integer} Number of time steps required
 #' @return \code{data.frame} State of each time step
-#' @importFrom stats aggregate na.omit
+#' @importFrom stats aggregate
 #' @importFrom utils head
 #' @export
 runEFDM <- function(state0, actprob, activities, n) {
   totalarea <- sum(state0$area)
   state <- state0
-  factornames <- setdiff(names(state), "area")
+  # state may include for example plot id which should not be anywhere else
+  actfactors <- intersect(names(state), names(actprob))
   actnames <- setdiff(names(actprob), names(state))
 
-  if(anyDuplicated(actprob[factornames]))
+  if(anyDuplicated(actprob[setdiff(names(actprob), actnames)]))
     stop("Duplicated rows in actprob.")
 
   if(any(actprob[actnames] < 0)) stop("Probabilities should be positive.")
@@ -65,7 +73,7 @@ runEFDM <- function(state0, actprob, activities, n) {
   check_activities(activities)
   beforeactivity <- NULL
   for(i in 0:n) {
-    m <- merge(state, actprob, by=factornames, all.x=TRUE)
+    m <- merge(state, actprob, by=actfactors, all.x=TRUE)
     if(any(is.na(m[actnames]))) {
       print("No activation probability for:")
       print(head(m[is.na(m[length(m)]),]))
@@ -76,7 +84,7 @@ runEFDM <- function(state0, actprob, activities, n) {
     for(act in activities) {
       m2 <- m
       m2$area <- m2$area*m2[[act$actprobname]]
-      m2 <- m2[c(factornames, "area")]
+      m2 <- m2[names(state)]
       m2 <- m2[m2$area != 0,, drop=FALSE]
       # m2 can include some area that is not meant for this activity due to
       # activities having different statespace but shared activation probability
@@ -103,7 +111,7 @@ runEFDM <- function(state0, actprob, activities, n) {
     }
 
     allres <- do.call(rbind, res)
-    state <- aggregate(allres["area"], allres[factornames], sum)
+    state <- aggregate(allres["area"], allres[setdiff(names(state), "area")], sum)
     newtotalarea <- sum(state$area)
     if(!isTRUE(all.equal(totalarea, newtotalarea)))
       warning(paste("Starting with", totalarea, "area ended up with", newtotalarea, " area."))

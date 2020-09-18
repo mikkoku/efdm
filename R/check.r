@@ -2,7 +2,7 @@
 check_unused_variables <- function(data, usednames) {
   for(name in setdiff(names(data), usednames)) {
     if(!all(data[[name]] == data[[name]][1]))
-      stop(paste("Don't know what to do with '", name, "' variable.."))
+      stop(paste0("Don't know what to do with '", name, "' variable.."))
   }
 }
 
