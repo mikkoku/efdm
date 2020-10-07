@@ -5,6 +5,15 @@ extract_A <- function(act) {
   A
 }
 
+aggregate_area <- function(res, by=names(res)) {
+  ns <- setdiff(by, "area")
+  r <- as.data.table(res)
+  # Using area instead of .SD$area appears to be a lot faster
+  area <- stop # This is to trick R Check into not warning about the variable "area"
+  as.data.frame(r[,list(area=sum(area)), by=ns])
+}
+
+#' @importFrom data.table as.data.table .SD
 do_activity <- function(state, act) {
   A <- extract_A(act)
   requirednames <- c(setdiff(names(A), c("prob", act$dynamicvariables0, act$dynamicvariables1)),
@@ -16,7 +25,9 @@ do_activity <- function(state, act) {
 
   names1 <- intersect(names(A), names(state))
                         #3c(act$dynamicvariables1, "prob"))
-  res <- merge(state, A, by.x = c(names1, gsub("0$", "", act$dynamicvariables0)), by.y=c(names1, act$dynamicvariables0), all.x=FALSE, all.y=FALSE)
+  by.x = c(names1, gsub("0$", "", act$dynamicvariables0))
+  by.y = c(names1, act$dynamicvariables0)
+  res <- merge(as.data.table(state), as.data.table(A), by.x=by.x, by.y=by.y, all.x=FALSE, all.y=FALSE, allow.cartesian=TRUE)
   res$area <- res$area * res$prob
   res$prob <- NULL
   resbefore <- res
@@ -27,8 +38,8 @@ do_activity <- function(state, act) {
     names(res)[i] <- gsub("1$", "", names(res)[i])
     resbefore[[n]] <- NULL
   }
-  resbefore <- aggregate(resbefore["area"], resbefore[names(resbefore) != "area"], sum)
-  res <- aggregate(res["area"], res[names(res) != "area"], sum)
+  resbefore <- aggregate_area(resbefore)
+  res <- aggregate_area(res)
 
   if(!isTRUE(all.equal(sum(resbefore$area), sum(res$area)))) {
     stop(paste0("Some area (", sum(resbefore$area), "!=", sum(res$area), ") was lost in the computation for act ", act$actname))
@@ -73,7 +84,13 @@ runEFDM <- function(state0, actprob, activities, n) {
   check_activities(activities)
   beforeactivity <- NULL
   for(i in 0:n) {
-    m <- merge(state, actprob, by=actfactors, all.x=TRUE)
+    m <- if(length(actfactors)==0) {
+      stopifnot(nrow(actprob)==1)
+      cbind(state, actprob)
+    } else {
+      as.data.frame(merge(as.data.table(state), as.data.table(actprob), by=actfactors, all.x=TRUE, all.y=FALSE, allow.cartesian=TRUE))
+    }
+
     if(any(is.na(m[actnames]))) {
       print("No activation probability for:")
       print(head(m[is.na(m[length(m)]),]))
@@ -111,7 +128,7 @@ runEFDM <- function(state0, actprob, activities, n) {
     }
 
     allres <- do.call(rbind, res)
-    state <- aggregate(allres["area"], allres[setdiff(names(state), "area")], sum)
+    state <- aggregate_area(allres, names(state))
     newtotalarea <- sum(state$area)
     if(!isTRUE(all.equal(totalarea, newtotalarea)))
       warning(paste("Starting with", totalarea, "area ended up with", newtotalarea, " area."))

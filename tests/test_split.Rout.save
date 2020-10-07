@@ -6,6 +6,11 @@
 > actprob <- state0 <- statespace
 > actprob$test <- 1
 > state0$area <- c(1,1,1,1, 0,0,0,0, 0,0,0,0)
+> orderresult <- function(res) {
++   res <- res[do.call(order, res[c("time", "region", "ds", "vol")]),c("time", "region", "ds", "vol", "activity", "area")]
++   row.names(res) <- NULL
++   res
++ }
 >
 > act <- define_activity("test", c("vol"))
 > act <- build_statespace(act, subset(statespace, ds=="sp"&region=="n"), factors=c("ds", "region"))
@@ -13,16 +18,16 @@
 > act <- define_activity("test", c("vol"))
 > act <- build_statespace(act, subset(statespace, !(ds=="sp"&region=="n")), factors=c("ds", "region"))
 > act2 <- estimatetransprobs(act, NULL, "nochange")
-> runEFDM(state0, actprob, list(act1, act2), 1)
-  ds region vol area activity time
-1 sp      n   1    1     test    0
-2 pi      n   1    1     test    0
-3 pi      s   1    1     test    0
-4 sp      s   1    1     test    0
-5 sp      n   1    1     test    1
-6 pi      n   1    1     test    1
-7 pi      s   1    1     test    1
-8 sp      s   1    1     test    1
+> orderresult(runEFDM(state0, actprob, list(act1, act2), 1))
+  time region ds vol activity area
+1    0      n pi   1     test    1
+2    0      n sp   1     test    1
+3    0      s pi   1     test    1
+4    0      s sp   1     test    1
+5    1      n pi   1     test    1
+6    1      n sp   1     test    1
+7    1      s pi   1     test    1
+8    1      s sp   1     test    1
 >
 > act <- define_activity("test", c("vol"))
 > act <- build_statespace(act, subset(statespace, ds=="sp"&region=="n"), factors=c("ds", "region"))
@@ -30,90 +35,90 @@
 > act <- define_activity("test", c("vol"))
 > act <- build_statespace(act, subset(statespace, !(ds=="sp"&region=="n")), factors=c("ds", "region"))
 > act2 <- estimatetransprobs(act, subset(pairdata, !(ds=="sp"&region=="n")), "nochange")
-> runEFDM(state0, actprob, list(act1, act2), 10)
-   ds region vol         area activity time
-1  sp      n   1 1.000000e+00     test    0
-2  pi      n   1 1.000000e+00     test    0
-3  pi      s   1 1.000000e+00     test    0
-4  sp      s   1 1.000000e+00     test    0
-5  sp      n   1 2.500000e-01     test    1
-6  sp      n   2 7.500000e-01     test    1
-7  pi      n   1 3.333333e-01     test    1
-8  pi      s   1 2.500000e-01     test    1
-9  sp      s   1 5.000000e-01     test    1
-10 pi      n   3 6.666667e-01     test    1
-11 pi      s   3 7.500000e-01     test    1
-12 sp      s   3 5.000000e-01     test    1
-13 sp      n   1 6.250000e-02     test    2
-14 sp      n   2 9.375000e-01     test    2
-15 pi      n   1 1.111111e-01     test    2
-16 pi      s   1 6.250000e-02     test    2
-17 sp      s   1 2.500000e-01     test    2
-18 pi      n   3 8.888889e-01     test    2
-19 pi      s   3 9.375000e-01     test    2
-20 sp      s   3 7.500000e-01     test    2
-21 sp      n   1 1.562500e-02     test    3
-22 sp      n   2 9.843750e-01     test    3
-23 pi      n   1 3.703704e-02     test    3
-24 pi      s   1 1.562500e-02     test    3
-25 sp      s   1 1.250000e-01     test    3
-26 pi      n   3 9.629630e-01     test    3
-27 pi      s   3 9.843750e-01     test    3
-28 sp      s   3 8.750000e-01     test    3
-29 sp      n   1 3.906250e-03     test    4
-30 sp      n   2 9.960938e-01     test    4
-31 pi      n   1 1.234568e-02     test    4
-32 pi      s   1 3.906250e-03     test    4
-33 sp      s   1 6.250000e-02     test    4
-34 pi      n   3 9.876543e-01     test    4
-35 pi      s   3 9.960938e-01     test    4
-36 sp      s   3 9.375000e-01     test    4
-37 sp      n   1 9.765625e-04     test    5
-38 sp      n   2 9.990234e-01     test    5
-39 pi      n   1 4.115226e-03     test    5
-40 pi      s   1 9.765625e-04     test    5
-41 sp      s   1 3.125000e-02     test    5
-42 pi      n   3 9.958848e-01     test    5
-43 pi      s   3 9.990234e-01     test    5
-44 sp      s   3 9.687500e-01     test    5
-45 sp      n   1 2.441406e-04     test    6
-46 sp      n   2 9.997559e-01     test    6
-47 pi      n   1 1.371742e-03     test    6
-48 pi      s   1 2.441406e-04     test    6
-49 sp      s   1 1.562500e-02     test    6
-50 pi      n   3 9.986283e-01     test    6
-51 pi      s   3 9.997559e-01     test    6
-52 sp      s   3 9.843750e-01     test    6
-53 sp      n   1 6.103516e-05     test    7
-54 sp      n   2 9.999390e-01     test    7
-55 pi      n   1 4.572474e-04     test    7
-56 pi      s   1 6.103516e-05     test    7
-57 sp      s   1 7.812500e-03     test    7
-58 pi      n   3 9.995428e-01     test    7
-59 pi      s   3 9.999390e-01     test    7
-60 sp      s   3 9.921875e-01     test    7
-61 sp      n   1 1.525879e-05     test    8
-62 sp      n   2 9.999847e-01     test    8
-63 pi      n   1 1.524158e-04     test    8
-64 pi      s   1 1.525879e-05     test    8
-65 sp      s   1 3.906250e-03     test    8
-66 pi      n   3 9.998476e-01     test    8
-67 pi      s   3 9.999847e-01     test    8
-68 sp      s   3 9.960938e-01     test    8
-69 sp      n   1 3.814697e-06     test    9
-70 sp      n   2 9.999962e-01     test    9
-71 pi      n   1 5.080526e-05     test    9
-72 pi      s   1 3.814697e-06     test    9
-73 sp      s   1 1.953125e-03     test    9
-74 pi      n   3 9.999492e-01     test    9
-75 pi      s   3 9.999962e-01     test    9
-76 sp      s   3 9.980469e-01     test    9
-77 sp      n   1 9.536743e-07     test   10
-78 sp      n   2 9.999990e-01     test   10
-79 pi      n   1 1.693509e-05     test   10
-80 pi      s   1 9.536743e-07     test   10
-81 sp      s   1 9.765625e-04     test   10
-82 pi      n   3 9.999831e-01     test   10
-83 pi      s   3 9.999990e-01     test   10
-84 sp      s   3 9.990234e-01     test   10
+> orderresult(runEFDM(state0, actprob, list(act1, act2), 10))
+   time region ds vol activity         area
+1     0      n pi   1     test 1.000000e+00
+2     0      n sp   1     test 1.000000e+00
+3     0      s pi   1     test 1.000000e+00
+4     0      s sp   1     test 1.000000e+00
+5     1      n pi   1     test 3.333333e-01
+6     1      n pi   3     test 6.666667e-01
+7     1      n sp   1     test 2.500000e-01
+8     1      n sp   2     test 7.500000e-01
+9     1      s pi   1     test 2.500000e-01
+10    1      s pi   3     test 7.500000e-01
+11    1      s sp   1     test 5.000000e-01
+12    1      s sp   3     test 5.000000e-01
+13    2      n pi   1     test 1.111111e-01
+14    2      n pi   3     test 8.888889e-01
+15    2      n sp   1     test 6.250000e-02
+16    2      n sp   2     test 9.375000e-01
+17    2      s pi   1     test 6.250000e-02
+18    2      s pi   3     test 9.375000e-01
+19    2      s sp   1     test 2.500000e-01
+20    2      s sp   3     test 7.500000e-01
+21    3      n pi   1     test 3.703704e-02
+22    3      n pi   3     test 9.629630e-01
+23    3      n sp   1     test 1.562500e-02
+24    3      n sp   2     test 9.843750e-01
+25    3      s pi   1     test 1.562500e-02
+26    3      s pi   3     test 9.843750e-01
+27    3      s sp   1     test 1.250000e-01
+28    3      s sp   3     test 8.750000e-01
+29    4      n pi   1     test 1.234568e-02
+30    4      n pi   3     test 9.876543e-01
+31    4      n sp   1     test 3.906250e-03
+32    4      n sp   2     test 9.960938e-01
+33    4      s pi   1     test 3.906250e-03
+34    4      s pi   3     test 9.960938e-01
+35    4      s sp   1     test 6.250000e-02
+36    4      s sp   3     test 9.375000e-01
+37    5      n pi   1     test 4.115226e-03
+38    5      n pi   3     test 9.958848e-01
+39    5      n sp   1     test 9.765625e-04
+40    5      n sp   2     test 9.990234e-01
+41    5      s pi   1     test 9.765625e-04
+42    5      s pi   3     test 9.990234e-01
+43    5      s sp   1     test 3.125000e-02
+44    5      s sp   3     test 9.687500e-01
+45    6      n pi   1     test 1.371742e-03
+46    6      n pi   3     test 9.986283e-01
+47    6      n sp   1     test 2.441406e-04
+48    6      n sp   2     test 9.997559e-01
+49    6      s pi   1     test 2.441406e-04
+50    6      s pi   3     test 9.997559e-01
+51    6      s sp   1     test 1.562500e-02
+52    6      s sp   3     test 9.843750e-01
+53    7      n pi   1     test 4.572474e-04
+54    7      n pi   3     test 9.995428e-01
+55    7      n sp   1     test 6.103516e-05
+56    7      n sp   2     test 9.999390e-01
+57    7      s pi   1     test 6.103516e-05
+58    7      s pi   3     test 9.999390e-01
+59    7      s sp   1     test 7.812500e-03
+60    7      s sp   3     test 9.921875e-01
+61    8      n pi   1     test 1.524158e-04
+62    8      n pi   3     test 9.998476e-01
+63    8      n sp   1     test 1.525879e-05
+64    8      n sp   2     test 9.999847e-01
+65    8      s pi   1     test 1.525879e-05
+66    8      s pi   3     test 9.999847e-01
+67    8      s sp   1     test 3.906250e-03
+68    8      s sp   3     test 9.960938e-01
+69    9      n pi   1     test 5.080526e-05
+70    9      n pi   3     test 9.999492e-01
+71    9      n sp   1     test 3.814697e-06
+72    9      n sp   2     test 9.999962e-01
+73    9      s pi   1     test 3.814697e-06
+74    9      s pi   3     test 9.999962e-01
+75    9      s sp   1     test 1.953125e-03
+76    9      s sp   3     test 9.980469e-01
+77   10      n pi   1     test 1.693509e-05
+78   10      n pi   3     test 9.999831e-01
+79   10      n sp   1     test 9.536743e-07
+80   10      n sp   2     test 9.999990e-01
+81   10      s pi   1     test 9.536743e-07
+82   10      s pi   3     test 9.999990e-01
+83   10      s sp   1     test 9.765625e-04
+84   10      s sp   3     test 9.990234e-01
 >
