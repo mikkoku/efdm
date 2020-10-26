@@ -4,7 +4,7 @@
 \alias{runEFDM}
 \title{Run Markov Forest Dynamics Model}
 \usage{
-runEFDM(state0, actprob, activities, n)
+runEFDM(state0, actprob, activities, n, check = TRUE)
 }
 \arguments{
 \item{state0}{\code{data.frame} Initial state}
@@ -14,6 +14,8 @@ runEFDM(state0, actprob, activities, n)
 \item{activities}{\code{list} A list of activities}
 
 \item{n}{\code{integer} Number of time steps required}
+
+\item{check}{Check input arguments for consistency.}
 }
 \value{
 \code{data.frame} State of each time step

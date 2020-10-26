@@ -62,26 +62,29 @@ check_activities <- function(acts) {
 #' @param actprob \code{data.frame} Activaty probabilities
 #' @param activities \code{list} A list of activities
 #' @param n \code{integer} Number of time steps required
+#' @param check Check input arguments for consistency.
 #' @return \code{data.frame} State of each time step
 #' @importFrom stats aggregate
 #' @importFrom utils head
 #' @export
-runEFDM <- function(state0, actprob, activities, n) {
+runEFDM <- function(state0, actprob, activities, n, check=TRUE) {
   totalarea <- sum(state0$area)
   state <- state0
   # state may include for example plot id which should not be anywhere else
   actfactors <- intersect(names(state), names(actprob))
   actnames <- setdiff(names(actprob), names(state))
 
-  if(anyDuplicated(actprob[setdiff(names(actprob), actnames)]))
-    stop("Duplicated rows in actprob.")
+  if(check) {
+    if(anyDuplicated(actprob[setdiff(names(actprob), actnames)]))
+      stop("Duplicated rows in actprob.")
 
-  if(any(actprob[actnames] < 0)) stop("Probabilities should be positive.")
+    if(any(actprob[actnames] < 0)) stop("Probabilities should be positive.")
 
-  maxdiff <- max(abs(rowSums(actprob[actnames])-1))
-  if(maxdiff > 1e-15) stop(paste0("Not all activity probabilities sum to 1. Maximum absolute difference ", maxdiff))
+    maxdiff <- max(abs(rowSums(actprob[actnames])-1))
+    if(maxdiff > 1e-15) stop(paste0("Not all activity probabilities sum to 1. Maximum absolute difference ", maxdiff))
 
-  check_activities(activities)
+    check_activities(activities)
+  }
   beforeactivity <- NULL
   for(i in 0:n) {
     m <- if(length(actfactors)==0) {
