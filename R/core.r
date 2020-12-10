@@ -130,6 +130,9 @@ runEFDM <- function(state0, actprob, activities, n, check=TRUE) {
       }
     }
 
+    if(length(res) == 0) {
+      stop(paste0("All area was lost after time ", i, "."))
+    }
     allres <- do.call(rbind, res)
     state <- aggregate_area(allres, names(state))
     newtotalarea <- sum(state$area)
