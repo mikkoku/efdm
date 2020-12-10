@@ -11,7 +11,7 @@
 > act <- define_activity("test", c("vol"))
 > act <- build_statespace(act, statespace, by=c("a", "b"))
 > act1 <- estimatetransprobs(act, pairdata, "nochange")
-> extract_transitions(act1)
+> transprobs(act1)
 vol0 a b vol1 nobs N prob
 1     1 1 1    1    1 2  0.5
 2     1 1 1    2    1 2  0.5
@@ -45,7 +45,7 @@ a b vol area activity time
 > act <- define_activity("test", c("vol"))
 > act <- build_statespace(act, statespace, factors="a", by="b")
 > act2 <- estimatetransprobs(act, pairdata, "nochange")
-> extract_transitions(act2)
+> transprobs(act2)
 vol0 a b vol1 nobs N prob
 1     1 1 1    1    1 4 0.25
 2     1 1 1    2    2 4 0.50
@@ -84,7 +84,7 @@ a b vol area activity time
 > act <- define_activity("test", c("vol"))
 > act <- build_statespace(act, statespace, factors="b", by="a")
 > act3 <- estimatetransprobs(act, pairdata, "nochange")
-> extract_transitions(act3)
+> transprobs(act3)
 vol0 b a vol1 nobs N prob
 1     1 1 1    1    1 4 0.25
 2     1 1 1    2    2 4 0.50
@@ -123,7 +123,7 @@ b a vol area activity time
 > act <- define_activity("test", c("vol"))
 > act <- build_statespace(act, statespace, factors=c("a", "b"))
 > act4 <- estimatetransprobs(act, pairdata, "nochange")
-> extract_transitions(act4)
+> transprobs(act4)
 vol0 a b vol1 nobs N  prob
 1     1 1 1    1    1 8 0.125
 2     1 1 1    2    3 8 0.375
@@ -172,7 +172,7 @@ a b vol  area activity time
 > act <- define_activity("test", c("vol"))
 > act <- build_statespace(act, statespace, factors=c("b", "a"))
 > act5 <- estimatetransprobs(act, pairdata, "nochange")
-> extract_transitions(act5)
+> transprobs(act5)
 vol0 b a vol1 nobs N  prob
 1     1 1 1    1    1 8 0.125
 2     1 1 1    2    3 8 0.375
@@ -222,7 +222,7 @@ b a vol  area activity time
   > act <- define_activity("test", c("vol"))
 > act <- build_statespace(act, data.frame(vol=1:5))
 > act6 <- estimatetransprobs(act, pairdata[c("vol0", "vol1")], "nochange")
-> extract_transitions(act6)
+> transprobs(act6)
 vol0 vol1 nobs N prob
 1    1    1    1 5  0.2
 2    1    2    1 5  0.2

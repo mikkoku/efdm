@@ -95,12 +95,56 @@ build_statespace_by <- function(statespace0, statespace1, dynamicvariables0, dyn
   }))
 }
 
-#' Extract transition probabilities from an activity
+#' @rdname transprobs
+#' @export
+`transprobs<-` <- function(act, value) {
+  probs <- value
+  if(is.null(act$dynamicvariables0) || is.null(act$dynamicvariables1) || is.null(act$actname)) stop("Not a valid activity.")
+  if(!("prob" %in% names(probs))) stop("probs should have a column named 'prob'")
+  if(!all(act$dynamicvariables1 %in% names(probs)))
+    stop(paste0("dynamicvariables ", list(act$dynamicvariables1)), " found in 'probs'")
+  if(!all(act$dynamicvariables0 %in% names(probs)))
+    stop(paste0("dynamicvariables ", list(act$dynamicvariables0)), " found in 'probs'")
+
+  aggregatenames <- setdiff(names(probs), c(act$dynamicvariables1, "prob"))
+  totalprobs <- aggregate(probs['prob'], probs[aggregatenames], FUN=sum)
+
+  maxdiff <- max(abs(totalprobs$prob-1))
+  if(maxdiff > 1e-15) stop(paste0("Not all probabilities sum to 1. Maximum absolute difference ", maxdiff))
+
+  act$A <- probs
+  act
+}
+
+#' Transition probabilities of an activity
 #'
-#' @param act Activity
+#' Functions to get or set the transition probabilities of an activity
+#'
+#' The \code{probs} should contain
+#' \itemize{
+#' \item dynamic variables in the activity
+#' \item the probability of transition \code{prob}
+#' \item other variables affecting the transition probabilities.
+#' }
+#' @param act Activity definition
+#' @param value \code{data.frame} of transition probabilities
 #' @return \code{data.frame} where prob=nobs/N is the transition probability from current
 #' state (with suffix 0) to next state (with suffix 1).
+#' @examples
+#' act1 <- define_activity("test", c("vol"))
+#' transprobs(act1) <- data.frame(vol0 = 1:5, vol1=c(2:5, 5), prob=1)
+#' transprobs(act1)
+#'
+#' if(require("ggplot2")) {
+#'   ggplot(transprobs(act1)) + geom_raster(aes(x=vol0, y=vol1, fill=prob))
+#' }
+#' @export
+transprobs <- function(act) {
+  act$A
+}
+#' @rdname transprobs
 #' @export
 extract_transitions <- function(act) {
-  act$A
+  warning("extract_transitions replaced by transprobs.")
+  transprobs(act)
 }
