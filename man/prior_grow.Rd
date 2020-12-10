@@ -14,3 +14,11 @@ prior_grow(variable, howmuch = 1)
 \description{
 Prior for deterministic growth
 }
+\details{
+This function creates a prior in which one dynamic variable grows or declines
+with given amount.
+}
+\examples{
+# Age grows by one class every time step
+prior_grow("age")
+}

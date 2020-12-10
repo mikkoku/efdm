@@ -27,7 +27,12 @@ build_complex_statespace(
 Activity definition with statespace
 }
 \description{
+Add a statespace to an activity
+}
+\details{
 In a complex statespace it is possible to change statespaces with an activity.
+Since statespace is the collection of classes of variables this means that the
+classification changes.
 }
 \seealso{
 build_state_space

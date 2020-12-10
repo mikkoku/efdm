@@ -2,7 +2,7 @@
 % Please edit documentation in R/activity.r
 \name{define_activity}
 \alias{define_activity}
-\title{Define activity}
+\title{Define an activity}
 \usage{
 define_activity(name, dynamicvariables, probname = name)
 }
@@ -14,7 +14,31 @@ define_activity(name, dynamicvariables, probname = name)
 \item{probname}{(optional) Name of activity in activity probabilities data}
 }
 \description{
-Define activity
+Define an activity
+}
+\details{
+The set of activies in EFDM defines all possible alternatives for a forest
+stratum to develop during a scenario run step. Therefore activities are not only
+limited to forest treatments and management actions such as thinnings and final fellings
+but should also include 'no management' i.e. growth, if applicable. An activity may
+also be something else affecting the development, for example, a forest hazard:
+snow, wind, drought, pest damage etc.
+
+An activity is defined with this function. A name, which is henceforth
+used in the EFDM R project when refering to the activity, is given. In addition,
+the (stetaspace) variables which are affected by the activity are named.
+Typically an activity affects on the age, volume or stem count of the
+forest, but an activity may also, for example, change land-use and then
+a variable related to land-use categories is essential. If the activity name does
+not match the name in the activaty probability data set, those can be linked here.
+
+Defining an activity is the first step, which will be followed by
+\itemize{
+\item \code{\link{build_statespace}} or \code{\link{build_complex_statespace}} and
+  \code{\link{estimatetransprobs}} if using pairdata
+\item \code{\link{transprobs<-}} if not using pairdata
+}
+until an activity is fully applicable in runEFDM.
 }
 \examples{
 define_activity("nomanagement", c("vol", "age"))

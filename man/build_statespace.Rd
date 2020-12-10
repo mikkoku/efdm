@@ -19,11 +19,15 @@ build_statespace(act, statespace, factors = character(), by = character())
 Activity definition with statespace
 }
 \description{
-Statespace is the collection of strata.
+Add a statespace to an activity
 }
 \details{
+Statespace is the collection of strata. When it is added to an activity defined by define_activity
+the following \code{\link{estimatetransprobs}} function has sufficient information to estimate transition
+probabilties.
+
 \code{factors} and \code{by} variables are used by \code{\link{estimatetransprobs}}
-to estimate transition probabilities for missing strata. Observations with
+to estimate transition probabilities for strata. Observations with
 different levels of \code{factors} variables are used where as observations
 with different levels of \code{by} variables are never used.
 
@@ -36,19 +40,4 @@ statespacespruce <- expand.grid(species="spruce", vol=1:4, age=1:3, stringsAsFac
 statespace <- rbind(statespacepine, statespacespruce)
 act <- define_activity("nomanagement", c("vol", "age"))
 act <- build_statespace(act, statespace, by="species")
-
-\dontshow{
-statespace <- expand.grid(ds=c("sp", "pi"), region=c("n", "s"), vol=1:3, stringsAsFactors=FALSE)
-act <- define_activity("test", c("vol"))
-act <- build_statespace(act, subset(statespace, !(ds=="sp"&region=="n")), factors=c("ds", "region"))
-stopifnot(nrow(act$statespace[[1]])==3)
-
-statespace <- expand.grid(a=1:2, b=c("f", "g"), c=c(4,9), vol=1:3, stringsAsFactors=FALSE)
-ii <- sample(nrow(statespace), sample(nrow(statespace), 1))
-act <- define_activity("test", c("vol"))
-act <- build_statespace(act, statespace[ii,], factors=c("a", "b"), by="c")
-if(sum(sapply(act$statespace, function(x) nrow(x$statespace0)))!=length(ii)) {
-  stop(paste("build_statespace failed", list(ii)))
-}
-}
 }

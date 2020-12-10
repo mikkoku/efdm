@@ -27,7 +27,8 @@ do_activity <- function(state, act) {
                         #3c(act$dynamicvariables1, "prob"))
   by.x = c(names1, gsub("0$", "", act$dynamicvariables0))
   by.y = c(names1, act$dynamicvariables0)
-  res <- merge(as.data.table(state), as.data.table(A), by.x=by.x, by.y=by.y, all.x=FALSE, all.y=FALSE, allow.cartesian=TRUE)
+  res <- merge(as.data.table(state), as.data.table(A), by.x=by.x, by.y=by.y,
+               all.x=FALSE, all.y=FALSE, allow.cartesian=TRUE)
   res$area <- res$area * res$prob
   res$prob <- NULL
   resbefore <- res
@@ -53,17 +54,22 @@ check_activities <- function(acts) {
   if(any(sapply(splitacts, check_activity_split))) stop("Duplicated activies found.")
 }
 
-#' Run Markov Forest Dynamics Model
+#' Run European Forestry Dynamics Model
 #'
+#' Run European Forestry Dynamics Model
 #'
+#' This is the actual scenario running function, which projects the initial
+#' forest state n time steps to the future.
+#'
+#' An activity is defined by activity name, names of dynamic variables and transition probabilities.
 #'
 #'
 #' @param state0 \code{data.frame} Initial state
-#' @param actprob \code{data.frame} Activaty probabilities
+#' @param actprob \code{data.frame} Activity probabilities
 #' @param activities \code{list} A list of activities
 #' @param n \code{integer} Number of time steps required
 #' @param check Check input arguments for consistency.
-#' @return \code{data.frame} State of each time step
+#' @return \code{data.frame} State of each time step divided by activities
 #' @importFrom stats aggregate
 #' @importFrom utils head
 #' @export

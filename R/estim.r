@@ -1,5 +1,17 @@
 #' Estimate Transition Probabilities from Pairdata
 #'
+#' Estimate Transition Probabilities from Pairdata
+#'
+#' Transition probabilities 'move' the forest areas allocated in the cells of state matrix
+#' from the initial states in the beginning of a EFDM run step to the end position. This end
+#' position will be the initial state of the next EFDM step. Length of a step (=time)
+#' in the EFDM run is typically determined by the pairdata. It is the time difference of
+#' tree observations. Note that the pairdata can be also constructed from single observation,
+#' if the other (pair) observation is estimated or modelled.
+#'
+#' Each activity needs to have a transition probability. If no pairdata is available,
+#' transition probability matrices can be based entirelly on a prior defined with
+#' expert knowledge.
 #'
 #' The estimation uses an iterative Bayesian algorithm that is explained in
 #' \url{https://github.com/ec-jrc/efdm/blob/master/documents/EFDMinstructions/Seija_Mathematics_behind_EFDM.pdf}.

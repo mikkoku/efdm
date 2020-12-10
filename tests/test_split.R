@@ -1,3 +1,4 @@
+library(testthat)
 library(efdm)
 statespace <- expand.grid(ds=c("sp", "pi"), region=c("n", "s"), vol=1:3, stringsAsFactors=FALSE)
 pairdata <- data.frame(ds=c("sp", "pi"), vol0=c(1,1), vol1=c(2,3), region=c("n", "s"))
@@ -25,3 +26,15 @@ act <- define_activity("test", c("vol"))
 act <- build_statespace(act, subset(statespace, !(ds=="sp"&region=="n")), factors=c("ds", "region"))
 act2 <- estimatetransprobs(act, subset(pairdata, !(ds=="sp"&region=="n")), "nochange")
 orderresult(runEFDM(state0, actprob, list(act1, act2), 10))
+
+
+statespace <- expand.grid(ds=c("sp", "pi"), region=c("n", "s"), vol=1:3, stringsAsFactors=FALSE)
+act <- define_activity("test", c("vol"))
+act <- build_statespace(act, subset(statespace, !(ds=="sp"&region=="n")), factors=c("ds", "region"))
+stopifnot(nrow(act$statespace[[1]])==3)
+
+statespace <- expand.grid(a=1:2, b=c("f", "g"), c=c(4,9), vol=1:3, stringsAsFactors=FALSE)
+ii <- sample(nrow(statespace), sample(nrow(statespace), 1))
+act <- define_activity("test", c("vol"))
+act <- build_statespace(act, statespace[ii,], factors=c("a", "b"), by="c")
+expect_identical(sum(sapply(act$statespace, function(x) nrow(x$statespace0))), length(ii))

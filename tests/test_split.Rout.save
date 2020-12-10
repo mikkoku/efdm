@@ -1,5 +1,6 @@
 
 
+> library(testthat)
 > library(efdm)
 > statespace <- expand.grid(ds=c("sp", "pi"), region=c("n", "s"), vol=1:3, stringsAsFactors=FALSE)
 > pairdata <- data.frame(ds=c("sp", "pi"), vol0=c(1,1), vol1=c(2,3), region=c("n", "s"))
@@ -121,4 +122,16 @@
 82   10      s pi   3     test 9.999990e-01
 83   10      s sp   1     test 9.765625e-04
 84   10      s sp   3     test 9.990234e-01
+>
+>
+> statespace <- expand.grid(ds=c("sp", "pi"), region=c("n", "s"), vol=1:3, stringsAsFactors=FALSE)
+> act <- define_activity("test", c("vol"))
+> act <- build_statespace(act, subset(statespace, !(ds=="sp"&region=="n")), factors=c("ds", "region"))
+> stopifnot(nrow(act$statespace[[1]])==3)
+>
+> statespace <- expand.grid(a=1:2, b=c("f", "g"), c=c(4,9), vol=1:3, stringsAsFactors=FALSE)
+> ii <- sample(nrow(statespace), sample(nrow(statespace), 1))
+> act <- define_activity("test", c("vol"))
+> act <- build_statespace(act, statespace[ii,], factors=c("a", "b"), by="c")
+> expect_identical(sum(sapply(act$statespace, function(x) nrow(x$statespace0))), length(ii))
 >

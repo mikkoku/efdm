@@ -1,4 +1,29 @@
-#' Define activity
+#' Define an activity
+#'
+#' Define an activity
+#'
+#' The set of activies in EFDM defines all possible alternatives for a forest
+#' stratum to develop during a scenario run step. Therefore activities are not only
+#' limited to forest treatments and management actions such as thinnings and final fellings
+#' but should also include 'no management' i.e. growth, if applicable. An activity may
+#' also be something else affecting the development, for example, a forest hazard:
+#' snow, wind, drought, pest damage etc.
+#'
+#' An activity is defined with this function. A name, which is henceforth
+#' used in the EFDM R project when refering to the activity, is given. In addition,
+#' the (stetaspace) variables which are affected by the activity are named.
+#' Typically an activity affects on the age, volume or stem count of the
+#' forest, but an activity may also, for example, change land-use and then
+#' a variable related to land-use categories is essential. If the activity name does
+#' not match the name in the activaty probability data set, those can be linked here.
+#'
+#' Defining an activity is the first step, which will be followed by
+#' \itemize{
+#' \item \code{\link{build_statespace}} or \code{\link{build_complex_statespace}} and
+#'   \code{\link{estimatetransprobs}} if using pairdata
+#' \item \code{\link{transprobs<-}} if not using pairdata
+#' }
+#' until an activity is fully applicable in runEFDM.
 #'
 #' @param name Name of activity used in reporting
 #' @param dynamicvariables Names of variables where changes happen
@@ -15,11 +40,14 @@ define_activity <- function(name, dynamicvariables, probname=name) {
 
 #' Add a statespace to an activity
 #'
+#' Add a statespace to an activity
 #'
-#' Statespace is the collection of strata.
+#' Statespace is the collection of strata. When it is added to an activity defined by define_activity
+#' the following \code{\link{estimatetransprobs}} function has sufficient information to estimate transition
+#' probabilties.
 #'
 #' \code{factors} and \code{by} variables are used by \code{\link{estimatetransprobs}}
-#' to estimate transition probabilities for missing strata. Observations with
+#' to estimate transition probabilities for strata. Observations with
 #' different levels of \code{factors} variables are used where as observations
 #' with different levels of \code{by} variables are never used.
 #'
@@ -36,21 +64,6 @@ define_activity <- function(name, dynamicvariables, probname=name) {
 #' statespace <- rbind(statespacepine, statespacespruce)
 #' act <- define_activity("nomanagement", c("vol", "age"))
 #' act <- build_statespace(act, statespace, by="species")
-#'
-#' \dontshow{
-#' statespace <- expand.grid(ds=c("sp", "pi"), region=c("n", "s"), vol=1:3, stringsAsFactors=FALSE)
-#' act <- define_activity("test", c("vol"))
-#' act <- build_statespace(act, subset(statespace, !(ds=="sp"&region=="n")), factors=c("ds", "region"))
-#' stopifnot(nrow(act$statespace[[1]])==3)
-#'
-#' statespace <- expand.grid(a=1:2, b=c("f", "g"), c=c(4,9), vol=1:3, stringsAsFactors=FALSE)
-#' ii <- sample(nrow(statespace), sample(nrow(statespace), 1))
-#' act <- define_activity("test", c("vol"))
-#' act <- build_statespace(act, statespace[ii,], factors=c("a", "b"), by="c")
-#' if(sum(sapply(act$statespace, function(x) nrow(x$statespace0)))!=length(ii)) {
-#'   stop(paste("build_statespace failed", list(ii)))
-#' }
-#' }
 #' @export
 build_statespace <- function(act, statespace, factors=character(), by=character()) {
   # rename factors => class
@@ -58,8 +71,11 @@ build_statespace <- function(act, statespace, factors=character(), by=character(
 }
 #' Add a statespace to an activity
 #'
+#' Add a statespace to an activity
 #'
 #' In a complex statespace it is possible to change statespaces with an activity.
+#' Since statespace is the collection of classes of variables this means that the
+#' classification changes.
 #' @inheritParams build_statespace
 #' @param act Activity definition
 # @param data \code{data.frame} Observed transitions

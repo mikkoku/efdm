@@ -3,10 +3,13 @@ Title: Implement European Forestry Dynamics Model
 Version: 0.1.0
 Authors@R: c(
     person("Mikko", "Kuronen", email="mikko.kuronen@luke.fi", role="cre",
-           comment = c(ORCID = "0000-0002-8089-7895")))
-Description: An implementation of European Forest Dynamics Model and
+           comment = c(ORCID = "0000-0002-8089-7895")),
+    person("Minna", "Räty", email="minna.raty@luke.fi", role="aut",
+           comment = c(ORCID = "0000-0001-9898-8712")))
+Description: An implementation of European Forestry Dynamics Model and
     an estimation algorithm for the transition probabilities.
 URL: https://github.com/mikkoku/efdm
+BugReports: https://github.com/mikkoku/efdm/issues
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
@@ -14,4 +17,10 @@ Imports:
   stats,
   utils,
   data.table
+Suggests:
+    ggplot2,
+    knitr,
+    rmarkdown,
+    testthat
 RoxygenNote: 7.1.1
+VignetteBuilder: knitr

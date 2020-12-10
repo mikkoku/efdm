@@ -1,4 +1,10 @@
 #' Prior for final felling
+#'
+#' Prior for final felling
+#'
+#' This prior moves the forest area in final felled state cell to the
+#' smallest classes of given dynamic variables of the forest stratum.
+#'
 #' @examples
 #' statespace <- expand.grid(a=1:2, b=1:2, vol=1:15, age=1:35)
 #' act <- define_activity("test", c("vol", "age"))
@@ -19,8 +25,17 @@ prior_ff <- function() {
 
 #' Prior for deterministic growth
 #'
+#' Prior for deterministic growth
+#'
+#' This function creates a prior in which one dynamic variable grows or declines
+#' with given amount.
+#'
 #' @param variable Name of the variable to grow
 #' @param howmuch Amount of growth
+#'
+#' @examples
+#' # Age grows by one class every time step
+#' prior_grow("age")
 #' @export
 prior_grow <- function(variable, howmuch=1) {
   function(A, state1, state0) {

@@ -2,14 +2,14 @@
 % Please edit documentation in R/core.r
 \name{runEFDM}
 \alias{runEFDM}
-\title{Run Markov Forest Dynamics Model}
+\title{Run European Forestry Dynamics Model}
 \usage{
 runEFDM(state0, actprob, activities, n, check = TRUE)
 }
 \arguments{
 \item{state0}{\code{data.frame} Initial state}
 
-\item{actprob}{\code{data.frame} Activaty probabilities}
+\item{actprob}{\code{data.frame} Activity probabilities}
 
 \item{activities}{\code{list} A list of activities}
 
@@ -18,8 +18,14 @@ runEFDM(state0, actprob, activities, n, check = TRUE)
 \item{check}{Check input arguments for consistency.}
 }
 \value{
-\code{data.frame} State of each time step
+\code{data.frame} State of each time step divided by activities
 }
 \description{
-Run Markov Forest Dynamics Model
+Run European Forestry Dynamics Model
+}
+\details{
+This is the actual scenario running function, which projects the initial
+forest state n time steps to the future.
+
+An activity is defined by activity name, names of dynamic variables and transition probabilities.
 }
