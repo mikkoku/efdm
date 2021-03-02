@@ -50,7 +50,8 @@
 #' statespace <- expand.grid(a=1:2, b=1:2, vol=1:5)
 #' pairdata <- data.frame(a=c(1,1,2,2), b=c(1,2,1,2), vol0=c(1,1,1,1), vol1=c(2,3,4,5))
 #' state0 <- statespace
-#' actprob <- data.frame(test = 1)
+#' actprob <- statespace
+#' actprob$test <- 1
 #' state0$area <- 0
 #' state0$area[1] <- 1
 #'

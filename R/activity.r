@@ -117,12 +117,11 @@ build_statespace_by <- function(statespace0, statespace1, dynamicvariables0, dyn
   probs <- value
   if(is.null(act$dynamicvariables0) || is.null(act$dynamicvariables1) || is.null(act$actname)) stop("Not a valid activity.")
   if(!("prob" %in% names(probs))) stop("probs should have a column named 'prob'")
-  if(!all(act$dynamicvariables1 %in% names(probs)))
-    stop(paste0("dynamicvariables ", list(act$dynamicvariables1)), " found in 'probs'")
-  if(!all(act$dynamicvariables0 %in% names(probs)))
-    stop(paste0("dynamicvariables ", list(act$dynamicvariables0)), " found in 'probs'")
+  vars <- c(act$dynamicvariables1, act$dynamicvariables0)
+  if(!all(vars %in% names(probs)))
+    stop(paste0("dynamicvariables ", list(setdiff(vars, names(probs)))), " not found in 'probs'")
 
-  aggregatenames <- setdiff(names(probs), c(act$dynamicvariables1, "prob"))
+  aggregatenames <- setdiff(names(probs), c(act$dynamicvariables1, c("prob", "N", "nobs")))
   totalprobs <- aggregate(probs['prob'], probs[aggregatenames], FUN=sum)
 
   maxdiff <- max(abs(totalprobs$prob-1))
