@@ -34,8 +34,8 @@
 define_activity <- function(name, dynamicvariables, probname=name) {
   list(actname=name,
        actprobname=probname,
-       dynamicvariables0=paste0(dynamicvariables, "0"),
-       dynamicvariables1=paste0(dynamicvariables, "1"))
+       dynamicvariables0=paste0(dynamicvariables, "0", recycle0=TRUE),
+       dynamicvariables1=paste0(dynamicvariables, "1", recycle0=TRUE))
 }
 
 #' Add a statespace to an activity
@@ -116,6 +116,8 @@ build_statespace_by <- function(statespace0, statespace1, dynamicvariables0, dyn
 `transprobs<-` <- function(act, value) {
   probs <- value
   if(is.null(act$dynamicvariables0) || is.null(act$dynamicvariables1) || is.null(act$actname)) stop("Not a valid activity.")
+  if(length(act$dynamicvariables0) == 0)
+    stop("Activity without dynamic variables may not have transition probabilities.")
   if(!("prob" %in% names(probs))) stop("probs should have a column named 'prob'")
   vars <- c(act$dynamicvariables1, act$dynamicvariables0)
   if(!all(vars %in% names(probs)))

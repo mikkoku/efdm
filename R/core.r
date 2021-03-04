@@ -15,6 +15,9 @@ aggregate_area <- function(res, by=names(res)) {
 
 #' @importFrom data.table as.data.table .SD
 do_activity <- function(state, act) {
+  if(length(act$dynamicvariables0) == 0)
+    return(list(before=state, after=state))
+
   A <- extract_A(act)
   requirednames <- c(setdiff(names(A), c("prob", act$dynamicvariables0, act$dynamicvariables1)),
     gsub("0$", "", act$dynamicvariables0))
@@ -103,17 +106,19 @@ check_activities <- function(acts, actprob, actnames, actfactors) {
 
   # Check states after transition
   for(act in acts) {
-    A <- extract_A(act)
-    for(v in act$dynamicvariables0)
-      A[[v]] <- NULL
-    for(v1 in act$dynamicvariables1) {
-      v <- gsub("1$", "", v1)
-      A[[v]] <- A[[v1]]
-      A[[v1]] <- NULL
+    if(length(act$dynamicvariables0) > 0) {
+      A <- extract_A(act)
+      for(v in act$dynamicvariables0)
+        A[[v]] <- NULL
+      for(v1 in act$dynamicvariables1) {
+        v <- gsub("1$", "", v1)
+        A[[v]] <- A[[v1]]
+        A[[v1]] <- NULL
+      }
+      A$prob <- NULL
+      A <- A[!duplicated(A),,drop=FALSE]
+      P <- merge(P, A, all.x=TRUE, all.y=TRUE)
     }
-    A$prob <- NULL
-    A <- A[!duplicated(A),,drop=FALSE]
-    P <- merge(P, A, all.x=TRUE, all.y=TRUE)
   }
   check <- is.na(P$check___)
   if(any(check)) {
