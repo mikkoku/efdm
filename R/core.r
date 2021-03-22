@@ -19,6 +19,8 @@ do_activity <- function(state, act) {
     return(list(before=state, after=state))
 
   A <- extract_A(act)
+
+  # This check should already be in check_activities, but in case check==FALSE
   requirednames <- c(setdiff(names(A), c("prob", act$dynamicvariables0, act$dynamicvariables1)),
     gsub("0$", "", act$dynamicvariables0))
   missingnames <- setdiff(requirednames, names(state))
@@ -69,6 +71,10 @@ check_activities <- function(acts, actprob, actnames, actfactors) {
   # Check states before transition
   for(act in acts) {
     A <- extract_A(act)
+
+    if(is.null(A) && length(act$dynamicvariables0) != 0)
+      stop(paste0("Activity '", act$actname, "' has no transprobs."))
+
     for(v in act$dynamicvariables1)
       A[[v]] <- NULL
     for(v0 in act$dynamicvariables0) {
@@ -78,6 +84,10 @@ check_activities <- function(acts, actprob, actnames, actfactors) {
     }
 
     A$prob <- NULL
+
+    if(!(all(names(A) %in% names(P))))
+      stop(paste0("Activity '", act$actname, "' has variable ", list(setdiff(names(A), names(P))), " not in actprob."))
+
     A <- A[!duplicated(A),,drop=FALSE]
     A$check_new__ <- 1
     P <- merge(P, A, all.x=TRUE, all.y=TRUE)
@@ -92,9 +102,9 @@ check_activities <- function(acts, actprob, actnames, actfactors) {
   }
   check <- P$check___ == 0
   if(any(check)) {
-    print("States with no activity:")
+    print("States with no activity (in list of activities):")
     print(utils::head(P[check,,drop=FALSE]))
-    stop("States with no activity")
+    stop("States with no activity (in list of activities)")
   }
   P$check_1__ <- P$check___ - 1
   check <- abs(P$check_1__) > 1e-14
@@ -118,13 +128,13 @@ check_activities <- function(acts, actprob, actnames, actfactors) {
       A$prob <- NULL
       A <- A[!duplicated(A),,drop=FALSE]
       P <- merge(P, A, all.x=TRUE, all.y=TRUE)
+      check <- is.na(P$check___)
+      if(any(check)) {
+        print(paste0("Activity '", act$actname, "' caused transitions to state not in actprob:"))
+        print(utils::head(P[check,,drop=FALSE]))
+        stop("Activity transitions to state not in actprob")
+      }
     }
-  }
-  check <- is.na(P$check___)
-  if(any(check)) {
-    print("Activity transitions to state not in actprob:")
-    print(utils::head(P[check,,drop=FALSE]))
-    stop("Activity transitions to state not in actprob")
   }
 }
 
@@ -164,13 +174,13 @@ runEFDM <- function(state0, actprob, activities, n, check=TRUE) {
 
     check_activities(activities, actprob, actnames, actfactors)
   }
+  # Later checks should not be needed, but they are cheap and might be useful if check==FALSE
 
   beforeactivity <- NULL
   for(i in 0:n) {
     m <- as.data.frame(merge(as.data.table(state), as.data.table(actprob), by=actfactors, all.x=TRUE, all.y=FALSE, allow.cartesian=TRUE))
 
     if(any(is.na(m[actnames]))) {
-      # This shouldn't happen unless check=FALSE
       print("No activation probability for:")
       print(head(m[is.na(m[length(m)]),]))
       print("...")
@@ -213,7 +223,7 @@ runEFDM <- function(state0, actprob, activities, n, check=TRUE) {
         }
       }
     }
-    # These checks should not be needed because they are made in check_activities
+
     for(actname in actnames) {
       if(!isTRUE(all.equal(checkareain[[actname]], checkareaout[[actname]])))
         stop(paste0("Activity '", actname, "' was allocated ", checkareain[[actname]], " area, but it processed ", checkareaout[[actname]], "."))

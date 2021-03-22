@@ -10,7 +10,7 @@ state0$area[1] <- 1
 
 act3 <- define_activity("test", c("vol"))
 transprobs(act3) <- data.frame(vol0 = 1:4, vol1=2:5, prob=1)
-expect_error(runEFDM(state0, actprob, list(act3), 5), "States with no activity")
+expect_error(runEFDM(state0, actprob, list(act3), 5), "States with no activity (in list of activities)", fixed=TRUE)
 expect_error(runEFDM(state0, data.frame(test=1), list(act3), 5), "No state variables in actprob")
 
 
@@ -30,10 +30,13 @@ act5 <- define_activity("test", c("vol"))
 transprobs(act5) <- data.frame(vol0 = 1:6, vol1=2, prob=1)
 expect_error(runEFDM(state0, actprob, list(act5), 5), "Activity transitions from state not in actprob")
 
+act6 <- define_activity("test", c("vol"))
+expect_error(runEFDM(state0, actprob, list(act6), 1), "Activity 'test' has no transprobs.")
+transprobs(act6) <- data.frame(vol0 = 1:5, vol1=2, c=1, prob=1)
+expect_error(runEFDM(state0, actprob, list(act6), 1), "Activity 'test' has variable c not in actprob.")
 
 actprob$test[3] <- NA
 expect_error(runEFDM(state0, actprob, list(act3), 5), "Actprob should not have NAs.")
 
 actprob$test2 <- actprob$test <- 0.5
 expect_error(runEFDM(state0, actprob, list(act3), 5), "Activity probabilities for test2 given, but activities not.")
-

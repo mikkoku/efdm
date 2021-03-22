@@ -25,8 +25,10 @@ expect_identical(res0, res2)
 
 A$asdf <- 1
 transprobs(act1) <- A
-expect_error(runEFDM(state0, actprob, list(act1), 1),
+expect_error(runEFDM(state0, actprob, list(act1), 1, check=FALSE),
              "Variable 'asdf' required by activity 'test' not present in state.")
+expect_error(runEFDM(state0, actprob, list(act1), 1),
+             "Activity 'test' has variable asdf not in actprob.")
 
 
 act3 <- define_activity("test", c("vol"))
