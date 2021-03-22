@@ -105,8 +105,8 @@ build_statespace_by <- function(statespace0, statespace1, dynamicvariables0, dyn
   return(lapply(1:nrow(byrows), function(i) {
     #TODO: Change merge to a simple subset
     # merge has an interesting view on "sort"ing
-    bys0 <- merge(byrows[i, , drop=FALSE], statespace0, by=by, all=FALSE)
-    bys1 <- merge(byrows[i, , drop=FALSE], statespace1, by=by, all=FALSE)
+    bys0 <- as.data.frame(merge(as.data.table(byrows[i, , drop=FALSE]), as.data.table(statespace0), by=by, all=FALSE))
+    bys1 <- as.data.frame(merge(as.data.table(byrows[i, , drop=FALSE]), as.data.table(statespace1), by=by, all=FALSE))
     list(statespace0=bys0, statespace1=bys1)
   }))
 }

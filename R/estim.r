@@ -119,15 +119,21 @@ estimatetransprobs <- function(act, pairdata, prior) {
 
   act$A <- do.call(rbind, lapply(statespace, function(statespacepart) {
     bydata <- NULL
+    priorpart <- prior
     if(!is.null(pairdata)) {
-      bydata <- if(length(c(factors, by))) {
-        merge(pairdata, unique(statespacepart$statespace0[c(factors,by)]), all=FALSE, by=c(factors,by))
+      mergeby <- c(factors, by) # Why not just 'by' here?
+      if(length(mergeby)) {
+        select <- unique(statespacepart$statespace0[mergeby])
+        bydata <- as.data.frame(merge(as.data.table(pairdata), as.data.table(select), all=FALSE, by=mergeby))
+        if(is.data.frame(prior)) {
+          priorpart <- merge(prior, select, all=FALSE, by=mergeby)[c(act$dynamicvariables0, act$dynamicvariables1)]
+        }
       } else {
-        pairdata
+        bydata <- pairdata
       }
       processed_rows <<- processed_rows + nrow(bydata)
     }
-    estimatetransprobs1(bydata, statespacepart, prior, dynvar0, dynvar1, factors)
+    estimatetransprobs1(bydata, statespacepart, priorpart, dynvar0, dynvar1, factors)
   }))
   if(!is.null(pairdata)) {
     if(processed_rows > nrow(pairdata)) stop("Internal error. Processed pairdata multiple times.")
@@ -172,7 +178,11 @@ apply_prior <- function(statespace, prior, dynvar0, dynvar1) {
 
 estimatetransprobs1 <- function(pairdata, statespace, prior, dynvar0, dynvar1, factors) {
 
-  nobs <- apply_prior(statespace, prior, dynvar0, dynvar1)
+  nobs <- if(is.data.frame(prior)) {
+    prior
+  } else {
+    apply_prior(statespace, prior, dynvar0, dynvar1)
+  }
 
   if(!is.null(pairdata) && nrow(pairdata) > 0) {
     # Reorder columns for iterativebayesian estimation
@@ -180,7 +190,8 @@ estimatetransprobs1 <- function(pairdata, statespace, prior, dynvar0, dynvar1, f
 
     pairdatafact <- pairdata[usednames]
     # Factors need all levels counted to borrow information across levels
-    # dynamic variables only those with observations
+    # dynamic variables only those with observations.
+    # factors need to be converted to factor, because different 'by' classes can have different factor levels.
     for(n in factors) {
       pairdatafact[[n]] <- factor(pairdata[[n]], levels=sort(unique(statespace$statespace0[[n]])))
     }
