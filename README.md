@@ -10,3 +10,7 @@ The package is not yet on CRAN. It can be installed easily with the remotes pack
 ```R
 remotes::install_github("mikkoku/efdm")
 ```
+
+# Vignette
+
+[Scenario example](https://mikkoku.github.io/efdm/vignettes/example.html)
