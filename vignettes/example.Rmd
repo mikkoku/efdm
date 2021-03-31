@@ -1,0 +1,235 @@
+---
+title: "Example scenarios"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example scenarios}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, warning = FALSE, message = FALSE}
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+library(efdm)
+theme_set(theme(legend.position = "bottom", axis.text.x = element_text(angle = -90)))
+```
+
+## Estimate transition probabilities and set up actitivies
+
+Statespace is the collection of all possible states of classifying variables and can be obtained from actprob by removing the activity probabilities (in our case, thin = thinning, ff = final felling, noman = no management). It is used for constructing transition probabilities.
+
+```{r statespace}
+statespace <- example$actprob %>% select(-c(thin, ff, noman))
+head(statespace)
+```
+
+Use pair data to estimate transition probabilities for actitivies no management and thinning.
+```{r pairdata}
+head(example$noman_pairs)
+```
+
+Statespace and prior are used to fill the missing combinations from pairdata.
+Here we simply assume that age grows by one age class if no data is seen.
+Transitions are estimated separately for each region and species.
+The esimation procedure uses data from different soil types with less weight than the correct soil type.
+```{r noman}
+act <- define_activity("noman", c("vol", "age"))
+act <- build_statespace(act, statespace,
+                        factors=c("soil"), by=c("region","sp"))
+noman <- estimatetransprobs(act, example$noman_pairs, prior_grow("age"))
+```
+
+```{r thin}
+act <- define_activity("thin", c("vol", "age"))
+act <- build_statespace(act, statespace,
+                        factors=c("soil"), by=c("region","sp"))
+thin <- estimatetransprobs(act, example$thin_pairs, prior_grow("age"))
+```
+
+Final felling sets age and volume class to the smallest class. No pairdata is needed/utilized.
+```{r ff}
+ff <- define_activity("ff", c("vol", "age"))
+transprobs(ff) <- unique(statespace %>% select(vol0=vol, age0=age)) %>% mutate(vol1=1, age1=1, prob=1)
+head(transprobs(ff))
+```
+
+## Example 1
+
+The activities are collected to a list. The initial state and activity probabilities and the number of time steps are the remaining parameters of the `runEFDM` function
+
+```{r}
+activities <- list(noman, thin, ff)
+state0 <- example$initial_state
+actprob <- example$actprob
+head(actprob)
+```
+
+EFDM is run for 20 time steps. The length of timestep is determined by the inventory data used to be 5 years.
+```{r}
+states1 <- runEFDM(state0, actprob, activities, 20)
+head(states1)
+```
+
+runEFDM produces a data.frame of areas allocated to each activity at each timestep.
+
+To obtain total growing stock volume, volume coeffiecients are used. The volume coefficients and drain were estimated based on the species composition and changes in timber assortments linked to management activities observed in the forest inventory data.
+```{r}
+head(example$vol_coef)
+```
+
+Drain and income....
+```{r}
+head(example$drain_coef)
+```
+
+Income is loosely linked to the actual timber assortment prices in unit eur/m3.
+```{r}
+head(example$income_coef)
+```
+Simulation timesteps are mutated to mid-years of simulation steps:
+```{r}
+states1 <- states1 %>% mutate(time = factor(2016 + time*5))
+```
+
+
+Growing stock
+```{r}
+tilstate<-merge(states1, example$vol_coef) %>% mutate (volume=area*volume)
+ggplot(subset(tilstate,species!='all')) + scale_fill_viridis_d(end = 0.9) +
+  geom_bar(aes(x=time, weight=volume/1000000000,fill=species)) + 
+  labs(y=NULL,title=expression(paste("Growing stock, bil.",m^3)), x="Year", fill="")
+```
+
+Age distribution
+```{r}
+states1$ageclass <- cut(states1$age, breaks=c(0,10,20,30,35), include.lowest = TRUE, 
+                        #labels=c("0-50","51-100","101-150","150+"))
+                        labels=c("-50","-100","-150","150+"))
+states1$region <- factor(states1$region, labels = c("South", "Middle", "North"))
+ggplot(subset(states1, time %in% c(2016,2066,2116))) +
+  geom_bar(aes(x=ageclass, weight=area/1000000, fill=region)) +  
+  scale_fill_viridis_d(end = 0.9) +
+  facet_grid(cols=vars(time)) + labs(y=NULL, title="Area, mill.ha", x="Ageclass", fill=NULL)
+```
+
+
+First the drain in units m3/ha is converted in into eur/ha. Then multiplication with area (ha) gives the euros.
+```{r}
+euro<- merge(example$drain_coef, example$income_coef) %>% mutate(euro = euro*drain)
+removal <- merge(states1, euro) %>% mutate(income=euro*area)
+
+ggplot(subset(removal,!time %in% c(2116))) + 
+  geom_bar(aes(x=time, weight=income/5000000000, fill=assort)) +
+  scale_fill_viridis_d(end = 0.9) +
+  labs(y=NULL,title = "Income, bil.€/year", x="5-year intervals", fill=NULL )
+```
+
+
+
+
+
+## Example 2
+In this example the tree species changes after final felling. Therefore we redefine final felling activity taking into account in addition to volume and age also the dominant species. The change depends on region and dominant species. Volume and age act as before. They more to the smallest classes (vol1=1 and age1=1).
+```{r}
+ff_age_species <- define_activity("ff", c("vol", "age", "sp"))
+transprobs(ff_age_species) <- unique(filter(statespace) %>% 
+                                       select(vol0=vol, age0=age, sp0=sp, region)) %>% 
+  group_by(region, sp0, vol0, age0) %>%
+  summarize(data.frame(vol1=1, age1=1, sp1=c('other','spruce'),
+                       prob=case_when(sp0=='other' && region=='South' ~ c(1, 0),
+                                      sp0=='other' && region=='Middle' ~ c(1, 0),
+                                      sp0=='other' && region=='North' ~ c(0.8, 0.2),
+                                      sp0=='spruce' && region=='South' ~ c(0.3, 0.7),
+                                      sp0=='spruce' && region=='Middle' ~ c(0.2, 0.8),
+                                      sp0=='spruce' && region=='North' ~ c(0, 1))))
+```
+
+```{r}
+activities2 <- list(noman, thin, ff_age_species)
+states2 <- runEFDM(state0, actprob, activities2, 20)
+```
+
+## Example 3 - Land use changes
+
+First we add two land use classes to the statespace. Agriculture is classified according to region and soil type, while other land use is only classified accoring to region.
+```{r}
+statespace3 <- statespace
+statespace3$landuse <- "forest"
+agri <- unique(statespace3 %>% mutate(sp=0, vol=0, age=0, landuse="agri"))
+other <- unique(statespace3 %>% mutate(soil=0, sp=0, vol=0, age=0, landuse="other"))
+statespace3 <- rbind(statespace3, agri, other)
+```
+
+We use separate activities for deforestration to each land use class.
+Variables not used by the agriculture are set to 0.
+Soil type and region are not changing as a result of deforestation to agriculture.
+```{r}
+defor_to_agri <- define_activity("defor_to_agri", 
+                                          c("vol", "age", "sp", "landuse"))
+transprobs(defor_to_agri) <- unique(filter(statespace3, landuse=="forest") %>% 
+                                               select(vol0=vol, age0=age, sp0=sp,landuse0=landuse) %>% 
+                                               mutate(vol1=0, age1=0, sp1=0, landuse1="agri", prob=1))
+```
+
+Deforestation to other land use also changes soil type to 0.
+```{r}
+defor_to_other <- define_activity("defor_to_other", 
+                                        c("soil", "vol", "age", "sp", "landuse"))
+transprobs(defor_to_other) <- unique(filter(statespace3, landuse=="forest") %>% 
+                                             select(soil0=soil, vol0=vol, age0=age, sp0=sp,landuse0=landuse) %>% 
+                                             mutate(soil1=0, vol1=0, age1=0, sp1=0, landuse1="other", prob=1))
+```
+
+Afforestetaion only applies to agriculture.
+Volume and age classes start from 1 and the area is split evenly to spruce and other species.
+```{r}
+affor <- define_activity("affor", c("vol", "age", "sp", "landuse"))
+aff <- filter(statespace3, landuse=="agri") %>% 
+  select(soil, vol0=vol, age0=age, region, sp0=sp, landuse0=landuse) %>% 
+  mutate(vol1=1, age1=1, sp1="other", landuse1="forest", prob=1)
+aff <- rbind(aff %>% mutate(sp1="spruce", prob=0.5), 
+             aff %>% mutate(sp1="other", prob=0.5))
+transprobs(affor) <- aff
+```
+
+A donothing activity is used for non-forest land uses, when there is nothing forestry related going on.
+```{r}
+donothing <- define_activity("donothing", character())
+activities3 <- list(noman, thin, ff, defor_to_other, defor_to_agri, affor, donothing)
+```
+
+adding land use information to state 
+```{r}
+state03 <- state0
+state03$landuse <- "forest"
+state03 <- rbind(state03,  agri %>% mutate(area=rep(c(1552000/2,997000/2,76000/2),each=2)),
+                 other %>% mutate(area=c(721000,507000,112000)))
+```
+
+Activity probabilities for new land uses 
+```{r}
+actprob3 <- actprob
+actprob3$defor_to_other <- 0.0002
+actprob3$defor_to_agri <- 0.00025
+actprob3$affor <- 0
+actprob3$landuse <- "forest"
+actprob3$donothing <- 0
+actnames <- setdiff(names(actprob3), names(state03))
+actprob3[actnames] <- actprob3[actnames]/rowSums(actprob3[actnames])
+actprob3 <- rbind(actprob3, 
+        agri %>% mutate(thin=0, ff=0, noman=0, defor_to_other=0, defor_to_agri=0, affor=0.0005, donothing=0.9995),
+        other %>% mutate(thin=0, ff=0, noman=0, defor_to_other=0, defor_to_agri=0, affor=0, donothing=1))
+```
+
+
+```{r}
+states3 <- runEFDM(state03, actprob3, activities3, 20)
+```
