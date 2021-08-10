@@ -168,7 +168,7 @@ other <- unique(statespace3 %>% mutate(soil=0, sp=0, vol=0, age=0, landuse="othe
 statespace3 <- rbind(statespace3, agri, other)
 ```
 
-We use separate activities for deforestration to each land use class.
+We use separate activities for deforestation to each land use class.
 Variables not used by the agriculture are set to 0.
 Soil type and region are not changing as a result of deforestation to agriculture.
 ```{r}
@@ -188,7 +188,7 @@ transprobs(defor_to_other) <- unique(filter(statespace3, landuse=="forest") %>%
                                              mutate(soil1=0, vol1=0, age1=0, sp1=0, landuse1="other", prob=1))
 ```
 
-Afforestetaion only applies to agriculture.
+Afforestation only applies to agriculture.
 Volume and age classes start from 1 and the area is split evenly to spruce and other species.
 ```{r}
 affor <- define_activity("affor", c("vol", "age", "sp", "landuse"))
