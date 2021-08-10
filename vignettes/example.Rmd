@@ -19,6 +19,7 @@ library(dplyr)
 library(ggplot2)
 library(gridExtra)
 library(efdm)
+data(example)
 theme_set(theme(legend.position = "bottom", axis.text.x = element_text(angle = -90)))
 ```
 
