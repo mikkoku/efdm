@@ -3,14 +3,11 @@
 \name{transprobs<-}
 \alias{transprobs<-}
 \alias{transprobs}
-\alias{extract_transitions}
 \title{Transition probabilities of an activity}
 \usage{
 transprobs(act) <- value
 
 transprobs(act)
-
-extract_transitions(act)
 }
 \arguments{
 \item{act}{Activity definition}

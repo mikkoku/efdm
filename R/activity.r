@@ -159,9 +159,3 @@ build_statespace_by <- function(statespace0, statespace1, dynamicvariables0, dyn
 transprobs <- function(act) {
   act$A
 }
-#' @rdname transprobs
-#' @export
-extract_transitions <- function(act) {
-  warning("extract_transitions replaced by transprobs.")
-  transprobs(act)
-}
