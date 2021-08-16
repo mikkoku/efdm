@@ -25,6 +25,9 @@
 #' }
 #' until an activity is fully applicable in runEFDM.
 #'
+#' @return An incomplete activity definition that needs to be completed with
+#' transition probabilities, see Details.
+#'
 #' @param name Name of activity used in reporting
 #' @param dynamicvariables Names of variables where changes happen
 #' @param probname (optional) Name of activity in activity probabilities data
@@ -137,7 +140,7 @@ build_statespace_by <- function(statespace0, statespace1, dynamicvariables0, dyn
 #'
 #' Functions to get or set the transition probabilities of an activity
 #'
-#' The \code{probs} should contain
+#' The \code{value} should contain
 #' \itemize{
 #' \item dynamic variables in the activity
 #' \item the probability of transition \code{prob}

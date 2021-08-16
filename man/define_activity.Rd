@@ -13,6 +13,10 @@ define_activity(name, dynamicvariables, probname = name)
 
 \item{probname}{(optional) Name of activity in activity probabilities data}
 }
+\value{
+An incomplete activity definition that needs to be completed with
+transition probabilities, see Details.
+}
 \description{
 Define an activity
 }

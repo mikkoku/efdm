@@ -22,7 +22,7 @@ state (with suffix 0) to next state (with suffix 1).
 Functions to get or set the transition probabilities of an activity
 }
 \details{
-The \code{probs} should contain
+The \code{value} should contain
 \itemize{
 \item dynamic variables in the activity
 \item the probability of transition \code{prob}

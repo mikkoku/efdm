@@ -2,20 +2,36 @@
 % Please edit documentation in R/prior.r
 \name{prior_ff}
 \alias{prior_ff}
-\title{Prior for final felling}
+\alias{prior_grow}
+\title{Priors for \code{\link{estimatetransprobs}}}
 \usage{
 prior_ff()
+
+prior_grow(variable, howmuch = 1)
+}
+\arguments{
+\item{variable}{Name of the variable to grow}
+
+\item{howmuch}{Amount of growth}
+}
+\value{
+Return value is used by \code{\link{estimatetransprobs}} to provide
+prior information on the transition probabilities.
 }
 \description{
-Prior for final felling
+Priors for \code{\link{estimatetransprobs}}
 }
 \details{
-This prior moves the forest area in final felled state cell to the
-smallest classes of given dynamic variables of the forest stratum.
+\code{prior_ff} moves the forest area to the smallest classes of the given
+dynamic variables of the forest stratum.
+
+\code{prior_grow} moves the forest to another class given by increasing
+\code{variable} by \code{howmuch}.
 }
 \examples{
 statespace <- expand.grid(a=1:2, b=1:2, vol=1:15, age=1:35)
 act <- define_activity("test", c("vol", "age"))
 act <- build_statespace(act, statespace, by=c("a", "b"))
 act1 <- estimatetransprobs(act, NULL, prior_ff())
+act2 <- estimatetransprobs(act, NULL, prior_grow("age"))
 }

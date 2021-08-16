@@ -1,15 +1,25 @@
-#' Prior for final felling
+#' Priors for \code{\link{estimatetransprobs}}
 #'
-#' Prior for final felling
+#' Priors for \code{\link{estimatetransprobs}}
 #'
-#' This prior moves the forest area in final felled state cell to the
-#' smallest classes of given dynamic variables of the forest stratum.
+#' \code{prior_ff} moves the forest area to the smallest classes of the given
+#' dynamic variables of the forest stratum.
+#'
+#' \code{prior_grow} moves the forest to another class given by increasing
+#' \code{variable} by \code{howmuch}.
+#'
+#' @param variable Name of the variable to grow
+#' @param howmuch Amount of growth
+#'
+#' @return Return value is used by \code{\link{estimatetransprobs}} to provide
+#' prior information on the transition probabilities.
 #'
 #' @examples
 #' statespace <- expand.grid(a=1:2, b=1:2, vol=1:15, age=1:35)
 #' act <- define_activity("test", c("vol", "age"))
 #' act <- build_statespace(act, statespace, by=c("a", "b"))
 #' act1 <- estimatetransprobs(act, NULL, prior_ff())
+#' act2 <- estimatetransprobs(act, NULL, prior_grow("age"))
 #' @export
 prior_ff <- function() {
   function(A, state1, state0) {
@@ -23,19 +33,7 @@ prior_ff <- function() {
   }
 }
 
-#' Prior for deterministic growth
-#'
-#' Prior for deterministic growth
-#'
-#' This function creates a prior in which one dynamic variable grows or declines
-#' with given amount.
-#'
-#' @param variable Name of the variable to grow
-#' @param howmuch Amount of growth
-#'
-#' @examples
-#' # Age grows by one class every time step
-#' prior_grow("age")
+#' @rdname prior_ff
 #' @export
 prior_grow <- function(variable, howmuch=1) {
   function(A, state1, state0) {
