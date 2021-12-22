@@ -1,5 +1,5 @@
 Package: efdm
-Title: Simulate forest resources with the European Forestry Dynamics Model
+Title: Simulate Forest Resources with the European Forestry Dynamics Model
 Version: 0.2.0
 Authors@R: c(
     person("Mikko", "Kuronen", email="mikko.kuronen@luke.fi", role=c("aut", "cre"),
