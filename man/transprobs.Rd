@@ -15,19 +15,16 @@ transprobs(act)
 \item{value}{\code{data.frame} of transition probabilities}
 }
 \value{
-\code{data.frame} where prob=nobs/N is the transition probability from current
+\code{data.frame} where prob is the transition probability from current
 state (with suffix 0) to next state (with suffix 1).
 }
 \description{
 Functions to get or set the transition probabilities of an activity
 }
 \details{
-The \code{value} should contain
-\itemize{
-\item dynamic variables in the activity
-\item the probability of transition \code{prob}
-\item other variables affecting the transition probabilities.
-}
+The \code{value} should be a \code{data.frame} defining the transition probabilities
+between dynamic variables of the activity. See \code{\link{define_activity}}
+for details
 }
 \examples{
 act1 <- define_activity("test", c("vol"))

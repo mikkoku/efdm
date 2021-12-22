@@ -17,9 +17,10 @@
 #' @examples
 #' statespace <- expand.grid(a=1:2, b=1:2, vol=1:15, age=1:35)
 #' act <- define_activity("test", c("vol", "age"))
-#' act <- build_statespace(act, statespace, by=c("a", "b"))
-#' act1 <- estimatetransprobs(act, NULL, prior_ff())
-#' act2 <- estimatetransprobs(act, NULL, prior_grow("age"))
+#' act1 <- estimatetransprobs(c("vol", "age"), NULL, statespace, by=c("a", "b"),
+#'   prior=prior_ff())
+#' act2 <- estimatetransprobs(c("vol", "age"), NULL, statespace, by=c("a", "b"),
+#'   prior=prior_grow("age"))
 #' @export
 prior_ff <- function() {
   function(A, state1, state0) {

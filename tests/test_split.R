@@ -11,30 +11,27 @@ orderresult <- function(res) {
   res
 }
 
-act <- define_activity("test", c("vol"))
-act <- build_statespace(act, subset(statespace, ds=="sp"&region=="n"), factors=c("ds", "region"))
-act1 <- estimatetransprobs(act, NULL, "nochange")
-act <- define_activity("test", c("vol"))
-act <- build_statespace(act, subset(statespace, !(ds=="sp"&region=="n")), factors=c("ds", "region"))
-act2 <- estimatetransprobs(act, NULL, "nochange")
+act1 <- define_activity("test", c("vol"))
+transprobs(act1) <- estimatetransprobs("vol", NULL, subset(statespace, ds=="sp"&region=="n"), factors=c("ds", "region"), prior="nochange")
+act2 <- define_activity("test", c("vol"))
+transprobs(act2) <- estimatetransprobs("vol", NULL, subset(statespace, !(ds=="sp"&region=="n")), factors=c("ds", "region"), prior="nochange")
 orderresult(runEFDM(state0, actprob, list(act1, act2), 1))
 
-act <- define_activity("test", c("vol"))
-act <- build_statespace(act, subset(statespace, ds=="sp"&region=="n"), factors=c("ds", "region"))
-act1 <- estimatetransprobs(act, subset(pairdata, ds=="sp"&region=="n"), "nochange")
-act <- define_activity("test", c("vol"))
-act <- build_statespace(act, subset(statespace, !(ds=="sp"&region=="n")), factors=c("ds", "region"))
-act2 <- estimatetransprobs(act, subset(pairdata, !(ds=="sp"&region=="n")), "nochange")
+act1 <- define_activity("test", c("vol"))
+transprobs(act1) <- estimatetransprobs("vol", subset(pairdata, ds=="sp"&region=="n"), subset(statespace, ds=="sp"&region=="n"), factors=c("ds", "region"), prior="nochange")
+act2 <- define_activity("test", c("vol"))
+transprobs(act2) <- estimatetransprobs("vol", subset(pairdata, !(ds=="sp"&region=="n")), subset(statespace, !(ds=="sp"&region=="n")), factors=c("ds", "region"), prior="nochange")
 orderresult(runEFDM(state0, actprob, list(act1, act2), 10))
 
 
 statespace <- expand.grid(ds=c("sp", "pi"), region=c("n", "s"), vol=1:3, stringsAsFactors=FALSE)
 act <- define_activity("test", c("vol"))
-act <- build_statespace(act, subset(statespace, !(ds=="sp"&region=="n")), factors=c("ds", "region"))
+statespace1 <- subset(statespace, !(ds=="sp"&region=="n"))
+act <- efdm:::build_complex_statespace(act, statespace1, statespace1, factors=c("ds", "region"))
 stopifnot(nrow(act$statespace[[1]])==3)
 
 statespace <- expand.grid(a=1:2, b=c("f", "g"), c=c(4,9), vol=1:3, stringsAsFactors=FALSE)
 ii <- sample(nrow(statespace), sample(nrow(statespace), 1))
 act <- define_activity("test", c("vol"))
-act <- build_statespace(act, statespace[ii,], factors=c("a", "b"), by="c")
+act <- efdm:::build_complex_statespace(act, statespace[ii,], statespace[ii,], factors=c("a", "b"), by="c")
 expect_identical(sum(sapply(act$statespace, function(x) nrow(x$statespace0))), length(ii))

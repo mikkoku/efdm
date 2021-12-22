@@ -1,6 +1,6 @@
 #' Example dataset.
 #'
-#' A listt containing the necessary datasets for EFDM forest scenario example.
+#' A list containing the necessary datasets for EFDM forest scenario example.
 #'
 #' @format A list of data frames:
 #' \describe{
@@ -13,3 +13,16 @@
 #'   \item{income_coef}{Coefficients to transform harvest accumulation into income}
 #' }
 "example"
+
+#' Finnish bio-geographical regions
+#'
+#' A low resolution copy of the finnish bio-geographical regions.
+#' The original shapefile was provided by Finnish Environment Institute.
+#' See \url{https://ckan.ymparisto.fi/fi/dataset/metsakasvillisuusvyohykkeet}.
+#'
+#' @format An sf-object:
+#' \describe{
+#'   \item{region}{Factor with three levels: North, Middle, South}
+#'   \item{geometry}{Polygon, each region is composed of multiple polygons}
+#' }
+"MetsaKasvVyoh"

@@ -20,6 +20,6 @@ A list of data frames:
 example
 }
 \description{
-A listt containing the necessary datasets for EFDM forest scenario example.
+A list containing the necessary datasets for EFDM forest scenario example.
 }
 \keyword{datasets}

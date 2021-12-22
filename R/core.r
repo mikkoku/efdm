@@ -147,7 +147,7 @@ check_activities <- function(acts, actprob, actnames, actfactors) {
 #' This is the actual scenario running function, which projects the initial
 #' forest state n time steps to the future.
 #'
-#' An activity is defined by activity name, names of dynamic variables and transition probabilities.
+#' Activities are defined using \code{\link{define_activity}}.
 #'
 #'
 #' @param state0 \code{data.frame} Initial state

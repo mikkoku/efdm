@@ -4,17 +4,30 @@
 \alias{estimatetransprobs}
 \title{Estimate Transition Probabilities from Pairdata}
 \usage{
-estimatetransprobs(act, pairdata, prior)
+estimatetransprobs(
+  dynamicvariables,
+  pairdata,
+  statespace,
+  factors = character(),
+  by = character(),
+  prior = "nochange"
+)
 }
 \arguments{
-\item{act}{Activity definition with statespace}
+\item{dynamicvariables}{The names of the dynamic variables, \code{character} vector}
 
 \item{pairdata}{\code{data.frame} Observed transitions}
+
+\item{statespace}{\code{data.frame} or a \code{list} of two \code{data.frame}s if the state space changes as a result of the activity}
+
+\item{factors}{\code{character} Variables used by the activity}
+
+\item{by}{\code{character} Variables that split the state space}
 
 \item{prior}{function or character}
 }
 \value{
-Activity definition with transition probabilities
+Transition probabilities as a \code{data.frame}
 }
 \description{
 Estimate Transition Probabilities from Pairdata
@@ -28,7 +41,7 @@ tree observations. Note that the pairdata can be also constructed from single ob
 if the other (pair) observation is estimated or modelled.
 
 Each activity needs to have a transition probability. If no pairdata is available,
-transition probability matrices can be based entirelly on a prior defined with
+transition probability matrices can be based entirely on a prior defined with
 expert knowledge.
 
 The estimation uses an iterative Bayesian algorithm that is explained in
@@ -57,6 +70,13 @@ across 'by' variables.
   dimnames(A) <- c(dynvar1, dynvar0). The function should fill A with the number of
   prior transitions and return it.
 }
+
+The statespace is used to fill in the transitions where there are no observations.
+In special cases the statespace may change as a result of the activity.
+For example changing the tree species might lead to change in the volume classification used.
+
+This function assumes that the dynamic variables are coded as integers starting with 1.
+Other variables are not restricted.
 }
 \examples{
 
@@ -71,31 +91,26 @@ state0$area[1] <- 1
 
 # With by=c("a", "b") there are two observations: one from prior and the other
 # from the exact combination of class levels.
-act <- define_activity("test", c("vol"))
-act <- build_statespace(act, statespace, by=c("a", "b"))
-act1 <- estimatetransprobs(act, pairdata, "nochange")
+probs <- estimatetransprobs("vol", pairdata, statespace, by=c("a", "b"), prior="nochange")
+act1 <- define_activity("test", c("vol"), probs)
 runEFDM(state0, actprob, list(act1), 1)
 
-act <- define_activity("test", c("vol"))
-act <- build_statespace(act, statespace, factors="a", by="b")
-act2 <- estimatetransprobs(act, pairdata, "nochange")
+probs <- estimatetransprobs("vol", pairdata, statespace, factors="a", by="b", prior="nochange")
+act2 <- define_activity("test", c("vol"), probs)
 runEFDM(state0, actprob, list(act2), 1)
 
-act <- define_activity("test", c("vol"))
-act <- build_statespace(act, statespace, factors="b", by="a")
-act3 <- estimatetransprobs(act, pairdata, "nochange")
+probs <- estimatetransprobs("vol", pairdata, statespace, factors="b", by="a", prior="nochange")
+act3 <- define_activity("test", c("vol"), probs)
 runEFDM(state0, actprob, list(act3), 1)
 
 # The order of variables in factors argument specifies the order of importance.
 # Observation that differ in the first variable are counted more times.
-act <- define_activity("test", c("vol"))
-act <- build_statespace(act, statespace, factors=c("a", "b"))
-act4 <- estimatetransprobs(act, pairdata, "nochange")
+probs <- estimatetransprobs("vol", pairdata, statespace, factors=c("a", "b"), prior="nochange")
+act4 <- define_activity("test", c("vol"), probs)
 runEFDM(state0, actprob, list(act4), 1)
 
-act <- define_activity("test", c("vol"))
-act <- build_statespace(act, statespace, factors=c("b", "a"))
-act5 <- estimatetransprobs(act, pairdata, "nochange")
+probs <- estimatetransprobs("vol", pairdata, statespace, factors=c("b", "a"), prior="nochange")
+act5 <- define_activity("test", c("vol"), probs)
 runEFDM(state0, actprob, list(act5), 1)
 
 

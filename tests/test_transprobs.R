@@ -8,9 +8,8 @@ actprob$test <- 1
 state0$area <- 0
 state0$area[1] <- 1
 
-act <- define_activity("test", c("vol"))
-act <- build_statespace(act, statespace, by=c("a", "b"))
-act1 <- estimatetransprobs(act, pairdata, "nochange")
+act1 <- define_activity("test", c("vol"))
+transprobs(act1) <- estimatetransprobs("vol", pairdata, statespace, by=c("a", "b"), prior="nochange")
 A <- transprobs(act1)
 res0 <- runEFDM(state0, actprob, list(act1), 1)
 

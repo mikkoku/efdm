@@ -4,45 +4,53 @@
 \alias{define_activity}
 \title{Define an activity}
 \usage{
-define_activity(name, dynamicvariables, probname = name)
+define_activity(name, dynamicvariables, transprobs = NULL, probname = name)
 }
 \arguments{
 \item{name}{Name of activity used in reporting}
 
 \item{dynamicvariables}{Names of variables where changes happen}
 
+\item{transprobs}{Transition probabilities (\code{data.frame})}
+
 \item{probname}{(optional) Name of activity in activity probabilities data}
 }
 \value{
-An incomplete activity definition that needs to be completed with
-transition probabilities, see Details.
+An activity definition
 }
 \description{
 Define an activity
 }
 \details{
-The set of activies in EFDM defines all possible alternatives for a forest
+The set of activities in EFDM defines all possible alternatives for a forest
 stratum to develop during a scenario run step. Therefore activities are not only
 limited to forest treatments and management actions such as thinnings and final fellings
 but should also include 'no management' i.e. growth, if applicable. An activity may
 also be something else affecting the development, for example, a forest hazard:
 snow, wind, drought, pest damage etc.
 
-An activity is defined with this function. A name, which is henceforth
-used in the EFDM R project when refering to the activity, is given. In addition,
-the (stetaspace) variables which are affected by the activity are named.
+\code{name} is used as the name of the activity in the result of \code{\link{runEFDM}}
+and it is used to identify the activity probability.
+If multiple activities should be reported under a common name, \code{actprobname} can
+be used to specify the activity name in activity probability data.
+
+\code{dynamicvariables} are those (state space) variables which change as
+a result of the activity
 Typically an activity affects on the age, volume or stem count of the
 forest, but an activity may also, for example, change land-use and then
-a variable related to land-use categories is essential. If the activity name does
-not match the name in the activaty probability data set, those can be linked here.
+a variable related to land-use categories is essential.
 
-Defining an activity is the first step, which will be followed by
+The \code{transprobs} should be a \code{data.frame} with columns:
 \itemize{
-\item \code{\link{build_statespace}} or \code{\link{build_complex_statespace}} and
-  \code{\link{estimatetransprobs}} if using pairdata
-\item \code{\link{transprobs<-}} if not using pairdata
+\item pairs of dynamic variables. For example, if the dynamic variables are
+  \code{vol} and \code{age}, then transprobs should have columns
+  \code{age0}, \code{age1}, \code{vol0}, \code{vol1}.
+\item the probability of transition \code{prob}
+\item and possibly other variables affecting the transition probabilities.
+  For example \code{soiltype}, \code{treespecies}, etc.
 }
-until an activity is fully applicable in runEFDM.
+\code{\link{estimatetransprobs}} can be used to estimate transition probabilities
+from a similar set of pair data of observations.
 }
 \examples{
 define_activity("nomanagement", c("vol", "age"))

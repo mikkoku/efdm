@@ -10,7 +10,7 @@
 #' if the other (pair) observation is estimated or modelled.
 #'
 #' Each activity needs to have a transition probability. If no pairdata is available,
-#' transition probability matrices can be based entirelly on a prior defined with
+#' transition probability matrices can be based entirely on a prior defined with
 #' expert knowledge.
 #'
 #' The estimation uses an iterative Bayesian algorithm that is explained in
@@ -40,10 +40,20 @@
 #'   prior transitions and return it.
 #' }
 #'
-#' @param act Activity definition with statespace
+#' The statespace is used to fill in the transitions where there are no observations.
+#' In special cases the statespace may change as a result of the activity.
+#' For example changing the tree species might lead to change in the volume classification used.
+#'
+#' This function assumes that the dynamic variables are coded as integers starting with 1.
+#' Other variables are not restricted.
+#'
+#' @param dynamicvariables The names of the dynamic variables, \code{character} vector
 #' @param pairdata \code{data.frame} Observed transitions
+#' @param statespace \code{data.frame} or a \code{list} of two \code{data.frame}s if the state space changes as a result of the activity
+#' @param factors \code{character} Variables used by the activity
+#' @param by \code{character} Variables that split the state space
 #' @param prior function or character
-#' @return Activity definition with transition probabilities
+#' @return Transition probabilities as a \code{data.frame}
 #' @examples
 #'
 #' # Estimation can use observed transitions with different levels of factors.
@@ -57,41 +67,44 @@
 #'
 #' # With by=c("a", "b") there are two observations: one from prior and the other
 #' # from the exact combination of class levels.
-#' act <- define_activity("test", c("vol"))
-#' act <- build_statespace(act, statespace, by=c("a", "b"))
-#' act1 <- estimatetransprobs(act, pairdata, "nochange")
+#' probs <- estimatetransprobs("vol", pairdata, statespace, by=c("a", "b"), prior="nochange")
+#' act1 <- define_activity("test", c("vol"), probs)
 #' runEFDM(state0, actprob, list(act1), 1)
 #'
-#' act <- define_activity("test", c("vol"))
-#' act <- build_statespace(act, statespace, factors="a", by="b")
-#' act2 <- estimatetransprobs(act, pairdata, "nochange")
+#' probs <- estimatetransprobs("vol", pairdata, statespace, factors="a", by="b", prior="nochange")
+#' act2 <- define_activity("test", c("vol"), probs)
 #' runEFDM(state0, actprob, list(act2), 1)
 #'
-#' act <- define_activity("test", c("vol"))
-#' act <- build_statespace(act, statespace, factors="b", by="a")
-#' act3 <- estimatetransprobs(act, pairdata, "nochange")
+#' probs <- estimatetransprobs("vol", pairdata, statespace, factors="b", by="a", prior="nochange")
+#' act3 <- define_activity("test", c("vol"), probs)
 #' runEFDM(state0, actprob, list(act3), 1)
 #'
 #' # The order of variables in factors argument specifies the order of importance.
 #' # Observation that differ in the first variable are counted more times.
-#' act <- define_activity("test", c("vol"))
-#' act <- build_statespace(act, statespace, factors=c("a", "b"))
-#' act4 <- estimatetransprobs(act, pairdata, "nochange")
+#' probs <- estimatetransprobs("vol", pairdata, statespace, factors=c("a", "b"), prior="nochange")
+#' act4 <- define_activity("test", c("vol"), probs)
 #' runEFDM(state0, actprob, list(act4), 1)
 #'
-#' act <- define_activity("test", c("vol"))
-#' act <- build_statespace(act, statespace, factors=c("b", "a"))
-#' act5 <- estimatetransprobs(act, pairdata, "nochange")
+#' probs <- estimatetransprobs("vol", pairdata, statespace, factors=c("b", "a"), prior="nochange")
+#' act5 <- define_activity("test", c("vol"), probs)
 #' runEFDM(state0, actprob, list(act5), 1)
 #'
 #'
 #' @export
-estimatetransprobs <- function(act, pairdata, prior) {
-  stopifnot(!is.null(act$statespace))
+estimatetransprobs <- function(dynamicvariables, pairdata,
+                               statespace,
+                               factors=character(), by=character(),
+                               prior="nochange") {
+  act <- define_activity("temp", dynamicvariables)
+  if (is.data.frame(statespace)) {
+    statespace0 <- statespace1 <- statespace
+  } else {
+    statespace0 <- statespace[[1]]
+    statespace1 <- statespace[[2]]
+  }
+  act <- build_complex_statespace(act, statespace0, statespace1, factors, by)
   dynvar0 <- act$dynamicvariables0
   dynvar1 <- act$dynamicvariables1
-  factors <- act$factors
-  by <- act$by
   statespace <- act$statespace
   pairdata <- pairdata[c(dynvar1, dynvar0, factors, by)]
 
@@ -101,7 +114,7 @@ estimatetransprobs <- function(act, pairdata, prior) {
     missingnames <- setdiff(requirednames, names(pairdata))
     if(length(missingnames) > 0) stop(paste0("Variable '", list(missingnames), "' not present in pairdata."))
 
-    # Check pairdata agains statespace
+    # Check pairdata against statespace
     a <- act$statespace0
     a$check_missing_combinations <- 1
     a <- merge(pairdata, a, by.x = c(factors, by, act$dynamicvariables0),
@@ -117,7 +130,7 @@ estimatetransprobs <- function(act, pairdata, prior) {
 
   processed_rows <- 0
 
-  act$A <- do.call(rbind, lapply(statespace, function(statespacepart) {
+  A <- do.call(rbind, lapply(statespace, function(statespacepart) {
     bydata <- NULL
     priorpart <- prior
     if(!is.null(pairdata)) {
@@ -139,8 +152,38 @@ estimatetransprobs <- function(act, pairdata, prior) {
     if(processed_rows > nrow(pairdata)) stop("Internal error. Processed pairdata multiple times.")
     if(processed_rows < nrow(pairdata)) warning("Not all pairdata was processed. Was this intentional?")
   }
+  A$N <- NULL
+  A$nobs <- NULL
+  A
+}
+
+build_complex_statespace <- function(act, statespace0, statespace1, factors=character(), by=character()) {
+  extranames <- setdiff(names(statespace0), c(factors, by, gsub("0$", "", act$dynamicvariables0)))
+  if(length(extranames)) stop(paste0("Variables '", list(extranames), "' in statespace not used by activity."))
+  act$factors <- factors
+  act$by <- by
+  act$statespace0 <- statespace0
+  act$statespace1 <- statespace1
+  act$statespace <- build_statespace_by(statespace0, statespace1, act$dynamicvariables0, act$dynamicvariables1, factors, by)
   act
 }
+build_statespace_by <- function(statespace0, statespace1, dynamicvariables0, dynamicvariables1, factors, by) {
+  if(!all(by %in% names(statespace1))) stop("All by variables should be in statespace1")
+  if(!all(gsub("0$", "", dynamicvariables0) %in% names(statespace0))) stop("All dynamic variables should be in statespace0")
+  if(!all(gsub("1$", "", dynamicvariables1) %in% names(statespace1))) stop("All dynamic variables should be in statespace1")
+  if(!all(by %in% names(statespace0))) stop("All by variables should be in statespace0")
+
+  if(length(by)==0) return(list(list(statespace0=statespace0, statespace1=statespace1)))
+  byrows <- unique(rbind(statespace0[by], statespace1[by]))
+  return(lapply(1:nrow(byrows), function(i) {
+    #TODO: Change merge to a simple subset
+    # merge has an interesting view on "sort"ing
+    bys0 <- as.data.frame(merge(as.data.table(byrows[i, , drop=FALSE]), as.data.table(statespace0), by=by, all=FALSE))
+    bys1 <- as.data.frame(merge(as.data.table(byrows[i, , drop=FALSE]), as.data.table(statespace1), by=by, all=FALSE))
+    list(statespace0=bys0, statespace1=bys1)
+  }))
+}
+
 
 # Matrix form of prior should only work with numeric states
 # => no need to worry about factors

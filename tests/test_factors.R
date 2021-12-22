@@ -8,9 +8,8 @@ actprob <- state0 <- statespace
 actprob$test <- 1
 state0$area <- c(1,1,1,1, 0,0,0,0, 0,0,0,0)
 
-act <- define_activity("test", c("vol"))
-act <- build_statespace(act, statespace, factors=c("region"), by=c("split", "ds"))
-act1 <- estimatetransprobs(act, pairdata, "nochange")
+act1 <- define_activity("test", c("vol"))
+transprobs(act1) <- estimatetransprobs("vol", pairdata, statespace, factors=c("region"), by=c("split", "ds"), prior="nochange")
 r1 <- runEFDM(state0, actprob, list(act1), 10)
 
 statespace <- expand.grid(ds=c("sp", "pi"), region=c("n", "s"), vol=1:3)
@@ -21,9 +20,8 @@ actprob <- state0 <- statespace
 actprob$test <- 1
 state0$area <- c(1,1,1,1, 0,0,0,0, 0,0,0,0)
 
-act <- define_activity("test", c("vol"))
-act <- build_statespace(act, statespace, factors=c("region"), by=c("split", "ds"))
-act1 <- estimatetransprobs(act, pairdata, "nochange")
+act1 <- define_activity("test", c("vol"))
+transprobs(act1) <- estimatetransprobs("vol", pairdata, statespace, factors=c("region"), by=c("split", "ds"), prior="nochange")
 r2 <- runEFDM(state0, actprob, list(act1), 10)
 r1$ds <- factor(r1$ds, levels=c("sp", "pi"))
 r1$region <- factor(r1$region, levels=c("n", "s"))
