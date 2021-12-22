@@ -14,6 +14,7 @@
 
 <title>Example scenarios</title>
 
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -34,26 +35,28 @@
   }
 </style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -62,9 +65,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -122,187 +125,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<style type="text/css">body {
-background-color: #fff;
-margin: 1em auto;
-max-width: 700px;
-overflow: visible;
-padding-left: 2em;
-padding-right: 2em;
-font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-font-size: 14px;
-line-height: 1.35;
-}
-#TOC {
-clear: both;
-margin: 0 0 10px 10px;
-padding: 4px;
-width: 400px;
-border: 1px solid #CCCCCC;
-border-radius: 5px;
-background-color: #f6f6f6;
-font-size: 13px;
-line-height: 1.3;
-}
-#TOC .toctitle {
-font-weight: bold;
-font-size: 15px;
-margin-left: 5px;
-}
-#TOC ul {
-padding-left: 40px;
-margin-left: -1.5em;
-margin-top: 5px;
-margin-bottom: 5px;
-}
-#TOC ul ul {
-margin-left: -2em;
-}
-#TOC li {
-line-height: 16px;
-}
-table {
-margin: 1em auto;
-border-width: 1px;
-border-color: #DDDDDD;
-border-style: outset;
-border-collapse: collapse;
-}
-table th {
-border-width: 2px;
-padding: 5px;
-border-style: inset;
-}
-table td {
-border-width: 1px;
-border-style: inset;
-line-height: 18px;
-padding: 5px 5px;
-}
-table, table th, table td {
-border-left-style: none;
-border-right-style: none;
-}
-table thead, table tr.even {
-background-color: #f7f7f7;
-}
-p {
-margin: 0.5em 0;
-}
-blockquote {
-background-color: #f6f6f6;
-padding: 0.25em 0.75em;
-}
-hr {
-border-style: solid;
-border: none;
-border-top: 1px solid #777;
-margin: 28px 0;
-}
-dl {
-margin-left: 0;
-}
-dl dd {
-margin-bottom: 13px;
-margin-left: 13px;
-}
-dl dt {
-font-weight: bold;
-}
-ul {
-margin-top: 0;
-}
-ul li {
-list-style: circle outside;
-}
-ul ul {
-margin-bottom: 0;
-}
-pre, code {
-background-color: #f7f7f7;
-border-radius: 3px;
-color: #333;
-white-space: pre-wrap; 
-}
-pre {
-border-radius: 3px;
-margin: 5px 0px 10px 0px;
-padding: 10px;
-}
-pre:not([class]) {
-background-color: #f7f7f7;
-}
-code {
-font-family: Consolas, Monaco, 'Courier New', monospace;
-font-size: 85%;
-}
-p > code, li > code {
-padding: 2px 0px;
-}
-div.figure {
-text-align: center;
-}
-img {
-background-color: #FFFFFF;
-padding: 2px;
-border: 1px solid #DDDDDD;
-border-radius: 3px;
-border: 1px solid #CCCCCC;
-margin: 0 5px;
-}
-h1 {
-margin-top: 0;
-font-size: 35px;
-line-height: 40px;
-}
-h2 {
-border-bottom: 4px solid #f7f7f7;
-padding-top: 10px;
-padding-bottom: 2px;
-font-size: 145%;
-}
-h3 {
-border-bottom: 2px solid #f7f7f7;
-padding-top: 10px;
-font-size: 120%;
-}
-h4 {
-border-bottom: 1px solid #f7f7f7;
-margin-left: 8px;
-font-size: 105%;
-}
-h5, h6 {
-border-bottom: 1px solid #ccc;
-font-size: 105%;
-}
-a {
-color: #0033dd;
-text-decoration: none;
-}
-a:hover {
-color: #6666ff; }
-a:visited {
-color: #800080; }
-a:visited:hover {
-color: #BB00BB; }
-a[href^="http:"] {
-text-decoration: underline; }
-a[href^="https:"] {
-text-decoration: underline; }
-
-code > span.kw { color: #555; font-weight: bold; } 
-code > span.dt { color: #902000; } 
-code > span.dv { color: #40a070; } 
-code > span.bn { color: #d14; } 
-code > span.fl { color: #d14; } 
-code > span.ch { color: #d14; } 
-code > span.st { color: #d14; } 
-code > span.co { color: #888888; font-style: italic; } 
-code > span.ot { color: #007020; } 
-code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; } 
-code > span.er { color: #a61717; background-color: #e3d2d2; } 
-</style>
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
 
 
 
@@ -317,199 +140,446 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Example scenarios</h1>
 
 
+<div id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#example-data">Example data</a></li>
+<li><a href="#activities">Activities</a>
+<ul>
+<li><a href="#activity-probability-and-transition-probabilities">Activity probability and transition probabilities</a></li>
+<li><a href="#final-felling">Final felling</a></li>
+<li><a href="#no-management">No management</a>
+<ul>
+<li><a href="#estimation-of-transition-matrix-using-pair-data">Estimation of transition matrix using pair data</a>
+<ul>
+<li><a href="#state-space">State space</a></li>
+<li><a href="#prior">Prior</a></li>
+<li><a href="#estimation">Estimation</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#thinning">Thinning</a></li>
+</ul></li>
+<li><a href="#scenario-1">Scenario 1</a>
+<ul>
+<li><a href="#analysing-results">Analysing results</a>
+<ul>
+<li><a href="#result-coefficients">Result coefficients</a></li>
+<li><a href="#results">Results</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#scenario-2">Scenario 2</a></li>
+<li><a href="#scenario-3---land-use-changes">Scenario 3 - Land use changes</a></li>
+</ul>
+</div>
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw">library</span>(gridExtra)</a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="kw">library</span>(efdm)</a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="kw">theme_set</span>(<span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">-90</span>)))</a></code></pre></div>
-<div id="estimate-transition-probabilities-and-set-up-actitivies" class="section level2">
-<h2>Estimate transition probabilities and set up actitivies</h2>
-<p>Statespace is the collection of all possible states of classifying variables and can be obtained from actprob by removing the activity probabilities (in our case, thin = thinning, ff = final felling, noman = no management). It is used for constructing transition probabilities.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">statespace &lt;-<span class="st"> </span>example<span class="op">$</span>actprob <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">c</span>(thin, ff, noman))</a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw">head</span>(statespace)</a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="co">#&gt;   region    soil    sp vol age</span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="co">#&gt; 1  South Mineral other   1   1</span></a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="co">#&gt; 2  South Mineral other   1   2</span></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt; 3  South Mineral other   1   3</span></a>
-<a class="sourceLine" id="cb2-7" title="7"><span class="co">#&gt; 4  South Mineral other   1   4</span></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="co">#&gt; 5  South Mineral other   1   5</span></a>
-<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt; 6  South Mineral other   1   6</span></a></code></pre></div>
-<p>Use pair data to estimate transition probabilities for actitivies no management and thinning.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">head</span>(example<span class="op">$</span>noman_pairs)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="co">#&gt;   region    soil     sp vol0 vol1 age0 age1</span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; 1  South Mineral spruce   10    7   13   14</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; 2  South Mineral spruce    8    8   20   21</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt; 3  South Mineral  other    9   10    5    6</span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; 4  South Mineral  other    1    1    1    2</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co">#&gt; 5  South Mineral  other    7    8    2    3</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="co">#&gt; 6  South Mineral  other    7   10    5    6</span></a></code></pre></div>
-<p>Statespace and prior are used to fill the missing combinations from pairdata. Here we simply assume that age grows by one age class if no data is seen. Transitions are estimated separately for each region and species. The esimation procedure uses data from different soil types with less weight than the correct soil type.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">act &lt;-<span class="st"> </span><span class="kw">define_activity</span>(<span class="st">&quot;noman&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;vol&quot;</span>, <span class="st">&quot;age&quot;</span>))</a>
-<a class="sourceLine" id="cb4-2" title="2">act &lt;-<span class="st"> </span><span class="kw">build_statespace</span>(act, statespace,</a>
-<a class="sourceLine" id="cb4-3" title="3">                        <span class="dt">factors=</span><span class="kw">c</span>(<span class="st">&quot;soil&quot;</span>), <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;region&quot;</span>,<span class="st">&quot;sp&quot;</span>))</a>
-<a class="sourceLine" id="cb4-4" title="4">noman &lt;-<span class="st"> </span><span class="kw">estimatetransprobs</span>(act, example<span class="op">$</span>noman_pairs, <span class="kw">prior_grow</span>(<span class="st">&quot;age&quot;</span>))</a></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">act &lt;-<span class="st"> </span><span class="kw">define_activity</span>(<span class="st">&quot;thin&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;vol&quot;</span>, <span class="st">&quot;age&quot;</span>))</a>
-<a class="sourceLine" id="cb5-2" title="2">act &lt;-<span class="st"> </span><span class="kw">build_statespace</span>(act, statespace,</a>
-<a class="sourceLine" id="cb5-3" title="3">                        <span class="dt">factors=</span><span class="kw">c</span>(<span class="st">&quot;soil&quot;</span>), <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;region&quot;</span>,<span class="st">&quot;sp&quot;</span>))</a>
-<a class="sourceLine" id="cb5-4" title="4">thin &lt;-<span class="st"> </span><span class="kw">estimatetransprobs</span>(act, example<span class="op">$</span>thin_pairs, <span class="kw">prior_grow</span>(<span class="st">&quot;age&quot;</span>))</a></code></pre></div>
-<p>Final felling sets age and volume class to the smallest class. No pairdata is needed/utilized.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">ff &lt;-<span class="st"> </span><span class="kw">define_activity</span>(<span class="st">&quot;ff&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;vol&quot;</span>, <span class="st">&quot;age&quot;</span>))</a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="kw">transprobs</span>(ff) &lt;-<span class="st"> </span><span class="kw">unique</span>(statespace <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="dt">vol0=</span>vol, <span class="dt">age0=</span>age)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">vol1=</span><span class="dv">1</span>, <span class="dt">age1=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="kw">head</span>(<span class="kw">transprobs</span>(ff))</a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="co">#&gt;   vol0 age0 vol1 age1 prob</span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="co">#&gt; 1    1    1    1    1    1</span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="co">#&gt; 2    1    2    1    1    1</span></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="co">#&gt; 3    1    3    1    1    1</span></a>
-<a class="sourceLine" id="cb6-8" title="8"><span class="co">#&gt; 4    1    4    1    1    1</span></a>
-<a class="sourceLine" id="cb6-9" title="9"><span class="co">#&gt; 5    1    5    1    1    1</span></a>
-<a class="sourceLine" id="cb6-10" title="10"><span class="co">#&gt; 6    1    6    1    1    1</span></a></code></pre></div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>European Forestry Dynamics Model (EFDM) is a model for large scale scenario analysis. The model is an area-based matrix model where forest area is stratified with respect to, for example, use, management strategy and development (growth). The model can consider also other land uses, see Scenario 3. In a model run forest area moves in ‘a matrix’ span with the stratifying factors.</p>
+<p>The <code>efdm</code> package includes functions to</p>
+<ul>
+<li>define management activities</li>
+<li>estimate transition probabilities</li>
+<li>run an EFDM scenario</li>
+</ul>
+<p>and an example dataset for illustration purposes.</p>
+<p>In this vignette, we demonstrate ‘efdm’ in running a scenario with the example dataset. Typical workflow in a EFDM scenario analysis starts with preparing the datasets required as an input. Preparing the datasets is usually the most time consuming part of the scenario analysis, and the work flow depends on the data available. Therefore, the preparation is not explained in this vignette. However, the attached datasets offer an example for preparing own datasets.</p>
+<p>The <code>efdm</code> is loaded with</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(efdm)</span></code></pre></div>
+<p>The following packages are used in this vignette to manipulate data and plot results. However, the data manipulation and reporting the results could be done using other packages or even outside the R environment.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code></pre></div>
 </div>
-<div id="example-1" class="section level2">
-<h2>Example 1</h2>
-<p>The activities are collected to a list. The initial state and activity probabilities and the number of time steps are the remaining parameters of the <code>runEFDM</code> function</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">activities &lt;-<span class="st"> </span><span class="kw">list</span>(noman, thin, ff)</a>
-<a class="sourceLine" id="cb7-2" title="2">state0 &lt;-<span class="st"> </span>example<span class="op">$</span>initial_state</a>
-<a class="sourceLine" id="cb7-3" title="3">actprob &lt;-<span class="st"> </span>example<span class="op">$</span>actprob</a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="kw">head</span>(actprob)</a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt;   region    soil    sp vol age noman  thin    ff</span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt; 1  South Mineral other   1   1 0.976 0.023 0.001</span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; 2  South Mineral other   1   2 0.981 0.019 0.000</span></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt; 3  South Mineral other   1   3 0.994 0.006 0.000</span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt; 4  South Mineral other   1   4 0.991 0.008 0.001</span></a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt; 5  South Mineral other   1   5 0.764 0.024 0.212</span></a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="co">#&gt; 6  South Mineral other   1   6 0.974 0.025 0.001</span></a></code></pre></div>
-<p>EFDM is run for 20 time steps. The length of timestep is determined by the inventory data used to be 5 years.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">states1 &lt;-<span class="st"> </span><span class="kw">runEFDM</span>(state0, actprob, activities, <span class="dv">20</span>)</a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="kw">head</span>(states1)</a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="co">#&gt;      soil region    sp vol age        area activity time</span></a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="co">#&gt; 1 Mineral Middle other   1   1 101627.6564    noman    0</span></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; 2 Mineral Middle other   1   2  73660.4310    noman    0</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; 3 Mineral Middle other   1   3  26299.4701    noman    0</span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; 4 Mineral Middle other   1   4   5982.8223    noman    0</span></a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; 5 Mineral Middle other   1   5    379.4954    noman    0</span></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; 6 Mineral Middle other   1   6   1104.1126    noman    0</span></a></code></pre></div>
-<p>runEFDM produces a data.frame of areas allocated to each activity at each timestep.</p>
-<p>To obtain total growing stock volume, volume coeffiecients are used. The volume coefficients and drain were estimated based on the species composition and changes in timber assortments linked to management activities observed in the forest inventory data.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">head</span>(example<span class="op">$</span>vol_coef)</a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="co">#&gt;   vol    sp species     volume</span></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="co">#&gt; 1   1 other     all   0.506323</span></a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="co">#&gt; 2  10 other     all 176.677720</span></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="co">#&gt; 3  11 other     all 210.438071</span></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="co">#&gt; 4  12 other     all 245.009871</span></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="co">#&gt; 5  13 other     all 279.955533</span></a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="co">#&gt; 6  14 other     all 314.900072</span></a></code></pre></div>
-<p>Drain and income….</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">head</span>(example<span class="op">$</span>drain_coef)</a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="co">#&gt;   vol     sp    drain assort activity</span></a>
-<a class="sourceLine" id="cb10-3" title="3"><span class="co">#&gt; 1   1  other 0.000000    saw       ff</span></a>
-<a class="sourceLine" id="cb10-4" title="4"><span class="co">#&gt; 2   1 spruce 0.000000    saw       ff</span></a>
-<a class="sourceLine" id="cb10-5" title="5"><span class="co">#&gt; 3   2  other 0.000000    saw       ff</span></a>
-<a class="sourceLine" id="cb10-6" title="6"><span class="co">#&gt; 4   2 spruce 0.000000    saw       ff</span></a>
-<a class="sourceLine" id="cb10-7" title="7"><span class="co">#&gt; 5   3  other 0.000000    saw       ff</span></a>
-<a class="sourceLine" id="cb10-8" title="8"><span class="co">#&gt; 6   3 spruce 1.012518    saw       ff</span></a></code></pre></div>
-<p>Income is loosely linked to the actual timber assortment prices in unit eur/m3.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">head</span>(example<span class="op">$</span>income_coef)</a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="co">#&gt;   assort activity euro</span></a>
-<a class="sourceLine" id="cb11-3" title="3"><span class="co">#&gt; 1    saw       ff   56</span></a>
-<a class="sourceLine" id="cb11-4" title="4"><span class="co">#&gt; 2    saw     thin   44</span></a>
-<a class="sourceLine" id="cb11-5" title="5"><span class="co">#&gt; 3   pulp       ff   20</span></a>
-<a class="sourceLine" id="cb11-6" title="6"><span class="co">#&gt; 4   pulp     thin   15</span></a></code></pre></div>
-<p>Simulation timesteps are mutated to mid-years of simulation steps:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">states1 &lt;-<span class="st"> </span>states1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">time =</span> <span class="kw">factor</span>(<span class="dv">2016</span> <span class="op">+</span><span class="st"> </span>time<span class="op">*</span><span class="dv">5</span>))</a></code></pre></div>
-<p>Growing stock</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">tilstate&lt;-<span class="kw">merge</span>(states1, example<span class="op">$</span>vol_coef) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span> (<span class="dt">volume=</span>area<span class="op">*</span>volume)</a>
-<a class="sourceLine" id="cb13-2" title="2"><span class="kw">ggplot</span>(<span class="kw">subset</span>(tilstate,species<span class="op">!=</span><span class="st">&#39;all&#39;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_viridis_d</span>(<span class="dt">end =</span> <span class="fl">0.9</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb13-3" title="3"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time, <span class="dt">weight=</span>volume<span class="op">/</span><span class="dv">1000000000</span>,<span class="dt">fill=</span>species)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-4" title="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="ot">NULL</span>,<span class="dt">title=</span><span class="kw">expression</span>(<span class="kw">paste</span>(<span class="st">&quot;Growing stock, bil.&quot;</span>,m<span class="op">^</span><span class="dv">3</span>)), <span class="dt">x=</span><span class="st">&quot;Year&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;&quot;</span>)</a></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
-<p>Age distribution</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">states1<span class="op">$</span>ageclass &lt;-<span class="st"> </span><span class="kw">cut</span>(states1<span class="op">$</span>age, <span class="dt">breaks=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">35</span>), <span class="dt">include.lowest =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb14-2" title="2">                        <span class="co">#labels=c(&quot;0-50&quot;,&quot;51-100&quot;,&quot;101-150&quot;,&quot;150+&quot;))</span></a>
-<a class="sourceLine" id="cb14-3" title="3">                        <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;-50&quot;</span>,<span class="st">&quot;-100&quot;</span>,<span class="st">&quot;-150&quot;</span>,<span class="st">&quot;150+&quot;</span>))</a>
-<a class="sourceLine" id="cb14-4" title="4">states1<span class="op">$</span>region &lt;-<span class="st"> </span><span class="kw">factor</span>(states1<span class="op">$</span>region, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;South&quot;</span>, <span class="st">&quot;Middle&quot;</span>, <span class="st">&quot;North&quot;</span>))</a>
-<a class="sourceLine" id="cb14-5" title="5"><span class="kw">ggplot</span>(<span class="kw">subset</span>(states1, time <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">2016</span>,<span class="dv">2066</span>,<span class="dv">2116</span>))) <span class="op">+</span></a>
-<a class="sourceLine" id="cb14-6" title="6"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ageclass, <span class="dt">weight=</span>area<span class="op">/</span><span class="dv">1000000</span>, <span class="dt">fill=</span>region)) <span class="op">+</span><span class="st">  </span></a>
-<a class="sourceLine" id="cb14-7" title="7"><span class="st">  </span><span class="kw">scale_fill_viridis_d</span>(<span class="dt">end =</span> <span class="fl">0.9</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb14-8" title="8"><span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">cols=</span><span class="kw">vars</span>(time)) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="ot">NULL</span>, <span class="dt">title=</span><span class="st">&quot;Area, mill.ha&quot;</span>, <span class="dt">x=</span><span class="st">&quot;Ageclass&quot;</span>, <span class="dt">fill=</span><span class="ot">NULL</span>)</a></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
-<p>First the drain in units m3/ha is converted in into eur/ha. Then multiplication with area (ha) gives the euros.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">euro&lt;-<span class="st"> </span><span class="kw">merge</span>(example<span class="op">$</span>drain_coef, example<span class="op">$</span>income_coef) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">euro =</span> euro<span class="op">*</span>drain)</a>
-<a class="sourceLine" id="cb15-2" title="2">removal &lt;-<span class="st"> </span><span class="kw">merge</span>(states1, euro) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">income=</span>euro<span class="op">*</span>area)</a>
-<a class="sourceLine" id="cb15-3" title="3"></a>
-<a class="sourceLine" id="cb15-4" title="4"><span class="kw">ggplot</span>(<span class="kw">subset</span>(removal,<span class="op">!</span>time <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">2116</span>))) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-5" title="5"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time, <span class="dt">weight=</span>income<span class="op">/</span><span class="dv">5000000000</span>, <span class="dt">fill=</span>assort)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb15-6" title="6"><span class="st">  </span><span class="kw">scale_fill_viridis_d</span>(<span class="dt">end =</span> <span class="fl">0.9</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb15-7" title="7"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="ot">NULL</span>,<span class="dt">title =</span> <span class="st">&quot;Income, bil.€/year&quot;</span>, <span class="dt">x=</span><span class="st">&quot;5-year intervals&quot;</span>, <span class="dt">fill=</span><span class="ot">NULL</span> )</a></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div id="example-data" class="section level1">
+<h1>Example data</h1>
+<p>In this vignette we are using <code>example</code>, a collection of example datasets to describe working with <code>efdm</code>. The dataset covers entire Finland and the initial state represents year 2016. However, the dataset is a toy data which is meant for learning the model concept.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(example)</span></code></pre></div>
+<p>In this example we have chosen</p>
+<ul>
+<li>a 5-year simulation step</li>
+<li>age and total growing stock volume per hectare to present forest state
+<ul>
+<li>age is classified into 5 year classes, starting from class 1 = 0-5 years, and ending at class 35 = 170+ years with all forests over 170 years old</li>
+<li>volume is classified into 15 classes with class limits depending on the dominant tree species and their growth pattern</li>
+</ul></li>
+<li>additional stratification variables defining different forest strata are spatial region (North, Middle, South), soil type (Mineral, Peat) and dominant tree species (spruce, other species)</li>
+</ul>
 </div>
-<div id="example-2" class="section level2">
-<h2>Example 2</h2>
-<p>In this example the tree species changes after final felling. Therefore we redefine final felling activity taking into account in addition to volume and age also the dominant species. The change depends on region and dominant species. Volume and age act as before. They more to the smallest classes (vol1=1 and age1=1).</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">ff_age_species &lt;-<span class="st"> </span><span class="kw">define_activity</span>(<span class="st">&quot;ff&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;vol&quot;</span>, <span class="st">&quot;age&quot;</span>, <span class="st">&quot;sp&quot;</span>))</a>
-<a class="sourceLine" id="cb16-2" title="2"><span class="kw">transprobs</span>(ff_age_species) &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">filter</span>(statespace) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-3" title="3"><span class="st">                                       </span><span class="kw">select</span>(<span class="dt">vol0=</span>vol, <span class="dt">age0=</span>age, <span class="dt">sp0=</span>sp, region)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-4" title="4"><span class="st">  </span><span class="kw">group_by</span>(region, sp0, vol0, age0) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-5" title="5"><span class="st">  </span><span class="kw">summarize</span>(<span class="kw">data.frame</span>(<span class="dt">vol1=</span><span class="dv">1</span>, <span class="dt">age1=</span><span class="dv">1</span>, <span class="dt">sp1=</span><span class="kw">c</span>(<span class="st">&#39;other&#39;</span>,<span class="st">&#39;spruce&#39;</span>),</a>
-<a class="sourceLine" id="cb16-6" title="6">                       <span class="dt">prob=</span><span class="kw">case_when</span>(sp0<span class="op">==</span><span class="st">&#39;other&#39;</span> <span class="op">&amp;&amp;</span><span class="st"> </span>region<span class="op">==</span><span class="st">&#39;South&#39;</span> <span class="op">~</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb16-7" title="7">                                      sp0<span class="op">==</span><span class="st">&#39;other&#39;</span> <span class="op">&amp;&amp;</span><span class="st"> </span>region<span class="op">==</span><span class="st">&#39;Middle&#39;</span> <span class="op">~</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb16-8" title="8">                                      sp0<span class="op">==</span><span class="st">&#39;other&#39;</span> <span class="op">&amp;&amp;</span><span class="st"> </span>region<span class="op">==</span><span class="st">&#39;North&#39;</span> <span class="op">~</span><span class="st"> </span><span class="kw">c</span>(<span class="fl">0.8</span>, <span class="fl">0.2</span>),</a>
-<a class="sourceLine" id="cb16-9" title="9">                                      sp0<span class="op">==</span><span class="st">&#39;spruce&#39;</span> <span class="op">&amp;&amp;</span><span class="st"> </span>region<span class="op">==</span><span class="st">&#39;South&#39;</span> <span class="op">~</span><span class="st"> </span><span class="kw">c</span>(<span class="fl">0.3</span>, <span class="fl">0.7</span>),</a>
-<a class="sourceLine" id="cb16-10" title="10">                                      sp0<span class="op">==</span><span class="st">&#39;spruce&#39;</span> <span class="op">&amp;&amp;</span><span class="st"> </span>region<span class="op">==</span><span class="st">&#39;Middle&#39;</span> <span class="op">~</span><span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.8</span>),</a>
-<a class="sourceLine" id="cb16-11" title="11">                                      sp0<span class="op">==</span><span class="st">&#39;spruce&#39;</span> <span class="op">&amp;&amp;</span><span class="st"> </span>region<span class="op">==</span><span class="st">&#39;North&#39;</span> <span class="op">~</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))))</a>
-<a class="sourceLine" id="cb16-12" title="12"><span class="co">#&gt; `summarise()` has grouped output by &#39;region&#39;, &#39;sp0&#39;, &#39;vol0&#39;, &#39;age0&#39;. You can override using the `.groups` argument.</span></a></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">activities2 &lt;-<span class="st"> </span><span class="kw">list</span>(noman, thin, ff_age_species)</a>
-<a class="sourceLine" id="cb17-2" title="2">states2 &lt;-<span class="st"> </span><span class="kw">runEFDM</span>(state0, actprob, activities2, <span class="dv">20</span>)</a></code></pre></div>
+<div id="activities" class="section level1">
+<h1>Activities</h1>
+<p>In EFDM forest management is represented by activities and activity probabilities. In the first example we have three activities</p>
+<ul>
+<li>thinning (thin)</li>
+<li>final felling (ff)</li>
+<li>no management (noman)</li>
+</ul>
+<div id="activity-probability-and-transition-probabilities" class="section level2">
+<h2>Activity probability and transition probabilities</h2>
+<p>The activity probabilities (<code>actprob</code> below) are the probabilities for applying a specific management activity in a specific forest state described by the stratification variables. The activity probabilities are used to allocate forest area to different activities. A valid activity probability specifies activity probabilities for all possible states and activities. All probabilities should be positive and the sum of activity probabilities for each state should be 1.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>actprob <span class="ot">&lt;-</span> example<span class="sc">$</span>actprob</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>actprob</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   region    soil    sp vol age noman  thin    ff</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  South Mineral other   1   1 0.976 0.023 0.001</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  South Mineral other   1   2 0.981 0.019 0.000</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  South Mineral other   1   3 0.994 0.006 0.000</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  South Mineral other   1   4 0.991 0.008 0.001</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  South Mineral other   1   5 0.764 0.024 0.212</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  South Mineral other   1   6 0.974 0.025 0.001</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 6294 rows ]</span></span></code></pre></div>
+<p>Each activity has a transition probability matrix. The transition probability describes movements of forest areas by the simulation time steps. It is used to move a forest state to the next states. A valid transition probability should specify transition probability for each state where the activity can be used. For example if final felling only applies to forests with some minimum volume, then there is no need to specify transitions from states with less than the minimum volume.</p>
 </div>
-<div id="example-3---land-use-changes" class="section level2">
-<h2>Example 3 - Land use changes</h2>
-<p>First we add two land use classes to the statespace. Agriculture is classified according to region and soil type, while other land use is only classified accoring to region.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">statespace3 &lt;-<span class="st"> </span>statespace</a>
-<a class="sourceLine" id="cb18-2" title="2">statespace3<span class="op">$</span>landuse &lt;-<span class="st"> &quot;forest&quot;</span></a>
-<a class="sourceLine" id="cb18-3" title="3">agri &lt;-<span class="st"> </span><span class="kw">unique</span>(statespace3 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">sp=</span><span class="dv">0</span>, <span class="dt">vol=</span><span class="dv">0</span>, <span class="dt">age=</span><span class="dv">0</span>, <span class="dt">landuse=</span><span class="st">&quot;agri&quot;</span>))</a>
-<a class="sourceLine" id="cb18-4" title="4">other &lt;-<span class="st"> </span><span class="kw">unique</span>(statespace3 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">soil=</span><span class="dv">0</span>, <span class="dt">sp=</span><span class="dv">0</span>, <span class="dt">vol=</span><span class="dv">0</span>, <span class="dt">age=</span><span class="dv">0</span>, <span class="dt">landuse=</span><span class="st">&quot;other&quot;</span>))</a>
-<a class="sourceLine" id="cb18-5" title="5">statespace3 &lt;-<span class="st"> </span><span class="kw">rbind</span>(statespace3, agri, other)</a></code></pre></div>
-<p>We use separate activities for deforestration to each land use class. Variables not used by the agriculture are set to 0. Soil type and region are not changing as a result of deforestation to agriculture.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">defor_to_agri &lt;-<span class="st"> </span><span class="kw">define_activity</span>(<span class="st">&quot;defor_to_agri&quot;</span>, </a>
-<a class="sourceLine" id="cb19-2" title="2">                                          <span class="kw">c</span>(<span class="st">&quot;vol&quot;</span>, <span class="st">&quot;age&quot;</span>, <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;landuse&quot;</span>))</a>
-<a class="sourceLine" id="cb19-3" title="3"><span class="kw">transprobs</span>(defor_to_agri) &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">filter</span>(statespace3, landuse<span class="op">==</span><span class="st">&quot;forest&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-4" title="4"><span class="st">                                               </span><span class="kw">select</span>(<span class="dt">vol0=</span>vol, <span class="dt">age0=</span>age, <span class="dt">sp0=</span>sp,<span class="dt">landuse0=</span>landuse) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-5" title="5"><span class="st">                                               </span><span class="kw">mutate</span>(<span class="dt">vol1=</span><span class="dv">0</span>, <span class="dt">age1=</span><span class="dv">0</span>, <span class="dt">sp1=</span><span class="dv">0</span>, <span class="dt">landuse1=</span><span class="st">&quot;agri&quot;</span>, <span class="dt">prob=</span><span class="dv">1</span>))</a></code></pre></div>
+<div id="final-felling" class="section level2">
+<h2>Final felling</h2>
+<p>The final felling activity is represented by a transition matrix that has probability 1 to move any forest to a state where volume and age are in the smallest class.</p>
+<p>The target state is independent of the starting state. It will always be <code>vol=1</code> and <code>age=1</code>, the smallest class in the stratification.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>transprobs_ff <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">vol0=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, <span class="at">age0=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>, <span class="at">vol1=</span><span class="dv">1</span>, <span class="at">age1=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="dv">1</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>transprobs_ff</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    vol0 age0 vol1 age1 prob</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     1    1    1    1    1</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     2    1    1    1    1</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     3    1    1    1    1</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     4    1    1    1    1</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5     5    1    1    1    1</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6     6    1    1    1    1</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7     7    1    1    1    1</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8     8    1    1    1    1</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9     9    1    1    1    1</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10   10    1    1    1    1</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 515 rows ]</span></span></code></pre></div>
+<p>In <code>efdm</code> the final felling activity is defined by giving</p>
+<ul>
+<li>name of the activity, “ff”</li>
+<li>names of the dynamic variables, that is the variables that the final felling activity affects, “vol” and “age”</li>
+<li>transition probabilities</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ff <span class="ot">&lt;-</span> <span class="fu">define_activity</span>(<span class="st">&quot;ff&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;vol&quot;</span>, <span class="st">&quot;age&quot;</span>), transprobs_ff)</span></code></pre></div>
+</div>
+<div id="no-management" class="section level2">
+<h2>No management</h2>
+<p>If there are no management activities or treatments in the forest, “no management” activity is used to make the forest grow. In this example, we assume that growth changes the values of volume and age and is dependent on region, soil type and tree species. Moreover, we assume that the growth is so different in between regions and tree species, that it should be estimates completely separately for each class.</p>
+<div id="estimation-of-transition-matrix-using-pair-data" class="section level3">
+<h3>Estimation of transition matrix using pair data</h3>
+<p>To estimate the transition matrix, we use “pair data” obtained from two consecutive measurements of permanent sample plots in the national forest inventory. For <code>estimatetransprobs</code>, the estimation function implemented in <code>efdm</code>, the pair data is a <code>data.frame</code> of pairs of dynamic variables and possible stratification variables, which affect the growth but are not affected by growth.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>example<span class="sc">$</span>noman_pairs</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   region    soil     sp vol0 vol1 age0 age1</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  South Mineral spruce   10    7   13   14</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  South Mineral spruce    8    8   20   21</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  South Mineral  other    9   10    5    6</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  South Mineral  other    1    1    1    2</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  South Mineral  other    7    8    2    3</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  South Mineral  other    7   10    5    6</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7  South Mineral  other    3    5   31   32</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 15535 rows ]</span></span></code></pre></div>
+<p>In order to use <code>estimatetransprobs</code> we still need two parts, a state space and a prior. The state space and prior are required because the pair data might not have observations for all possible states, but the transition matrix should be available for all states.</p>
+<div id="state-space" class="section level4">
+<h4>State space</h4>
+<p>The state space is the collection of all possible states of stratifying variables. Since we have an activity probability for each state we can use the <code>actprob</code> to obtain the <code>statespace</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>statespace <span class="ot">&lt;-</span> actprob <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">c</span>(region, soil, sp, vol, age))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>statespace</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    region    soil    sp vol age</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   South Mineral other   1   1</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   South Mineral other   1   2</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   South Mineral other   1   3</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   South Mineral other   1   4</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   South Mineral other   1   5</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6   South Mineral other   1   6</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7   South Mineral other   1   7</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8   South Mineral other   1   8</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9   South Mineral other   1   9</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10  South Mineral other   1  10</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 6290 rows ]</span></span></code></pre></div>
+<p>In this example dataset the number of states in the state space is the product of the number of classes in each stratifying variable, that is <span class="math inline">\(3*2*2*15*35 = 6300\)</span>.</p>
+</div>
+<div id="prior" class="section level4">
+<h4>Prior</h4>
+<p>The prior in <code>estimatetransprobs</code> works by adding one observation to the pair data for each starting state. The <code>efdm</code> has a few standard prior choices.</p>
+<ul>
+<li><code>prior_grow(variable)</code> grows <code>variable</code> by one class.</li>
+<li><code>&quot;nochange&quot;</code>, forest state is not changed</li>
+<li><code>&quot;uninformative&quot;</code>, an observation with tiny weight is added to every possible target state.</li>
+</ul>
+<p>For the no management activity we are using <code>prior_grow(&quot;age&quot;)</code> stating that there is always at least one observation where the age grows by one class but the volume is not changing.</p>
+</div>
+<div id="estimation" class="section level4">
+<h4>Estimation</h4>
+<p>Now we are ready to estimate the transition probabilities for no management</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>transprobs_noman <span class="ot">&lt;-</span> <span class="fu">estimatetransprobs</span>(<span class="fu">c</span>(<span class="st">&quot;vol&quot;</span>, <span class="st">&quot;age&quot;</span>), <span class="co"># the dynamic variables of the activity</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                     example<span class="sc">$</span>noman_pairs,  <span class="co"># pair data for no management</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">statespace=</span>statespace,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">factors=</span><span class="fu">c</span>(<span class="st">&quot;soil&quot;</span>), <span class="co"># Information for different soil types</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                                        <span class="co"># is used with smaller weight</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;region&quot;</span>,<span class="st">&quot;sp&quot;</span>), <span class="co"># Separate estimation for each</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                                          <span class="co"># region and species</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">prior=</span><span class="fu">prior_grow</span>(<span class="st">&quot;age&quot;</span>))</span></code></pre></div>
+<p>and to define the activity <code>noman</code></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>noman <span class="ot">&lt;-</span> <span class="fu">define_activity</span>(<span class="st">&quot;noman&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;vol&quot;</span>, <span class="st">&quot;age&quot;</span>), transprobs_noman)</span></code></pre></div>
+<p>The resulting transition probabilities look like</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>transprobs_noman <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(vol0, age0, soil, region, sp, vol1, age1)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   vol0 age0    soil region    sp vol1 age1        prob</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    1    1 Mineral Middle other    1    2 0.629107981</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    1    1 Mineral Middle other    2    2 0.145539906</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    1    1 Mineral Middle other    3    2 0.122065728</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    1    1 Mineral Middle other    4    2 0.089201878</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    1    1 Mineral Middle other    5    2 0.009389671</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6    1    1 Mineral Middle other    6    2 0.004694836</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 13180 rows ]</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="thinning" class="section level2">
+<h2>Thinning</h2>
+<p>We use exactly the same procedure for thinning that we used for no management. The only differences are the activity name and the pair data used.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>transprobs_thin <span class="ot">&lt;-</span> <span class="fu">estimatetransprobs</span>(<span class="fu">c</span>(<span class="st">&quot;vol&quot;</span>, <span class="st">&quot;age&quot;</span>),</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                     example<span class="sc">$</span>thin_pairs, <span class="co"># pair data for thinning</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">statespace=</span>statespace,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">factors=</span><span class="fu">c</span>(<span class="st">&quot;soil&quot;</span>),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;region&quot;</span>,<span class="st">&quot;sp&quot;</span>),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">prior=</span><span class="fu">prior_grow</span>(<span class="st">&quot;age&quot;</span>))</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>thin <span class="ot">&lt;-</span> <span class="fu">define_activity</span>(<span class="st">&quot;thin&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;vol&quot;</span>, <span class="st">&quot;age&quot;</span>), transprobs_thin)</span></code></pre></div>
+</div>
+</div>
+<div id="scenario-1" class="section level1">
+<h1>Scenario 1</h1>
+<p>EFDM is an area based model. The initial state of the scenario is a <code>data.frame</code> where for each state there is an <code>area</code> (zeros may be omitted)</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>state0 <span class="ot">&lt;-</span> example<span class="sc">$</span>initial_state</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>state0</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   region    soil     sp vol age       area</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  South Mineral  other   1   1  73518.749</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Middle Mineral  other   1   1 105532.353</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  North Mineral  other   1   1  49583.432</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  South    Peat  other   1   1  15035.772</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 Middle    Peat  other   1   1  33996.388</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  North    Peat  other   1   1   2039.203</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7  South Mineral spruce   1   1 186533.582</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8 Middle Mineral spruce   1   1  63984.635</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 3271 rows ]</span></span></code></pre></div>
+<p>Next, we run the EFDM scenario for 20 time steps (100 years) starting with initial state <code>state0</code>, activity probabilities <code>actprob</code> and a list of activities.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>activities <span class="ot">&lt;-</span> <span class="fu">list</span>(noman, thin, ff)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>states1 <span class="ot">&lt;-</span> <span class="fu">runEFDM</span>(state0, actprob, activities, <span class="dv">20</span>)</span></code></pre></div>
+<p><code>runEFDM</code> produces a <code>data.frame</code> of areas allocated to each activity at each time step.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>states1 <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(soil, region, sp, vol, age, time, activity)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      soil region    sp vol age         area activity time</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Mineral Middle other   1   1    105.53235       ff    0</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Mineral Middle other   1   1 101627.65637    noman    0</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Mineral Middle other   1   1   3799.16472     thin    0</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 Mineral Middle other   1   1     99.11577       ff    1</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 Mineral Middle other   1   1  95448.48821    noman    1</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 Mineral Middle other   1   1   3568.16778     thin    1</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 209007 rows ]</span></span></code></pre></div>
+<div id="analysing-results" class="section level2">
+<h2>Analysing results</h2>
+<div id="result-coefficients" class="section level3">
+<h3>Result coefficients</h3>
+<p>Using so called result coefficients is a way to obtain results with respect to other forest properties than area. In this scenario we have growing stock volume, drain and harvest income as result variables.</p>
+<p>The volume coefficients convert volume class <code>vol</code> and dominant species <code>sp</code> into growing stock volume <code>volume</code> (m3/ha) in four tree species groups (<code>species</code>): pine, spruce, broadleaves and all. The volume coefficients were estimated for the classes based on the species composition in the forest inventory data as class averages.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>example<span class="sc">$</span>vol_coef <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(vol, sp, species)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    vol     sp   species     volume</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    1  other       all 0.50632300</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    1  other broadleaf 0.12501893</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    1  other      pine 0.30152225</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    1  other    spruce 0.07978181</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    1 spruce       all 1.20000000</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6    1 spruce broadleaf 0.37598659</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7    1 spruce      pine 0.09533751</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8    1 spruce    spruce 0.72867590</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9    2  other       all 3.39429400</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10   2  other broadleaf 0.74911648</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11   2  other      pine 2.16464343</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12   2  other    spruce 0.48053409</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 108 rows ]</span></span></code></pre></div>
+<p>Drain is the harvest accumulation which is linked to management activities (activity), and separated by the volume class (vol) and dominant species (sp). It was also estimated from the observed changes in the forest inventory data as class averages. The drain is given as m3 per ha (drain) and timber assortment (assort): pulp/saw wood.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>example<span class="sc">$</span>drain_coef <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>vol, sp, assort, activity)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    vol     sp     drain assort activity</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   15  other 203.57043   pulp       ff</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   15  other  61.07113   pulp     thin</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   15  other 197.54969    saw       ff</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   15  other  59.26491    saw     thin</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   15 spruce 165.51780   pulp       ff</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6   15 spruce  49.65534   pulp     thin</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7   15 spruce 318.13899    saw       ff</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8   15 spruce  95.44170    saw     thin</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9   14  other 172.94581   pulp       ff</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10  14  other  51.88374   pulp     thin</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 110 rows ]</span></span></code></pre></div>
+<p>Income is loosely based on the actual statistics of Finnish timber assortment prices over last years in unit eur/m3.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>example<span class="sc">$</span>income_coef</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   assort activity euro</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    saw       ff   56</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    saw     thin   44</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   pulp       ff   20</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   pulp     thin   15</span></span></code></pre></div>
+</div>
+<div id="results" class="section level3">
+<h3>Results</h3>
+<p>Simulation timesteps are mutated to mid-years of simulation steps (the simulation begins from year 2016):</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>states1 <span class="ot">&lt;-</span> states1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">time =</span> <span class="fu">factor</span>(<span class="dv">2016</span> <span class="sc">+</span> time<span class="sc">*</span><span class="dv">5</span>))</span></code></pre></div>
+<p>Growing stock volume is estimated by merging the area distribution by simulation steps (states1) and volume coefficients. The total growing stock volume (m3) is a result of multiplication of area (ha) and coefficient (m3/ha). Finally the result is visualized in a figure.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>volume <span class="ot">&lt;-</span> <span class="fu">merge</span>(states1, example<span class="sc">$</span>vol_coef) <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span> (<span class="at">volume=</span>area<span class="sc">*</span>volume) <span class="sc">%&gt;%</span> <span class="co">#area is multiplied with m3/ha volume the get total volume in m3</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">!=</span> <span class="st">&quot;all&quot;</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(volume) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">end =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>time, <span class="at">weight=</span>volume<span class="sc">/</span><span class="dv">1000000000</span>, <span class="at">fill=</span>species)) <span class="sc">+</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="cn">NULL</span>,<span class="at">title=</span><span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Growing stock, bil.&quot;</span>,m<span class="sc">^</span><span class="dv">3</span>)), <span class="at">x=</span><span class="st">&quot;Year&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="sc">-</span><span class="dv">90</span>))</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Estimating age distribution does not require result coefficients. However, the age classes are defined for 50-year classes instead of original 5-year classes, and then plotted for only three time steps: years 2016, 2066 and 2116.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>states1<span class="sc">$</span>ageclass <span class="ot">&lt;-</span> <span class="fu">cut</span>(states1<span class="sc">$</span>age, <span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">35</span>), <span class="at">include.lowest =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                        <span class="co">#labels=c(&quot;0-50&quot;,&quot;51-100&quot;,&quot;101-150&quot;,&quot;150+&quot;))</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;-50&quot;</span>,<span class="st">&quot;-100&quot;</span>,<span class="st">&quot;-150&quot;</span>,<span class="st">&quot;150+&quot;</span>))</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>states1<span class="sc">$</span>region <span class="ot">&lt;-</span> <span class="fu">factor</span>(states1<span class="sc">$</span>region, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;South&quot;</span>, <span class="st">&quot;Middle&quot;</span>, <span class="st">&quot;North&quot;</span>))</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">subset</span>(states1, time <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2016</span>,<span class="dv">2066</span>,<span class="dv">2116</span>))) <span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>ageclass, <span class="at">weight=</span>area<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">fill=</span>region)) <span class="sc">+</span>  </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">end =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols=</span><span class="fu">vars</span>(time)) <span class="sc">+</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="cn">NULL</span>, <span class="at">title=</span><span class="st">&quot;Area, mill.ha&quot;</span>, <span class="at">x=</span><span class="st">&quot;Ageclass&quot;</span>, <span class="at">fill=</span><span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="sc">-</span><span class="dv">90</span>))</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Income is estimated by first converting the drain (m3/ha) into income (eur/ha). Then multiplication with area (ha) gives the euros.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>euro <span class="ot">&lt;-</span> <span class="fu">merge</span>(example<span class="sc">$</span>drain_coef, example<span class="sc">$</span>income_coef) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">euro =</span> euro<span class="sc">*</span>drain)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>removal <span class="ot">&lt;-</span> <span class="fu">merge</span>(states1, euro) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">income=</span>euro<span class="sc">*</span>area)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">subset</span>(removal,<span class="sc">!</span>time <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2116</span>))) <span class="sc">+</span> </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>time, <span class="at">weight=</span>income<span class="sc">/</span><span class="dv">5000000000</span>, <span class="at">fill=</span>assort)) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">end =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="cn">NULL</span>,<span class="at">title =</span> <span class="st">&quot;Income, bil.€/year&quot;</span>, <span class="at">x=</span><span class="st">&quot;5-year intervals&quot;</span>, <span class="at">fill=</span><span class="cn">NULL</span> ) <span class="sc">+</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="sc">-</span><span class="dv">90</span>))</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+</div>
+</div>
+<div id="scenario-2" class="section level1">
+<h1>Scenario 2</h1>
+<p>In this example the tree species changes after final felling. Therefore we redefine final felling activity taking into account in addition to volume and age also the dominant species. The change probability depends on region and dominant species. Volume and age act as before. They move to the smallest classes (vol1=1 and age1=1).</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>transprobs_ff_age_species <span class="ot">&lt;-</span> statespace <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">vol0=</span>vol, <span class="at">age0=</span>age, <span class="at">sp0=</span>sp, region) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  unique <span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region, sp0, vol0, age0) <span class="sc">%&gt;%</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">data.frame</span>(<span class="at">vol1=</span><span class="dv">1</span>, <span class="at">age1=</span><span class="dv">1</span>, <span class="at">sp1=</span><span class="fu">c</span>(<span class="st">&#39;other&#39;</span>,<span class="st">&#39;spruce&#39;</span>),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">prob=</span><span class="fu">case_when</span>(</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                         sp0<span class="sc">==</span><span class="st">&#39;other&#39;</span> <span class="sc">&amp;&amp;</span> region<span class="sc">==</span><span class="st">&#39;South&#39;</span> <span class="sc">~</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                         sp0<span class="sc">==</span><span class="st">&#39;other&#39;</span> <span class="sc">&amp;&amp;</span> region<span class="sc">==</span><span class="st">&#39;Middle&#39;</span> <span class="sc">~</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                         sp0<span class="sc">==</span><span class="st">&#39;other&#39;</span> <span class="sc">&amp;&amp;</span> region<span class="sc">==</span><span class="st">&#39;North&#39;</span> <span class="sc">~</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.2</span>), <span class="co">#in other dominated forest</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>                                        <span class="co"># in northern boreal vegetation zone 20% of final felled area</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>                                        <span class="co"># change to spruce dominated forest</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>                         sp0<span class="sc">==</span><span class="st">&#39;spruce&#39;</span> <span class="sc">&amp;&amp;</span> region<span class="sc">==</span><span class="st">&#39;South&#39;</span> <span class="sc">~</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.7</span>),</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>                         sp0<span class="sc">==</span><span class="st">&#39;spruce&#39;</span> <span class="sc">&amp;&amp;</span> region<span class="sc">==</span><span class="st">&#39;Middle&#39;</span> <span class="sc">~</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.8</span>),</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>                         sp0<span class="sc">==</span><span class="st">&#39;spruce&#39;</span> <span class="sc">&amp;&amp;</span> region<span class="sc">==</span><span class="st">&#39;North&#39;</span> <span class="sc">~</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))))</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;region&#39;, &#39;sp0&#39;, &#39;vol0&#39;, &#39;age0&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>ff_age_species <span class="ot">&lt;-</span> <span class="fu">define_activity</span>(<span class="st">&quot;ff&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;vol&quot;</span>, <span class="st">&quot;age&quot;</span>, <span class="st">&quot;sp&quot;</span>), transprobs_ff_age_species)</span></code></pre></div>
+<p>The list of activities includes the same noman and thin as in Scenario 1, and the above defined final felling. The same initial state as in Scenario 1 is run with the new list of activities and stored in variable states2.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>activities2 <span class="ot">&lt;-</span> <span class="fu">list</span>(noman, thin, ff_age_species)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>states2 <span class="ot">&lt;-</span> <span class="fu">runEFDM</span>(state0, actprob, activities2, <span class="dv">20</span>)</span></code></pre></div>
+<p>The proportion of spruce dominated forest area is estimated for time steps 0, 10 and 20 (years 2016, 2066 and 2116). And the result is presented by the vegetation zones as a map.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute proportion of spruces in each time and region</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>prop_spruces <span class="ot">&lt;-</span> states2 <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region, time) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">proportion =</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">sum</span>((sp<span class="sc">==</span><span class="st">&quot;spruce&quot;</span>)<span class="sc">*</span>area)<span class="sc">/</span><span class="fu">sum</span>(area)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">20</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> <span class="dv">2016</span> <span class="sc">+</span> <span class="dv">5</span><span class="sc">*</span>time)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;region&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Add bio-geographical regions (MetsaKasvVyoh provided in efdm package) to the data</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>prop_spruces <span class="ot">&lt;-</span> <span class="fu">merge</span>(MetsaKasvVyoh, prop_spruces)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>prop_spruces <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill=</span>proportion)) <span class="sc">+</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(time)) <span class="sc">+</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">&quot;white&quot;</span>, <span class="at">high =</span> <span class="st">&quot;forestgreen&quot;</span>) <span class="sc">+</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill=</span><span class="st">&quot;Proportion&quot;</span> ,<span class="at">title=</span><span class="st">&quot;Proportion of spruce dominated forests, %&quot;</span>) <span class="sc">+</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_colourbar</span>(<span class="at">frame.colour =</span> <span class="st">&quot;grey20&quot;</span>,<span class="at">ticks.colour =</span> <span class="st">&quot;grey20&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="sc">-</span><span class="dv">90</span>))</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>The map provided by: Finnish Environment Institute</p>
+</div>
+<div id="scenario-3---land-use-changes" class="section level1">
+<h1>Scenario 3 - Land use changes</h1>
+<p>First we add two land use classes to the statespace. Agriculture is stratified according to region and soil type, while other land use is only stratified according to region.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>statespace3 <span class="ot">&lt;-</span> statespace</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>statespace3<span class="sc">$</span>landuse <span class="ot">&lt;-</span> <span class="st">&quot;forest&quot;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>agriculture <span class="ot">&lt;-</span> <span class="fu">unique</span>(statespace3 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sp=</span><span class="dv">0</span>, <span class="at">vol=</span><span class="dv">0</span>, <span class="at">age=</span><span class="dv">0</span>, <span class="at">landuse=</span><span class="st">&quot;agriculture&quot;</span>))</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>other <span class="ot">&lt;-</span> <span class="fu">unique</span>(statespace3 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">soil=</span><span class="dv">0</span>, <span class="at">sp=</span><span class="dv">0</span>, <span class="at">vol=</span><span class="dv">0</span>, <span class="at">age=</span><span class="dv">0</span>, <span class="at">landuse=</span><span class="st">&quot;other&quot;</span>))</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>statespace3 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(statespace3, agriculture, other)</span></code></pre></div>
+<p>We use separate activities for deforestation to each land use class. Variables (vol, age, sp) not used by the agriculture are set to 0. Soil type and region are not changing as a result of deforestation to agriculture.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>transprobs_defor_to_agri <span class="ot">&lt;-</span> statespace3 <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(landuse<span class="sc">==</span><span class="st">&quot;forest&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">vol0=</span>vol, <span class="at">age0=</span>age, <span class="at">sp0=</span>sp,<span class="at">landuse0=</span>landuse) <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  unique <span class="sc">%&gt;%</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vol1=</span><span class="dv">0</span>, <span class="at">age1=</span><span class="dv">0</span>, <span class="at">sp1=</span><span class="dv">0</span>, <span class="at">landuse1=</span><span class="st">&quot;agriculture&quot;</span>, <span class="at">prob=</span><span class="dv">1</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>defor_to_agri <span class="ot">&lt;-</span> <span class="fu">define_activity</span>(<span class="st">&quot;defor_to_agri&quot;</span>,</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">c</span>(<span class="st">&quot;vol&quot;</span>, <span class="st">&quot;age&quot;</span>, <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;landuse&quot;</span>),</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>                                 transprobs_defor_to_agri)</span></code></pre></div>
 <p>Deforestation to other land use also changes soil type to 0.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">defor_to_other &lt;-<span class="st"> </span><span class="kw">define_activity</span>(<span class="st">&quot;defor_to_other&quot;</span>, </a>
-<a class="sourceLine" id="cb20-2" title="2">                                        <span class="kw">c</span>(<span class="st">&quot;soil&quot;</span>, <span class="st">&quot;vol&quot;</span>, <span class="st">&quot;age&quot;</span>, <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;landuse&quot;</span>))</a>
-<a class="sourceLine" id="cb20-3" title="3"><span class="kw">transprobs</span>(defor_to_other) &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">filter</span>(statespace3, landuse<span class="op">==</span><span class="st">&quot;forest&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-4" title="4"><span class="st">                                             </span><span class="kw">select</span>(<span class="dt">soil0=</span>soil, <span class="dt">vol0=</span>vol, <span class="dt">age0=</span>age, <span class="dt">sp0=</span>sp,<span class="dt">landuse0=</span>landuse) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-5" title="5"><span class="st">                                             </span><span class="kw">mutate</span>(<span class="dt">soil1=</span><span class="dv">0</span>, <span class="dt">vol1=</span><span class="dv">0</span>, <span class="dt">age1=</span><span class="dv">0</span>, <span class="dt">sp1=</span><span class="dv">0</span>, <span class="dt">landuse1=</span><span class="st">&quot;other&quot;</span>, <span class="dt">prob=</span><span class="dv">1</span>))</a></code></pre></div>
-<p>Afforestetaion only applies to agriculture. Volume and age classes start from 1 and the area is split evenly to spruce and other species.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">affor &lt;-<span class="st"> </span><span class="kw">define_activity</span>(<span class="st">&quot;affor&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;vol&quot;</span>, <span class="st">&quot;age&quot;</span>, <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;landuse&quot;</span>))</a>
-<a class="sourceLine" id="cb21-2" title="2">aff &lt;-<span class="st"> </span><span class="kw">filter</span>(statespace3, landuse<span class="op">==</span><span class="st">&quot;agri&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-3" title="3"><span class="st">  </span><span class="kw">select</span>(soil, <span class="dt">vol0=</span>vol, <span class="dt">age0=</span>age, region, <span class="dt">sp0=</span>sp, <span class="dt">landuse0=</span>landuse) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">vol1=</span><span class="dv">1</span>, <span class="dt">age1=</span><span class="dv">1</span>, <span class="dt">sp1=</span><span class="st">&quot;other&quot;</span>, <span class="dt">landuse1=</span><span class="st">&quot;forest&quot;</span>, <span class="dt">prob=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb21-5" title="5">aff &lt;-<span class="st"> </span><span class="kw">rbind</span>(aff <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">sp1=</span><span class="st">&quot;spruce&quot;</span>, <span class="dt">prob=</span><span class="fl">0.5</span>), </a>
-<a class="sourceLine" id="cb21-6" title="6">             aff <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">sp1=</span><span class="st">&quot;other&quot;</span>, <span class="dt">prob=</span><span class="fl">0.5</span>))</a>
-<a class="sourceLine" id="cb21-7" title="7"><span class="kw">transprobs</span>(affor) &lt;-<span class="st"> </span>aff</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>transprobs_defor_to_other <span class="ot">&lt;-</span> statespace3 <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(landuse<span class="sc">==</span><span class="st">&quot;forest&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">soil0=</span>soil, <span class="at">vol0=</span>vol, <span class="at">age0=</span>age, <span class="at">sp0=</span>sp,<span class="at">landuse0=</span>landuse) <span class="sc">%&gt;%</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  unique <span class="sc">%&gt;%</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">soil1=</span><span class="dv">0</span>, <span class="at">vol1=</span><span class="dv">0</span>, <span class="at">age1=</span><span class="dv">0</span>, <span class="at">sp1=</span><span class="dv">0</span>, <span class="at">landuse1=</span><span class="st">&quot;other&quot;</span>, <span class="at">prob=</span><span class="dv">1</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>defor_to_other <span class="ot">&lt;-</span> <span class="fu">define_activity</span>(<span class="st">&quot;defor_to_other&quot;</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="st">&quot;soil&quot;</span>, <span class="st">&quot;vol&quot;</span>, <span class="st">&quot;age&quot;</span>, <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;landuse&quot;</span>),</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>                                  transprobs_defor_to_other)</span></code></pre></div>
+<p>Afforestation only applies to agriculture. Volume and age classes start from 1 and the area is split evenly to spruce and other species.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>transprobs_aff <span class="ot">&lt;-</span> statespace3 <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(landuse<span class="sc">==</span><span class="st">&quot;agriculture&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(soil, <span class="at">vol0=</span>vol, <span class="at">age0=</span>age, region, <span class="at">sp0=</span>sp, <span class="at">landuse0=</span>landuse) <span class="sc">%&gt;%</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vol1=</span><span class="dv">1</span>, <span class="at">age1=</span><span class="dv">1</span>, <span class="at">sp1=</span><span class="st">&quot;other&quot;</span>, <span class="at">landuse1=</span><span class="st">&quot;forest&quot;</span>, <span class="at">prob=</span><span class="dv">1</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>transprobs_aff <span class="ot">&lt;-</span> <span class="fu">rbind</span>(transprobs_aff <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sp1=</span><span class="st">&quot;spruce&quot;</span>, <span class="at">prob=</span><span class="fl">0.5</span>),</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>                        transprobs_aff <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sp1=</span><span class="st">&quot;other&quot;</span>, <span class="at">prob=</span><span class="fl">0.5</span>))</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>affor <span class="ot">&lt;-</span> <span class="fu">define_activity</span>(<span class="st">&quot;affor&quot;</span>,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">c</span>(<span class="st">&quot;vol&quot;</span>, <span class="st">&quot;age&quot;</span>, <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;landuse&quot;</span>),</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>                         transprobs_aff)</span></code></pre></div>
 <p>A donothing activity is used for non-forest land uses, when there is nothing forestry related going on.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">donothing &lt;-<span class="st"> </span><span class="kw">define_activity</span>(<span class="st">&quot;donothing&quot;</span>, <span class="kw">character</span>())</a>
-<a class="sourceLine" id="cb22-2" title="2">activities3 &lt;-<span class="st"> </span><span class="kw">list</span>(noman, thin, ff, defor_to_other, defor_to_agri, affor, donothing)</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>donothing <span class="ot">&lt;-</span> <span class="fu">define_activity</span>(<span class="st">&quot;donothing&quot;</span>, <span class="fu">character</span>())</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>activities3 <span class="ot">&lt;-</span> <span class="fu">list</span>(noman, thin, ff, defor_to_other, defor_to_agri, affor, donothing)</span></code></pre></div>
 <p>adding land use information to state</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">state03 &lt;-<span class="st"> </span>state0</a>
-<a class="sourceLine" id="cb23-2" title="2">state03<span class="op">$</span>landuse &lt;-<span class="st"> &quot;forest&quot;</span></a>
-<a class="sourceLine" id="cb23-3" title="3">state03 &lt;-<span class="st"> </span><span class="kw">rbind</span>(state03,  agri <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">area=</span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1552000</span><span class="op">/</span><span class="dv">2</span>,<span class="dv">997000</span><span class="op">/</span><span class="dv">2</span>,<span class="dv">76000</span><span class="op">/</span><span class="dv">2</span>),<span class="dt">each=</span><span class="dv">2</span>)),</a>
-<a class="sourceLine" id="cb23-4" title="4">                 other <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">area=</span><span class="kw">c</span>(<span class="dv">721000</span>,<span class="dv">507000</span>,<span class="dv">112000</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>state03 <span class="ot">&lt;-</span> state0</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>state03<span class="sc">$</span>landuse <span class="ot">&lt;-</span> <span class="st">&quot;forest&quot;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>state03 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(state03,  agriculture <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">area=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1552000</span><span class="sc">/</span><span class="dv">2</span>,<span class="dv">997000</span><span class="sc">/</span><span class="dv">2</span>,<span class="dv">76000</span><span class="sc">/</span><span class="dv">2</span>),<span class="at">each=</span><span class="dv">2</span>)),</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                 other <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">area=</span><span class="fu">c</span>(<span class="dv">721000</span>,<span class="dv">507000</span>,<span class="dv">112000</span>)))</span></code></pre></div>
 <p>Activity probabilities for new land uses</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">actprob3 &lt;-<span class="st"> </span>actprob</a>
-<a class="sourceLine" id="cb24-2" title="2">actprob3<span class="op">$</span>defor_to_other &lt;-<span class="st"> </span><span class="fl">0.0002</span></a>
-<a class="sourceLine" id="cb24-3" title="3">actprob3<span class="op">$</span>defor_to_agri &lt;-<span class="st"> </span><span class="fl">0.00025</span></a>
-<a class="sourceLine" id="cb24-4" title="4">actprob3<span class="op">$</span>affor &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb24-5" title="5">actprob3<span class="op">$</span>landuse &lt;-<span class="st"> &quot;forest&quot;</span></a>
-<a class="sourceLine" id="cb24-6" title="6">actprob3<span class="op">$</span>donothing &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb24-7" title="7">actnames &lt;-<span class="st"> </span><span class="kw">setdiff</span>(<span class="kw">names</span>(actprob3), <span class="kw">names</span>(state03))</a>
-<a class="sourceLine" id="cb24-8" title="8">actprob3[actnames] &lt;-<span class="st"> </span>actprob3[actnames]<span class="op">/</span><span class="kw">rowSums</span>(actprob3[actnames])</a>
-<a class="sourceLine" id="cb24-9" title="9">actprob3 &lt;-<span class="st"> </span><span class="kw">rbind</span>(actprob3, </a>
-<a class="sourceLine" id="cb24-10" title="10">        agri <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">thin=</span><span class="dv">0</span>, <span class="dt">ff=</span><span class="dv">0</span>, <span class="dt">noman=</span><span class="dv">0</span>, <span class="dt">defor_to_other=</span><span class="dv">0</span>, <span class="dt">defor_to_agri=</span><span class="dv">0</span>, <span class="dt">affor=</span><span class="fl">0.0005</span>, <span class="dt">donothing=</span><span class="fl">0.9995</span>),</a>
-<a class="sourceLine" id="cb24-11" title="11">        other <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">thin=</span><span class="dv">0</span>, <span class="dt">ff=</span><span class="dv">0</span>, <span class="dt">noman=</span><span class="dv">0</span>, <span class="dt">defor_to_other=</span><span class="dv">0</span>, <span class="dt">defor_to_agri=</span><span class="dv">0</span>, <span class="dt">affor=</span><span class="dv">0</span>, <span class="dt">donothing=</span><span class="dv">1</span>))</a></code></pre></div>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">states3 &lt;-<span class="st"> </span><span class="kw">runEFDM</span>(state03, actprob3, activities3, <span class="dv">20</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>actprob3 <span class="ot">&lt;-</span> actprob</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>actprob3<span class="sc">$</span>landuse <span class="ot">&lt;-</span> <span class="st">&quot;forest&quot;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define probabilities for new activities</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>actprob3<span class="sc">$</span>defor_to_other <span class="ot">&lt;-</span> <span class="fl">0.0002</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>actprob3<span class="sc">$</span>defor_to_agri <span class="ot">&lt;-</span> <span class="fl">0.00025</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>actprob3<span class="sc">$</span>affor <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>actprob3<span class="sc">$</span>donothing <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalise probabilities after adding new activities</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>actnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;noman&quot;</span>, <span class="st">&quot;thin&quot;</span>, <span class="st">&quot;ff&quot;</span>, <span class="st">&quot;defor_to_other&quot;</span>, <span class="st">&quot;defor_to_agri&quot;</span>, <span class="st">&quot;affor&quot;</span>, <span class="st">&quot;donothing&quot;</span>)</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>actprob3[actnames] <span class="ot">&lt;-</span> actprob3[actnames]<span class="sc">/</span><span class="fu">rowSums</span>(actprob3[actnames])</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Define activity probabilities also for agriculture and other land uses</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>actprob3 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(actprob3, </span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>        agriculture <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">thin=</span><span class="dv">0</span>, <span class="at">ff=</span><span class="dv">0</span>, <span class="at">noman=</span><span class="dv">0</span>, <span class="at">defor_to_other=</span><span class="dv">0</span>, <span class="at">defor_to_agri=</span><span class="dv">0</span>, <span class="at">affor=</span><span class="fl">0.0005</span>, <span class="at">donothing=</span><span class="fl">0.9995</span>),</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>        other <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">thin=</span><span class="dv">0</span>, <span class="at">ff=</span><span class="dv">0</span>, <span class="at">noman=</span><span class="dv">0</span>, <span class="at">defor_to_other=</span><span class="dv">0</span>, <span class="at">defor_to_agri=</span><span class="dv">0</span>, <span class="at">affor=</span><span class="dv">0</span>, <span class="at">donothing=</span><span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>states3 <span class="ot">&lt;-</span> <span class="fu">runEFDM</span>(state03, actprob3, activities3, <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#pie charts of land use areas</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>LUareas <span class="ot">&lt;-</span> states3 <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(time, landuse) <span class="sc">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">area =</span> <span class="fu">sum</span>(area)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;time&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>LUareas <span class="ot">&lt;-</span> LUareas <span class="sc">%&gt;%</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> <span class="fu">factor</span>(time, <span class="at">labels =</span> <span class="fu">seq</span>(<span class="dv">2016</span>,<span class="dv">2116</span>,<span class="dv">5</span>)))</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>totalarea <span class="ot">&lt;-</span> <span class="fu">sum</span>(state03<span class="sc">$</span>area)</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>LUareas <span class="sc">%&gt;%</span> <span class="fu">filter</span>(time <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;2016&quot;</span>,<span class="st">&quot;2066&quot;</span>,<span class="st">&quot;2116&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">area =</span> area<span class="sc">/</span>totalarea) <span class="sc">%&gt;%</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>,<span class="at">y=</span>area, <span class="at">fill=</span>landuse), <span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">width=</span><span class="dv">1</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">end =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">&quot;y&quot;</span>, <span class="at">start=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(time)) <span class="sc">+</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="cn">NULL</span>,<span class="at">fill=</span><span class="st">&quot;Land use&quot;</span>, <span class="at">x=</span><span class="cn">NULL</span>)<span class="sc">+</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>,<span class="at">y =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.33</span>, <span class="fl">0.95</span>), <span class="dv">3</span>), <span class="at">label =</span> <span class="fu">round</span>(area<span class="sc">*</span><span class="dv">100</span>,<span class="dv">1</span>)),</span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">nudge_x=</span><span class="fl">0.25</span>, <span class="at">size=</span><span class="fl">2.25</span>,</span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">color=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;grey20&quot;</span>,<span class="st">&quot;white&quot;</span>,<span class="st">&quot;white&quot;</span>), <span class="dv">3</span>), <span class="at">fontface=</span><span class="st">&quot;bold&quot;</span>) <span class="sc">+</span></span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
 
 
