@@ -125,7 +125,11 @@ estimatetransprobs <- function(dynamicvariables, pairdata,
     a$check_missing_combinations <- 1
     a <- merge(pairdata, a, by.x = c(factors, by, act$dynamicvariables1),
                by.y = c(factors, by, gsub("1$", "", act$dynamicvariables1)), all.x=TRUE)
-    if(anyNA(a$check_missing_combinations)) stop("Pairdata has transitions resulting in states that are not in statespace.")
+    if(anyNA(a$check_missing_combinations)) {
+      print("Pairdata has transitions resulting in states that are not in statespace.")
+      print(utils::head(a[is.na(a$check_missing_combinations),,drop=FALSE]))
+      stop("Pairdata has transitions resulting in states that are not in statespace.")
+    }
   }
 
   processed_rows <- 0
