@@ -32,3 +32,5 @@ act6 <- define_activity("test", c("vol"))
 transprobs(act6) <- estimatetransprobs("vol", pairdata[c("vol0", "vol1")], data.frame(vol=1:5), prior="nochange")
 transprobs(act6)
 runEFDM(state0, actprob, list(act6), 1)
+
+try(estimatetransprobs("vol", pairdata[c("vol0", "vol1")], data.frame(vol=1:4), prior="nochange"))
