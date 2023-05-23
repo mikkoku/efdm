@@ -106,13 +106,11 @@ estimatetransprobs <- function(dynamicvariables, pairdata,
   dynvar0 <- act$dynamicvariables0
   dynvar1 <- act$dynamicvariables1
   statespace <- act$statespace
-  pairdata <- pairdata[c(dynvar1, dynvar0, factors, by)]
-
 
   if(!is.null(pairdata)) {
-    requirednames <- c(factors, by)
+    requirednames <- c(dynvar0, dynvar1, factors, by)
     missingnames <- setdiff(requirednames, names(pairdata))
-    if(length(missingnames) > 0) stop(paste0("Variable '", list(missingnames), "' not present in pairdata."))
+    if(length(missingnames) > 0) stop(paste0("Variable(s) '", list(missingnames), "' not present in pairdata."))
 
     # Check pairdata against statespace
     a <- act$statespace0
@@ -132,6 +130,7 @@ estimatetransprobs <- function(dynamicvariables, pairdata,
     }
   }
 
+  pairdata <- pairdata[c(dynvar1, dynvar0, factors, by)]
   processed_rows <- 0
 
   A <- do.call(rbind, lapply(statespace, function(statespacepart) {
