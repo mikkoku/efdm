@@ -29,7 +29,7 @@ dynamic variables of the forest stratum.
 \code{variable} by \code{howmuch}.
 }
 \examples{
-statespace <- expand.grid(a=1:2, b=1:2, vol=1:15, age=1:35)
+statespace <- expand.grid(a=1:2, b=1:2, vol=1:15, age=1:15)
 act <- define_activity("test", c("vol", "age"))
 act1 <- estimatetransprobs(c("vol", "age"), NULL, statespace, by=c("a", "b"),
   prior=prior_ff())

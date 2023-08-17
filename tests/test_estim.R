@@ -1,3 +1,4 @@
+data.table::setDTthreads(1)
 library(efdm)
 statespace <- expand.grid(a=1:2, b=1:2, vol=1:5)
 pairdata <- data.frame(a=c(1,1,2,2), b=c(1,2,1,2), vol0=c(1,1,1,1), vol1=c(2,3,4,5))

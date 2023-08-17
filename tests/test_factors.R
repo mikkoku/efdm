@@ -1,3 +1,4 @@
+data.table::setDTthreads(1)
 library(efdm)
 
 statespace <- expand.grid(ds=c("sp", "pi"), region=c("n", "s"), vol=1:3, stringsAsFactors=FALSE)
