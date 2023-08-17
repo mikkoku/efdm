@@ -1,6 +1,6 @@
 Package: efdm
 Title: Simulate Forest Resources with the European Forestry Dynamics Model
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(
     person("Mikko", "Kuronen", email="mikko.kuronen@luke.fi", role=c("aut", "cre"),
            comment = c(ORCID = "0000-0002-8089-7895")),
@@ -30,7 +30,7 @@ Suggests:
     rmarkdown,
     sf,
     testthat
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
