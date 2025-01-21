@@ -255,11 +255,11 @@ estimatetransprobs1 <- function(pairdata, statespace, prior, dynvar0, dynvar1, f
     if(length(factors)) {
       grid <- merge(grid, unique(statespace$statespace0[factors]), by=factors, all=FALSE)
     }
-    nobs <- merge(nobs, grid, by=names(pairdata), suffixes=c("", ".y"), all=TRUE)
+    nobs <- merge(nobs, grid, by=names(pairdata), suffixes=c("", ".y_check_839"), all=TRUE)
     na20 <- function(x) {x[is.na(x)] <- 0; x}
-    nobs$nobs <- na20(nobs$nobs) + na20(nobs$nobs.y)
-    nobs$nobs.y <- NULL
-    if(length(grep("\\.y$", names(nobs)))) stop(paste0("Internal error. Extra variables after transition matrix estimation."))
+    nobs$nobs <- na20(nobs$nobs) + na20(nobs$nobs.y_check_839)
+    nobs$nobs.y_check_839 <- NULL
+    if(length(grep("\\.y_check_839$", names(nobs)))) stop(paste0("Internal error. Extra variables after transition matrix estimation."))
   }
 
   N <- aggregate(list(N=nobs$nobs), nobs[c(dynvar0, factors)], sum)
